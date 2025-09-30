@@ -1,17 +1,4 @@
 User-agent: *
 Allow: /
 
-# Sitemap
 Sitemap: https://sebastiancabreraalcala.com/sitemap.xml
-
-# Crawl-delay para ser amigable con los bots
-Crawl-delay: 1
-
-# Bloquear archivos innecesarios
-Disallow: /node_modules/
-Disallow: /src/
-Disallow: /.git/
-Disallow: /.env
-Disallow: /package.json
-Disallow: /package-lock.json
-Disallow: /README.md
