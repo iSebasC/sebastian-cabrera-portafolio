@@ -34,19 +34,30 @@ export const ImageWithFallback = React.memo<ImageWithFallbackProps>(function Ima
     setIsLoading(false)
   }, [])
 
-  // Optimizar URLs de Unsplash con parámetros de tamaño
-  const optimizedSrc = useMemo(() => {
-    if (!src || didError) return src
+  // Optimizar URLs y generar diferentes formatos
+  const { optimizedSrc, webpSrc, avifSrc } = useMemo(() => {
+    if (!src || didError) return { optimizedSrc: src, webpSrc: null, avifSrc: null }
 
-    // Solo optimizar URLs de Unsplash
+    // Para URLs de Unsplash
     if (typeof src === 'string' && src.includes('images.unsplash.com')) {
-      // Cambiar w=1080 a w=800 para reducir tamaño, mantener calidad
       const optimizedUrl = src.replace(/w=\d+/g, 'w=800')
-                             .replace(/q=\d+/g, 'q=75') // Reducir calidad ligeramente
-      return optimizedUrl
+                             .replace(/q=\d+/g, 'q=75')
+      return { optimizedSrc: optimizedUrl, webpSrc: null, avifSrc: null }
     }
     
-    return src
+    // Para imágenes locales, generar versiones optimizadas
+    if (typeof src === 'string' && src.startsWith('/img/')) {
+      const ext = src.split('.').pop()
+      const baseName = src.replace(`.${ext}`, '')
+      
+      return {
+        optimizedSrc: src,
+        webpSrc: `${baseName}.webp`,
+        avifSrc: `${baseName}.avif`
+      }
+    }
+    
+    return { optimizedSrc: src, webpSrc: null, avifSrc: null }
   }, [src, didError])
 
   if (didError) {
@@ -83,17 +94,52 @@ export const ImageWithFallback = React.memo<ImageWithFallbackProps>(function Ima
         </div>
       )}
       
-      <img 
-        src={optimizedSrc} 
-        alt={alt} 
-        className={`w-full h-full ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
-        loading={priority ? 'eager' : (lazy ? 'lazy' : 'eager')}
-        decoding="async"
-        onError={handleError}
-        onLoad={handleLoad}
-        sizes={sizes}
-        {...rest} 
-      />
+      {/* Usar picture para formatos modernos cuando están disponibles */}
+      {webpSrc || avifSrc ? (
+        <picture>
+          {/* AVIF para máxima compresión */}
+          {avifSrc && (
+            <source 
+              srcSet={avifSrc} 
+              type="image/avif"
+              sizes={sizes}
+            />
+          )}
+          
+          {/* WebP para navegadores modernos */}
+          {webpSrc && (
+            <source 
+              srcSet={webpSrc} 
+              type="image/webp"
+              sizes={sizes}
+            />
+          )}
+          
+          {/* Imagen original como fallback */}
+          <img 
+            src={optimizedSrc} 
+            alt={alt} 
+            className={`w-full h-full ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+            loading={priority ? 'eager' : (lazy ? 'lazy' : 'eager')}
+            decoding="async"
+            onError={handleError}
+            onLoad={handleLoad}
+            {...rest} 
+          />
+        </picture>
+      ) : (
+        <img 
+          src={optimizedSrc} 
+          alt={alt} 
+          className={`w-full h-full ${isLoading ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}
+          loading={priority ? 'eager' : (lazy ? 'lazy' : 'eager')}
+          decoding="async"
+          onError={handleError}
+          onLoad={handleLoad}
+          sizes={sizes}
+          {...rest} 
+        />
+      )}
     </div>
   )
 })
