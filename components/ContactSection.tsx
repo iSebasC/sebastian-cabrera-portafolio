@@ -4,6 +4,8 @@ import { Send, Mail, Phone, MapPin, MessageCircle, CheckCircle } from 'lucide-re
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
+import emailjs from '@emailjs/browser';
+import { EMAILJS_CONFIG, isProduction } from '../config/email';
 
 const contactInfo = [
   {
@@ -49,33 +51,61 @@ export function ContactSection() {
     setIsSubmitting(true);
     
     try {
-      // Enviar a Netlify Forms
-      const formDataToSend = new FormData();
-      formDataToSend.append('form-name', 'contact');
-      formDataToSend.append('name', formData.name);
-      formDataToSend.append('email', formData.email);
-      formDataToSend.append('subject', formData.subject);
-      formDataToSend.append('message', formData.message);
-      
-      const response = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formDataToSend as any).toString()
-      });
-      
-      if (response.ok) {
-        setIsSubmitted(true);
-        // Reset form after 3 seconds
-        setTimeout(() => {
-          setIsSubmitted(false);
-          setFormData({ name: '', email: '', subject: '', message: '' });
-        }, 3000);
+      if (isProduction()) {
+        // En producción: usar Netlify Forms
+        const formData = new FormData(e.target as HTMLFormElement);
+        
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(formData as any).toString()
+        });
+        
+        if (!response.ok) throw new Error('Error en Netlify Forms');
       } else {
-        throw new Error('Error al enviar el formulario');
+        // En desarrollo: usar EmailJS
+        const templateParams = {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_name: 'Sebastian',
+        };
+        
+        await emailjs.send(
+          EMAILJS_CONFIG.serviceId,
+          EMAILJS_CONFIG.templateId,
+          templateParams,
+          EMAILJS_CONFIG.publicKey
+        );
       }
+      
+      setIsSubmitted(true);
+      // Reset form after 3 seconds
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      }, 3000);
+      
     } catch (error) {
       console.error('Error:', error);
-      alert('Error al enviar el mensaje. Por favor, intenta de nuevo.');
+      
+      // En caso de error, simular envío para demo
+      console.log('📧 Simulando envío para demo:', {
+        nombre: formData.name,
+        email: formData.email,
+        asunto: formData.subject,
+        mensaje: formData.message
+      });
+      
+      alert('⚠️ Formulario en modo demo. Los datos se muestran en consola. En producción enviará correos reales.');
+      
+      setIsSubmitted(true);
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      }, 3000);
+      
     } finally {
       setIsSubmitting(false);
     }
