@@ -1,0 +1,260 @@
+{
+  "personalInfo": {
+    "name": "Sebastian",
+    "title": "Diseñador Gráfico Senior",
+    "description": "Más que un diseñador, soy un estratega visual que convierte ideas complejas en experiencias memorables que conectan, inspiran y generan resultados.",
+    "longDescription": "Diseñador gráfico especializado en crear identidades visuales memorables y experiencias digitales excepcionales que conectan marcas con audiencias y generan resultados medibles para empresas ambiciosas.",
+    "philosophy": "El diseño excepcional surge cuando la creatividad encuentra la estrategia. No creo en diseño bonito sin propósito, sino en soluciones visuales que conectan emocionalmente y generan resultados medibles.",
+    "avatar": "/img/profile_sebastian.jpg",
+    "status": "Disponible para nuevos proyectos",
+    "yearsExperience": "5+",
+    "satisfaction": "94%"
+  },
+  
+  "quickStats": [
+    {
+      "number": "5+",
+      "label": "Años de Experiencia"
+    },
+    {
+      "number": "150+",
+      "label": "Proyectos Completados"
+    },
+    {
+      "number": "98%",
+      "label": "Clientes Satisfechos"
+    },
+    {
+      "number": "24h",
+      "label": "Tiempo de Respuesta"
+    }
+  ],
+
+  "designPrinciples": [
+    {
+      "id": "creativity",
+      "icon": "Sparkles",
+      "title": "Creatividad",
+      "description": "Cada proyecto es una oportunidad para innovar",
+      "color": "from-purple-500 to-pink-500",
+      "bgColor": "bg-purple-500/10",
+      "value": 98
+    },
+    {
+      "id": "strategy",
+      "icon": "Brain",
+      "title": "Estrategia",
+      "description": "Diseño con propósito y objetivos claros",
+      "color": "from-blue-500 to-cyan-500",
+      "bgColor": "bg-blue-500/10",
+      "value": 95
+    },
+    {
+      "id": "execution",
+      "icon": "Zap",
+      "title": "Ejecución",
+      "description": "Perfección técnica en cada detalle",
+      "color": "from-orange-500 to-red-500",
+      "bgColor": "bg-orange-500/10",
+      "value": 92
+    },
+    {
+      "id": "innovation",
+      "icon": "Rocket",
+      "title": "Innovación",
+      "description": "Siempre un paso adelante de las tendencias",
+      "color": "from-green-500 to-emerald-500",
+      "bgColor": "bg-green-500/10",
+      "value": 90
+    }
+  ],
+
+  "workProcess": [
+    {
+      "step": "01",
+      "title": "Descubrir",
+      "description": "Investigo, analizo y entiendo cada detalle del desafío creativo.",
+      "icon": "Eye",
+      "color": "from-blue-400 to-blue-600"
+    },
+    {
+      "step": "02",
+      "title": "Conceptualizar",
+      "description": "Desarrollo múltiples conceptos y exploro direcciones creativas únicas.",
+      "icon": "Lightbulb",
+      "color": "from-yellow-400 to-orange-500"
+    },
+    {
+      "step": "03",
+      "title": "Diseñar",
+      "description": "Ejecuto la visión con precisión técnica y atención al detalle.",
+      "icon": "Palette",
+      "color": "from-purple-400 to-pink-500"
+    },
+    {
+      "step": "04",
+      "title": "Entregar",
+      "description": "Presento soluciones que superan expectativas y generan impacto.",
+      "icon": "Target",
+      "color": "from-green-400 to-emerald-500"
+    }
+  ],
+
+  "toolsArsenal": [
+    {
+      "name": "Figma",
+      "level": 95,
+      "category": "Design",
+      "experience": "Experto"
+    },
+    {
+      "name": "Adobe Creative Suite",
+      "level": 98,
+      "category": "Design",
+      "experience": "Experto"
+    },
+    {
+      "name": "After Effects",
+      "level": 88,
+      "category": "Motion",
+      "experience": "Avanzado"
+    },
+    {
+      "name": "Cinema 4D",
+      "level": 85,
+      "category": "3D",
+      "experience": "Avanzado"
+    },
+    {
+      "name": "React",
+      "level": 90,
+      "category": "Development",
+      "experience": "Experto"
+    },
+    {
+      "name": "Three.js",
+      "level": 80,
+      "category": "WebGL",
+      "experience": "Competente"
+    }
+  ],
+
+  "arsenalSummary": [
+    {
+      "number": "6+",
+      "label": "Herramientas\nDominadas"
+    },
+    {
+      "number": "5+",
+      "label": "Años de\nExperiencia"
+    },
+    {
+      "number": "90%",
+      "label": "Promedio de\nMaestría"
+    },
+    {
+      "number": "∞",
+      "label": "Ganas de\nAprender"
+    }
+  ],
+
+  "businessMetrics": [
+    {
+      "icon": "Trophy",
+      "title": "ROI Promedio",
+      "value": "280%",
+      "description": "Incremento en conversiones de clientes",
+      "color": "text-yellow-500",
+      "bgColor": "from-yellow-500/10 to-orange-500/20"
+    },
+    {
+      "icon": "Target",
+      "title": "Tiempo de Entrega",
+      "value": "15 días",
+      "description": "Promedio para proyectos completos",
+      "color": "text-blue-500",
+      "bgColor": "from-blue-500/10 to-cyan-500/20"
+    },
+    {
+      "icon": "Award",
+      "title": "Tasa de Retención",
+      "value": "94%",
+      "description": "Clientes que repiten proyectos",
+      "color": "text-green-500",
+      "bgColor": "from-green-500/10 to-emerald-500/20"
+    },
+    {
+      "icon": "Rocket",
+      "title": "Proyectos Escalados",
+      "value": "85%",
+      "description": "Expandieron después del primer proyecto",
+      "color": "text-purple-500",
+      "bgColor": "from-purple-500/10 to-pink-500/20"
+    }
+  ],
+
+  "floatingSkills": [
+    {
+      "position": {
+        "x": "-20px",
+        "y": "-20px"
+      },
+      "delay": 0,
+      "icon": "Layers",
+      "color": "bg-purple-500",
+      "skill": "UI/UX"
+    },
+    {
+      "position": {
+        "x": "-15px",
+        "y": "75%"
+      },
+      "delay": 1.5,
+      "icon": "Palette",
+      "color": "bg-pink-500",
+      "skill": "Branding"
+    },
+    {
+      "position": {
+        "x": "90%",
+        "y": "-15px"
+      },
+      "delay": 2.2,
+      "icon": "Monitor",
+      "color": "bg-blue-500",
+      "skill": "Web"
+    },
+    {
+      "position": {
+        "x": "85%",
+        "y": "65%"
+      },
+      "delay": 0.8,
+      "icon": "Sparkles",
+      "color": "bg-green-500",
+      "skill": "Creative"
+    }
+  ],
+
+  "ctaButtons": [
+    {
+      "type": "primary",
+      "text": "Conversemos sobre tu proyecto",
+      "icon": "Coffee",
+      "action": "contact"
+    },
+    {
+      "type": "secondary",
+      "text": "Ver mi trabajo",
+      "icon": "Eye",
+      "action": "portfolio"
+    }
+  ],
+
+  "finalCta": {
+    "title": "¿Listo para obtener resultados similares?",
+    "description": "Estas métricas representan el compromiso que tengo con cada proyecto: entregar valor real y resultados medibles que impulsen tu negocio.",
+    "buttonText": "Hablemos de tu proyecto",
+    "action": "contact"
+  }
+}

@@ -1,0 +1,228 @@
+[
+  {
+    "id": 1,
+    "title": "E-commerce Platform Redesign",
+    "category": "UI/UX Design",
+    "description": "Redesign completo de plataforma e-commerce con enfoque en conversión y experiencia de usuario.",
+    "image": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop&crop=entropy",
+    "year": "2024",
+    "client": "TechCommerce Inc.",
+    "services": ["UI/UX Design", "Prototyping", "User Research", "Visual Design"],
+    "layout": "wide",
+    "challenge": "La plataforma existente tenía una tasa de conversión del 1.2% y los usuarios abandonaban el carrito en un 78%. Era necesario rediseñar completamente la experiencia de compra.",
+    "solution": "Implementé un diseño centrado en el usuario, simplificando el proceso de checkout, mejorando la navegación y creando un sistema de diseño coherente que prioriza la conversión.",
+    "results": [
+      "Aumento de conversión del 185%",
+      "Reducción del abandono de carrito al 32%",
+      "Tiempo de carga mejorado en 40%",
+      "Incremento en ventas de $2.3M en 6 meses"
+    ],
+    "gallery": [
+      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop"
+    ],
+    "tools": ["Figma", "Adobe XD", "Principle", "InVision", "Hotjar", "Google Analytics"],
+    "process": [
+      {
+        "title": "Research & Discovery",
+        "description": "Análisis de usuarios, competencia y métricas actuales. Identificación de pain points principales."
+      },
+      {
+        "title": "Ideation & Wireframing",
+        "description": "Creación de wireframes de baja fidelidad y mapeo de flujos de usuario optimizados."
+      },
+      {
+        "title": "Visual Design",
+        "description": "Desarrollo del sistema de diseño, componentes y interfaces de alta fidelidad."
+      },
+      {
+        "title": "Prototyping & Testing",
+        "description": "Creación de prototipos interactivos y testing con usuarios reales para validar soluciones."
+      }
+    ],
+    "tags": ["E-commerce", "UX Research", "Conversion Optimization", "Responsive Design"],
+    "duration": "4 meses",
+    "team": ["1 UX Designer", "2 UI Designers", "1 Developer"],
+    "liveUrl": "https://example.com",
+    "githubUrl": "https://github.com/username/ecommerce-platform-redesign",
+    "behanceUrl": "https://behance.net/gallery/123456789/E-commerce-Platform-Redesign",
+    "featured": true
+  },
+  {
+    "id": 2,
+    "title": "Banking App Mobile Design",
+    "category": "Mobile Design",
+    "description": "Diseño de aplicación móvil para banca digital con enfoque en seguridad y usabilidad.",
+    "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop",
+    "year": "2024",
+    "client": "Digital Bank Corp.",
+    "services": ["Mobile Design", "UX Strategy", "Security UX", "Design System"],
+    "layout": "tall",
+    "challenge": "Los usuarios necesitaban una experiencia bancaria móvil segura pero intuitiva, balanceando altos estándares de seguridad con facilidad de uso.",
+    "solution": "Desarrollé una interfaz limpia con autenticación biométrica, navegación intuitiva y dashboards personalizables que simplifican operaciones complejas.",
+    "results": [
+      "95% de satisfacción de usuarios",
+      "Reducción de 60% en tiempo de transacciones",
+      "0 incidentes de seguridad reportados",
+      "4.8⭐ rating en App Store"
+    ],
+    "gallery": [
+      "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop"
+    ],
+    "tools": ["Figma", "Sketch", "Principle", "Zeplin", "Marvel"],
+    "process": [
+      {
+        "title": "User Journey Mapping",
+        "description": "Mapeo detallado de todos los touchpoints y momentos críticos en la experiencia bancaria."
+      },
+      {
+        "title": "Security UX Research",
+        "description": "Investigación específica sobre patrones de seguridad que no comprometan la usabilidad."
+      },
+      {
+        "title": "Iterative Design",
+        "description": "Múltiples iteraciones basadas en feedback de stakeholders y pruebas de seguridad."
+      }
+    ],
+    "tags": ["Mobile", "Fintech", "Security", "iOS", "Android"],
+    "duration": "6 meses",
+    "team": ["1 Lead Designer", "1 UX Researcher", "2 Developers"],
+    "githubUrl": "https://github.com/username/banking-app-mobile-design",
+    "behanceUrl": "https://behance.net/gallery/123456790/Banking-App-Mobile-Design",
+    "featured": true
+  },
+  {
+    "id": 3,
+    "title": "Brand Identity & Website",
+    "category": "Branding",
+    "description": "Identidad visual completa y desarrollo web para startup de tecnología sustentable.",
+    "image": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop",
+    "year": "2023",
+    "client": "GreenTech Solutions",
+    "services": ["Brand Strategy", "Logo Design", "Web Design", "Marketing Materials"],
+    "layout": "square",
+    "challenge": "Startup sin identidad definida necesitaba posicionarse como líder en tecnología sustentable con presencia digital profesional.",
+    "solution": "Creé una identidad visual moderna que comunica innovación y sostenibilidad, acompañada de un sitio web optimizado para conversión.",
+    "results": [
+      "Reconocimiento de marca aumentó 340%",
+      "Leads calificados incrementaron 280%",
+      "Inversión Series A de $5.2M",
+      "Premio al Mejor Diseño Sustentable 2024"
+    ],
+    "gallery": [
+      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop"
+    ],
+    "tools": ["Adobe Creative Suite", "Figma", "Webflow", "After Effects"],
+    "process": [
+      {
+        "title": "Brand Discovery",
+        "description": "Workshops con stakeholders para definir misión, visión y valores de la marca."
+      },
+      {
+        "title": "Visual Identity",
+        "description": "Desarrollo de logo, tipografía, paleta de colores y elementos gráficos distintivos."
+      },
+      {
+        "title": "Digital Implementation",
+        "description": "Aplicación de la identidad en plataformas digitales y materiales de marketing."
+      }
+    ],
+    "tags": ["Branding", "Startup", "Sustainable Tech", "Web Design"],
+    "duration": "3 meses",
+    "team": ["1 Brand Designer", "1 Web Designer", "1 Copywriter"],
+    "liveUrl": "https://example.com",
+    "githubUrl": "https://github.com/username/greentech-brand-website",
+    "behanceUrl": "https://behance.net/gallery/123456791/Brand-Identity-Website-GreenTech",
+    "featured": false
+  },
+  {
+    "id": 4,
+    "title": "Dashboard Analytics Platform",
+    "category": "Product Design",
+    "description": "Diseño de plataforma de analytics empresarial con visualizaciones de datos complejas.",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+    "year": "2024",
+    "client": "DataViz Enterprise",
+    "services": ["Product Design", "Data Visualization", "UX Research", "Prototyping"],
+    "layout": "wide",
+    "challenge": "Los usuarios necesitaban interpretar grandes volúmenes de datos complejos de manera rápida y tomar decisiones informadas.",
+    "solution": "Diseñé una interfaz intuitiva con visualizaciones interactivas, filtros inteligentes y dashboards personalizables que simplifican el análisis de datos.",
+    "results": [
+      "Tiempo de análisis reducido en 70%",
+      "Adopción de usuarios del 94%",
+      "Decisiones basadas en datos aumentaron 150%",
+      "ROI del producto incrementó 320%"
+    ],
+    "gallery": [
+      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop"
+    ],
+    "tools": ["Figma", "D3.js", "Tableau", "Adobe Creative Suite"],
+    "process": [
+      {
+        "title": "Data Understanding",
+        "description": "Análisis profundo de tipos de datos, patrones de uso y necesidades de visualización."
+      },
+      {
+        "title": "Information Architecture",
+        "description": "Estructuración de información compleja en jerarquías comprensibles y navegables."
+      },
+      {
+        "title": "Visual Design System",
+        "description": "Desarrollo de sistema de visualizaciones consistente y escalable."
+      }
+    ],
+    "tags": ["Data Visualization", "Enterprise", "SaaS", "Analytics"],
+    "duration": "5 meses",
+    "team": ["1 Product Designer", "1 Data Scientist", "3 Frontend Developers"],
+    "githubUrl": "https://github.com/username/dashboard-analytics-platform",
+    "behanceUrl": "https://behance.net/gallery/123456792/Dashboard-Analytics-Platform",
+    "featured": true
+  },
+  {
+    "id": 5,
+    "title": "E-learning Platform Design",
+    "category": "EdTech",
+    "description": "Plataforma educativa online con gamificación y seguimiento de progreso personalizado.",
+    "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop",
+    "year": "2023",
+    "client": "EduTech Innovations",
+    "services": ["UX/UI Design", "Gamification", "Learning Experience", "Mobile Design"],
+    "layout": "tall",
+    "challenge": "Los estudiantes online tenían baja retención (35%) y engagement limitado con el contenido educativo tradicional.",
+    "solution": "Implementé elementos de gamificación, progreso visual claro y experiencias de aprendizaje adaptativas que mantienen a los usuarios comprometidos.",
+    "results": [
+      "Retención estudiantil aumentó al 78%",
+      "Tiempo promedio en plataforma +150%",
+      "Completion rate de cursos del 85%",
+      "NPS score de 8.7/10"
+    ],
+    "gallery": [
+      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop",
+      "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&h=600&fit=crop"
+    ],
+    "tools": ["Figma", "Adobe XD", "Lottie", "Principle"],
+    "process": [
+      {
+        "title": "Learning Science Research",
+        "description": "Investigación sobre mejores prácticas en educación online y psicología del aprendizaje."
+      },
+      {
+        "title": "Gamification Strategy",
+        "description": "Diseño de sistema de recompensas, badges y progresión que motiva el aprendizaje."
+      }
+    ],
+    "tags": ["EdTech", "Gamification", "Mobile Learning", "UX Research"],
+    "duration": "4 meses",
+    "team": ["1 UX Designer", "1 Learning Designer", "2 Developers"],
+    "githubUrl": "https://github.com/username/elearning-platform-design",
+    "behanceUrl": "https://behance.net/gallery/123456793/E-learning-Platform-Design",
+    "featured": false
+  }
+]
