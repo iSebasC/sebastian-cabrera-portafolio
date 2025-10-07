@@ -104,6 +104,7 @@ export function ContactSection() {
         // Crear FormData con los valores del estado
         const netlifyFormData = new FormData();
         netlifyFormData.append('form-name', 'contact');
+        netlifyFormData.append('bot-field', ''); // Campo honeypot vacío
         netlifyFormData.append('name', formData.name);
         netlifyFormData.append('email', formData.email);
         netlifyFormData.append('subject', formData.subject);
@@ -292,6 +293,8 @@ export function ContactSection() {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
+              {/* Campo honeypot oculto para Netlify */}
+              <input type="text" name="bot-field" style={{ display: 'none' }} />
               <div className="grid sm:grid-cols-2 gap-6">
                 {/* Name Field */}
                 <motion.div 
