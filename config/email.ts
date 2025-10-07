@@ -5,9 +5,26 @@ export const EMAILJS_CONFIG = {
   publicKey: 'TU_PUBLIC_KEY', // Se configurará en EmailJS
 };
 
-// Función para detectar si estamos en producción
+// Función mejorada para detectar si estamos en producción
 export const isProduction = () => {
-  return window.location.hostname !== 'localhost' && 
-         window.location.hostname !== '127.0.0.1' && 
-         window.location.hostname !== '';
+  // Detectar Netlify específicamente
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+    
+    // Dominios de producción
+    const productionDomains = [
+      'sebastiancabreraalcala.com',
+      'sebastiancabreraalcala.netlify.app'
+    ];
+    
+    // Verificar si estamos en un dominio de producción o en Netlify
+    return productionDomains.some(domain => hostname.includes(domain)) ||
+           hostname.includes('.netlify.app') ||
+           (hostname !== 'localhost' && 
+            hostname !== '127.0.0.1' && 
+            hostname !== '' && 
+            !hostname.includes('localhost'));
+  }
+  
+  return false;
 };

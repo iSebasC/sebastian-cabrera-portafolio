@@ -4,8 +4,7 @@ import { Send, Mail, Phone, MapPin, MessageCircle, CheckCircle } from 'lucide-re
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
-import emailjs from '@emailjs/browser';
-import { EMAILJS_CONFIG, isProduction } from '../config/email';
+import { isProduction } from '../config/email';
 
 const contactInfo = [
   {
@@ -38,22 +37,76 @@ export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
+
+  // Función de validación
+  const validateForm = () => {
+    const newErrors: {[key: string]: string} = {};
+    
+    if (!formData.name.trim()) {
+      newErrors.name = 'El nombre es requerido';
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = 'El nombre debe tener al menos 2 caracteres';
+    }
+    
+    if (!formData.email.trim()) {
+      newErrors.email = 'El email es requerido';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Por favor ingresa un email válido';
+    }
+    
+    if (!formData.subject.trim()) {
+      newErrors.subject = 'El asunto es requerido';
+    } else if (formData.subject.trim().length < 3) {
+      newErrors.subject = 'El asunto debe tener al menos 3 caracteres';
+    }
+    
+    if (!formData.message.trim()) {
+      newErrors.message = 'El mensaje es requerido';
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = 'El mensaje debe tener al menos 10 caracteres';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
+    
+    // Limpiar error del campo cuando el usuario empiece a escribir
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: ''
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validar formulario antes de enviar
+    if (!validateForm()) {
+      return;
+    }
+    
     setIsSubmitting(true);
     
     try {
       if (isProduction()) {
+        console.log('🌐 Enviando formulario vía Netlify Forms en producción');
+        
         // En producción: usar Netlify Forms
-        const formData = new FormData(e.target as HTMLFormElement);
+        const form = e.target as HTMLFormElement;
+        const formData = new FormData(form);
+        
+        // Agregar el atributo form-name requerido por Netlify
+        formData.append('form-name', 'contact');
         
         const response = await fetch('/', {
           method: 'POST',
@@ -61,26 +114,30 @@ export function ContactSection() {
           body: new URLSearchParams(formData as any).toString()
         });
         
-        if (!response.ok) throw new Error('Error en Netlify Forms');
-      } else {
-        // En desarrollo: usar EmailJS
-        const templateParams = {
-          from_name: formData.name,
-          from_email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-          to_name: 'Sebastian',
-        };
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
         
-        await emailjs.send(
-          EMAILJS_CONFIG.serviceId,
-          EMAILJS_CONFIG.templateId,
-          templateParams,
-          EMAILJS_CONFIG.publicKey
-        );
+        console.log('✅ Formulario enviado exitosamente vía Netlify');
+        
+      } else {
+        console.log('🧪 Modo desarrollo - simulando envío');
+        
+        // En desarrollo: simular envío y mostrar en consola
+        console.log('📧 Datos del formulario (modo desarrollo):', {
+          nombre: formData.name,
+          email: formData.email,
+          asunto: formData.subject,
+          mensaje: formData.message,
+          timestamp: new Date().toISOString()
+        });
+        
+        // Simular delay de red
+        await new Promise(resolve => setTimeout(resolve, 1000));
       }
       
       setIsSubmitted(true);
+      
       // Reset form after 3 seconds
       setTimeout(() => {
         setIsSubmitted(false);
@@ -88,23 +145,23 @@ export function ContactSection() {
       }, 3000);
       
     } catch (error) {
-      console.error('Error:', error);
+      console.error('❌ Error al enviar formulario:', error);
       
-      // En caso de error, simular envío para demo
-      console.log('📧 Simulando envío para demo:', {
-        nombre: formData.name,
-        email: formData.email,
-        asunto: formData.subject,
-        mensaje: formData.message
-      });
+      // Mostrar error específico al usuario
+      const errorMessage = isProduction() 
+        ? 'Error al enviar el mensaje. Por favor, intenta nuevamente o contáctame directamente.'
+        : 'Formulario en modo desarrollo. Los datos se muestran en consola.';
+        
+      alert(errorMessage);
       
-      alert('⚠️ Formulario en modo demo. Los datos se muestran en consola. En producción enviará correos reales.');
-      
-      setIsSubmitted(true);
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      }, 3000);
+      // En desarrollo, seguir mostrando como exitoso para demo
+      if (!isProduction()) {
+        setIsSubmitted(true);
+        setTimeout(() => {
+          setIsSubmitted(false);
+          setFormData({ name: '', email: '', subject: '', message: '' });
+        }, 3000);
+      }
       
     } finally {
       setIsSubmitting(false);
@@ -264,13 +321,26 @@ export function ContactSection() {
                       onFocus={() => setFocusedField('name')}
                       onBlur={() => setFocusedField(null)}
                       required
-                      className="h-14 pl-4 pr-12 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl focus:border-primary/50 hover:border-primary/30"
+                      className={`h-14 pl-4 pr-12 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl hover:border-primary/30 ${
+                        errors.name 
+                          ? 'border-red-500 focus:border-red-500' 
+                          : 'focus:border-primary/50'
+                      }`}
                       placeholder="Tu nombre"
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 text-primary/60 flex items-center justify-center w-6 h-6">
                       <span className="text-lg leading-none">✨</span>
                     </div>
                   </div>
+                  {errors.name && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red-500 text-sm mt-1"
+                    >
+                      {errors.name}
+                    </motion.p>
+                  )}
                 </motion.div>
                 
                 {/* Email Field */}
@@ -298,13 +368,26 @@ export function ContactSection() {
                       onFocus={() => setFocusedField('email')}
                       onBlur={() => setFocusedField(null)}
                       required
-                      className="h-14 pl-4 pr-12 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl focus:border-primary/50 hover:border-primary/30"
+                      className={`h-14 pl-4 pr-12 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl hover:border-primary/30 ${
+                        errors.email 
+                          ? 'border-red-500 focus:border-red-500' 
+                          : 'focus:border-primary/50'
+                      }`}
                       placeholder="tu@email.com"
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 text-primary/60 flex items-center justify-center w-6 h-6">
                       <span className="text-lg leading-none">💌</span>
                     </div>
                   </div>
+                  {errors.email && (
+                    <motion.p 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red-500 text-sm mt-1"
+                    >
+                      {errors.email}
+                    </motion.p>
+                  )}
                 </motion.div>
               </div>
 
@@ -332,13 +415,26 @@ export function ContactSection() {
                     onFocus={() => setFocusedField('subject')}
                     onBlur={() => setFocusedField(null)}
                     required
-                    className="h-14 pl-4 pr-12 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl focus:border-primary/50 hover:border-primary/30"
+                    className={`h-14 pl-4 pr-12 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl hover:border-primary/30 ${
+                      errors.subject 
+                        ? 'border-red-500 focus:border-red-500' 
+                        : 'focus:border-primary/50'
+                    }`}
                     placeholder="Proyecto web, branding, ilustración..."
                   />
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 text-primary/60 flex items-center justify-center w-6 h-6">
                     <span className="text-lg leading-none">🚀</span>
                   </div>
                 </div>
+                {errors.subject && (
+                  <motion.p 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-red-500 text-sm mt-1"
+                  >
+                    {errors.subject}
+                  </motion.p>
+                )}
               </motion.div>
 
               {/* Message Field */}
@@ -367,12 +463,25 @@ export function ContactSection() {
                     required
                     rows={6}
                     placeholder="Describe tu proyecto, objetivos, plazos, presupuesto estimado... ¡Todo lo que consideres importante!"
-                    className="pl-4 pr-4 pt-4 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl focus:border-primary/50 hover:border-primary/30 resize-none"
+                    className={`pl-4 pr-4 pt-4 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl hover:border-primary/30 resize-none ${
+                      errors.message 
+                        ? 'border-red-500 focus:border-red-500' 
+                        : 'focus:border-primary/50'
+                    }`}
                   />
                   <div className="absolute right-4 top-4 text-primary/60 flex items-center justify-center w-6 h-6">
                     <span className="text-lg leading-none">✍️</span>
                   </div>
                 </div>
+                {errors.message && (
+                  <motion.p 
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-red-500 text-sm mt-1"
+                  >
+                    {errors.message}
+                  </motion.p>
+                )}
               </motion.div>
 
               {/* Enhanced Submit Button */}
