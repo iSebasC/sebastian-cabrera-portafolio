@@ -101,17 +101,18 @@ export function ContactSection() {
       if (isProduction()) {
         console.log('🌐 Enviando formulario vía Netlify Forms en producción');
         
-        // En producción: usar Netlify Forms
-        const form = e.target as HTMLFormElement;
-        const formData = new FormData(form);
-        
-        // Agregar el atributo form-name requerido por Netlify
-        formData.append('form-name', 'contact');
+        // Crear FormData con los valores del estado
+        const netlifyFormData = new FormData();
+        netlifyFormData.append('form-name', 'contact');
+        netlifyFormData.append('name', formData.name);
+        netlifyFormData.append('email', formData.email);
+        netlifyFormData.append('subject', formData.subject);
+        netlifyFormData.append('message', formData.message);
         
         const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(formData as any).toString()
+          body: new URLSearchParams(netlifyFormData as any).toString()
         });
         
         if (!response.ok) {
@@ -286,16 +287,11 @@ export function ContactSection() {
 
             <motion.form
               onSubmit={handleSubmit}
-              name="contact"
-              data-netlify="true"
-              data-netlify-honeypot="bot-field"
               className="space-y-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
             >
-              {/* Campo oculto para Netlify */}
-              <input type="hidden" name="form-name" value="contact" />
               <div className="grid sm:grid-cols-2 gap-6">
                 {/* Name Field */}
                 <motion.div 
