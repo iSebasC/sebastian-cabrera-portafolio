@@ -72,7 +72,7 @@ export function App() {
       metaDescription.setAttribute('content', descriptions[portfolioMode]);
     }
 
-    // Update meta robots - noindex for freelance mode
+    // Update meta robots - index for freelance mode (public), noindex for employee mode (private)
     let metaRobots = document.querySelector('meta[name="robots"]');
     if (!metaRobots) {
       metaRobots = document.createElement('meta');
@@ -81,9 +81,9 @@ export function App() {
     }
     
     if (portfolioMode === 'freelance') {
-      metaRobots.setAttribute('content', 'noindex, nofollow');
-    } else {
       metaRobots.setAttribute('content', 'index, follow');
+    } else {
+      metaRobots.setAttribute('content', 'noindex, nofollow');
     }
   }, [portfolioMode]);
 
