@@ -6,7 +6,11 @@ import { Quote, Star, ChevronLeft, ChevronRight, Users, Loader2, AlertCircle, Re
 import { useTestimonials } from '../hooks/useTestimonials';
 import { TestimonialAvatar } from './TestimonialAvatar';
 
-export function TestimonialsSection() {
+interface TestimonialsSectionProps {
+  portfolioMode?: 'employee' | 'freelance';
+}
+
+export function TestimonialsSection({ portfolioMode = 'freelance' }: TestimonialsSectionProps) {
   const { data: testimonials, loading, error, refetch } = useTestimonials();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -314,13 +318,14 @@ export function TestimonialsSection() {
           </div>
         </div>
 
-        {/* Client Success Stories Summary */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-20"
-        >
+        {/* Client Success Stories Summary - Solo en modo freelance */}
+        {portfolioMode === 'freelance' && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-20"
+          >
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/5 via-accent/10 to-primary/5 border border-border/50 backdrop-blur-sm p-8 lg:p-12">
             {/* Background Animation */}
             <motion.div
@@ -440,6 +445,7 @@ export function TestimonialsSection() {
             </div>
           </div>
         </motion.div>
+        )}
       </div>
     </section>
   );

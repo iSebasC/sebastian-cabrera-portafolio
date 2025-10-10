@@ -9,6 +9,7 @@ import { ImageWithFallback } from './figma/ImageWithFallback';
 
 interface AboutSectionProps {
   setActiveSection?: (section: string) => void;
+  portfolioMode?: 'employee' | 'freelance';
 }
 
 const designPrinciples = [
@@ -130,7 +131,7 @@ const workProcess = [
   }
 ];
 
-export function AboutSection({ setActiveSection }: AboutSectionProps) {
+export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: AboutSectionProps) {
   const [selectedPrinciple, setSelectedPrinciple] = useState('creativity');
   const [hoveredTool, setHoveredTool] = useState<string | null>(null);
 
@@ -280,10 +281,13 @@ export function AboutSection({ setActiveSection }: AboutSectionProps) {
                   viewport={{ once: true }}
                   className="mb-8"
                 >
-                  <div className="inline-flex items-center gap-3 px-4 py-2 bg-primary/10 rounded-full border border-primary/20 mb-6">
-                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                    <span className="text-sm font-medium">Disponible para nuevos proyectos</span>
-                  </div>
+                  {/* Availability badge - only in freelance mode */}
+                  {portfolioMode === 'freelance' && (
+                    <div className="inline-flex items-center gap-3 px-4 py-2 bg-primary/10 rounded-full border border-primary/20 mb-6">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                      <span className="text-sm font-medium">Disponible para nuevos proyectos</span>
+                    </div>
+                  )}
                   
                   <h3 className="text-3xl lg:text-4xl font-bold mb-4">
                     Hola, soy <span className="bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">Sebastian</span>
@@ -316,7 +320,7 @@ export function AboutSection({ setActiveSection }: AboutSectionProps) {
                   >
                     <div className="flex items-center gap-2">
                       <Coffee className="w-4 h-4" />
-                      Conversemos sobre tu proyecto
+                      {portfolioMode === 'freelance' ? 'Conversemos sobre tu proyecto' : 'Contáctame'}
                     </div>
                   </motion.button>
                   
@@ -366,7 +370,7 @@ export function AboutSection({ setActiveSection }: AboutSectionProps) {
                 <ImageWithFallback
                   src="/img/profile_sebastian.jpg"
                   alt="Sebastian - Diseñador Gráfico"
-                  className="w-full h-[600px] object-cover object-center"
+                  className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover object-center"
                 />
                 
                 {/* Professional Badge Overlay */}
@@ -375,16 +379,16 @@ export function AboutSection({ setActiveSection }: AboutSectionProps) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.5 }}
-                  className="absolute bottom-6 left-6 right-6"
+                  className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6"
                 >
-                  <div className="bg-white/95 backdrop-blur-md rounded-2xl p-6 border border-white/50 shadow-xl">
+                  <div className="bg-white/95 backdrop-blur-md rounded-2xl p-4 sm:p-6 border border-white/50 shadow-xl">
                     <div className="flex items-center gap-4">
                       <motion.div
                         animate={{ rotate: [0, 10, -10, 0] }}
                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0"
+                        className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0"
                       >
-                        <Sparkles className="w-8 h-8 text-white" />
+                        <Sparkles className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                       </motion.div>
                       
                       <div className="flex-1">
@@ -414,38 +418,6 @@ export function AboutSection({ setActiveSection }: AboutSectionProps) {
 
                 <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/20 via-transparent to-blue-500/20" />
               </motion.div>
-
-              {/* Floating Skill Badges */}
-              {[
-                { x: -20, y: -20, delay: 0, icon: Layers, color: 'bg-purple-500', skill: 'UI/UX' },
-                { x: -15, y: '75%', delay: 1.5, icon: Palette, color: 'bg-pink-500', skill: 'Branding' },
-                { x: '90%', y: -15, delay: 2.2, icon: Monitor, color: 'bg-blue-500', skill: 'Web' },
-                { x: '85%', y: '65%', delay: 0.8, icon: Sparkles, color: 'bg-green-500', skill: 'Creative' }
-              ].map((element, index) => (
-                <motion.div
-                  key={index}
-                  animate={{ 
-                    y: [0, -20, 0],
-                    rotate: [0, 15, -5, 0],
-                    scale: [1, 1.15, 1]
-                  }}
-                  transition={{ 
-                    duration: 5,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                    delay: element.delay
-                  }}
-                  className="absolute"
-                  style={{ left: element.x, top: element.y }}
-                >
-                  <div className={`${element.color} rounded-2xl px-4 py-2 shadow-xl backdrop-blur-sm border border-white/30 group cursor-pointer`}>
-                    <div className="flex items-center gap-2">
-                      <element.icon className="w-4 h-4 text-white" />
-                      <span className="text-white text-sm font-bold">{element.skill}</span>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
             </div>
           </motion.div>
 
@@ -674,13 +646,14 @@ export function AboutSection({ setActiveSection }: AboutSectionProps) {
           </div>
         </motion.div>
 
-        {/* Business Impact Metrics */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center"
-        >
+        {/* Business Impact Metrics - Only show in freelance mode */}
+        {portfolioMode === 'freelance' && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
           <div className="mb-12">
             <h3 className="text-2xl lg:text-3xl font-bold mb-4">Impacto Empresarial Comprobado</h3>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -797,6 +770,7 @@ export function AboutSection({ setActiveSection }: AboutSectionProps) {
             </motion.button>
           </motion.div>
         </motion.div>
+        )}
       </div>
     </section>
   );

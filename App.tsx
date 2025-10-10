@@ -6,15 +6,17 @@ import { TestimonialsSection } from './components/TestimonialsSection';
 import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { ProjectDetail } from './components/ProjectDetail';
+import { QuotePage } from './components/QuotePage';
 import { getAllProjects } from './services/sanityService';
 import type { Project } from './types/sanity';
 
 export function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [isDark, setIsDark] = useState(false);
-  const [currentView, setCurrentView] = useState<'portfolio' | 'project'>('portfolio');
+  const [currentView, setCurrentView] = useState<'portfolio' | 'project' | 'quote'>('portfolio');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
+  const [portfolioMode, setPortfolioMode] = useState<'employee' | 'freelance'>('freelance');
 
   // Load projects from Sanity
   useEffect(() => {
@@ -41,6 +43,55 @@ export function App() {
       document.documentElement.classList.add('dark');
     }
   }, []);
+
+  // Portfolio mode management
+  useEffect(() => {
+    const savedMode = localStorage.getItem('portfolioMode');
+    if (savedMode === 'freelance' || savedMode === 'employee') {
+      setPortfolioMode(savedMode);
+    }
+  }, []);
+
+  // Update document title based on portfolio mode
+  useEffect(() => {
+    const titles = {
+      employee: 'Portfolio Sebastian - Desarrollador Web FullStack',
+      freelance: 'Sebastian Cabrera - Servicios de Desarrollo Web Freelance'
+    };
+    
+    const descriptions = {
+      employee: 'Portfolio de Sebastian - Desarrollador web FullStack especializado en la creación de experiencias digitales innovadoras.',
+      freelance: 'Servicios profesionales de desarrollo web freelance - Cotiza tu proyecto web con Sebastian Cabrera.'
+    };
+
+    document.title = titles[portfolioMode];
+    
+    // Update meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', descriptions[portfolioMode]);
+    }
+
+    // Update meta robots - noindex for freelance mode
+    let metaRobots = document.querySelector('meta[name="robots"]');
+    if (!metaRobots) {
+      metaRobots = document.createElement('meta');
+      metaRobots.setAttribute('name', 'robots');
+      document.head.appendChild(metaRobots);
+    }
+    
+    if (portfolioMode === 'freelance') {
+      metaRobots.setAttribute('content', 'noindex, nofollow');
+    } else {
+      metaRobots.setAttribute('content', 'index, follow');
+    }
+  }, [portfolioMode]);
+
+  const togglePortfolioMode = () => {
+    const newMode = portfolioMode === 'employee' ? 'freelance' : 'employee';
+    setPortfolioMode(newMode);
+    localStorage.setItem('portfolioMode', newMode);
+  };
 
   const toggleTheme = () => {
     setIsDark(!isDark);
@@ -107,6 +158,31 @@ export function App() {
     setActiveSection('projects');
   };
 
+  // Handle quote page navigation
+  const handleQuoteNavigation = () => {
+    setCurrentView('quote');
+    setActiveSection('quote');
+  };
+
+  // Handle back from quote to portfolio
+  const handleBackFromQuote = () => {
+    setCurrentView('portfolio');
+    setActiveSection('home');
+  };
+
+  // Handle contact navigation from quote page
+  const handleContactFromQuote = (serviceId?: string, specialty?: string, calculatedPrice?: number) => {
+    setCurrentView('portfolio');
+    setActiveSection('contact');
+    setTimeout(() => {
+      scrollToSection('contact');
+      // Aquí puedes agregar lógica para precargar datos del formulario si es necesario
+      if (serviceId || specialty || calculatedPrice) {
+        console.log('Contact with quote data:', { serviceId, specialty, calculatedPrice });
+      }
+    }, 100);
+  };
+
   // Handle contact navigation
   const handleContactNavigation = () => {
     if (currentView === 'project') {
@@ -132,6 +208,18 @@ export function App() {
     );
   }
 
+  // Show quote page view
+  if (currentView === 'quote') {
+    return (
+      <QuotePage 
+        onNavigateToContact={handleContactFromQuote}
+        onBack={handleBackFromQuote}
+        isDark={isDark}
+        toggleTheme={toggleTheme}
+      />
+    );
+  }
+
   // Show main portfolio view
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -140,29 +228,32 @@ export function App() {
         setActiveSection={setActiveSection}
         isDark={isDark}
         toggleTheme={toggleTheme}
+        onQuoteClick={handleQuoteNavigation}
+        portfolioMode={portfolioMode}
+        togglePortfolioMode={togglePortfolioMode}
       />
       
       <main>
         <section id="home">
-          <HeroSection setActiveSection={setActiveSection} />
+          <HeroSection setActiveSection={setActiveSection} portfolioMode={portfolioMode} />
         </section>
 
         <section id="about">
-          <AboutSection setActiveSection={setActiveSection} />
+          <AboutSection setActiveSection={setActiveSection} portfolioMode={portfolioMode} />
         </section>
 
                 
         <section id="projects">
-          <ProjectsSection onProjectSelect={handleProjectSelect} />
+          <ProjectsSection onProjectSelect={handleProjectSelect} portfolioMode={portfolioMode} />
         </section>
         
         
         <section id="testimonials">
-          <TestimonialsSection />
+          <TestimonialsSection portfolioMode={portfolioMode} />
         </section>
         
         <section id="contact">
-          <ContactSection />
+          <ContactSection portfolioMode={portfolioMode} />
         </section>
       </main>
 

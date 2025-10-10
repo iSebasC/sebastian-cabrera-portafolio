@@ -3,9 +3,10 @@ import { ArrowDown, Sparkles, Star, Zap, Target } from 'lucide-react';
 
 interface HeroSectionProps {
   setActiveSection: (section: string) => void;
+  portfolioMode?: 'employee' | 'freelance';
 }
 
-export function HeroSection({ setActiveSection }: HeroSectionProps) {
+export function HeroSection({ setActiveSection, portfolioMode = 'freelance' }: HeroSectionProps) {
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -96,7 +97,7 @@ export function HeroSection({ setActiveSection }: HeroSectionProps) {
               <span className="text-primary font-medium"> resultados extraordinarios</span>.
             </motion.p>
 
-            <motion.div 
+            <motion.div
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4"
             >
@@ -115,17 +116,16 @@ export function HeroSection({ setActiveSection }: HeroSectionProps) {
                 </motion.div>
               </motion.button>
               
+              {/* Contact button - text changes based on mode */}
               <motion.button
                 onClick={() => setActiveSection('contact')}
                 className="px-6 sm:px-8 py-3 sm:py-4 border border-border hover:bg-accent transition-all duration-300 rounded-2xl font-medium text-sm sm:text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Hablemos
+                {portfolioMode === 'freelance' ? 'Conversemos sobre tu proyecto' : 'Contáctame'}
               </motion.button>
-            </motion.div>
-
-            {/* Value Proposition - Clean */}
+            </motion.div>            {/* Value Proposition - Clean */}
             <motion.div 
               variants={itemVariants}
               className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8"

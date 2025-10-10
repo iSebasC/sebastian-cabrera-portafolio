@@ -7,9 +7,12 @@ interface NavigationProps {
   setActiveSection: (section: string) => void;
   isDark: boolean;
   toggleTheme: () => void;
+  onQuoteClick?: () => void;
+  portfolioMode?: 'employee' | 'freelance';
+  togglePortfolioMode?: () => void;
 }
 
-export function Navigation({ activeSection, setActiveSection, isDark, toggleTheme }: NavigationProps) {
+export function Navigation({ activeSection, setActiveSection, isDark, toggleTheme, onQuoteClick, portfolioMode = 'freelance', togglePortfolioMode }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -18,6 +21,7 @@ export function Navigation({ activeSection, setActiveSection, isDark, toggleThem
     { id: 'home', label: 'Inicio' },
     { id: 'about', label: 'Sobre Mí' },
     { id: 'projects', label: 'Proyectos' },
+    ...(portfolioMode === 'freelance' ? [{ id: 'quote', label: 'Cotizar' }] : []),
     { id: 'testimonials', label: 'Testimonios' },
     { id: 'contact', label: 'Contacto' }
   ];
@@ -44,6 +48,12 @@ export function Navigation({ activeSection, setActiveSection, isDark, toggleThem
   }, []);
 
   const handleSectionClick = (sectionId: string) => {
+    // Si es la sección de cotización, usar la función especial
+    if (sectionId === 'quote' && onQuoteClick) {
+      onQuoteClick();
+      return;
+    }
+    
     setActiveSection(sectionId);
     
     // Hacer scroll suave a la sección
@@ -130,8 +140,38 @@ export function Navigation({ activeSection, setActiveSection, isDark, toggleThem
               ))}
             </div>
 
-            {/* Theme Toggle & Mobile Menu */}
+            {/* Portfolio Mode Toggle, Theme Toggle & Mobile Menu */}
             <div className="flex items-center gap-2">
+              {/* Portfolio Mode Toggle */}
+              {togglePortfolioMode && (
+                <motion.div
+                  className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-accent/20 rounded-lg"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <span className={`text-xs transition-colors ${portfolioMode === 'employee' ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
+                    Dev
+                  </span>
+                  <motion.button
+                    onClick={togglePortfolioMode}
+                    className={`w-10 h-5 rounded-full p-0.5 transition-colors ${
+                      portfolioMode === 'freelance' ? 'bg-primary' : 'bg-muted'
+                    }`}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <motion.div
+                      className="w-4 h-4 bg-white rounded-full shadow-sm"
+                      animate={{
+                        x: portfolioMode === 'freelance' ? 20 : 0
+                      }}
+                      transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    />
+                  </motion.button>
+                  <span className={`text-xs transition-colors ${portfolioMode === 'freelance' ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
+                    Freelance
+                  </span>
+                </motion.div>
+              )}
+              
               <motion.button
                 onClick={toggleTheme}
                 className="p-2 rounded-lg hover:bg-accent transition-colors"
@@ -190,6 +230,41 @@ export function Navigation({ activeSection, setActiveSection, isDark, toggleThem
                   {section.label}
                 </motion.button>
               ))}
+              
+              {/* Portfolio Mode Toggle for Mobile */}
+              {togglePortfolioMode && (
+                <div className="mt-4 pt-4 border-t border-border">
+                  <div className="px-4 py-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-medium text-muted-foreground">Modo Portfolio</span>
+                      <div className="flex items-center gap-2">
+                        <span className={`text-xs ${portfolioMode === 'employee' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}>
+                          Dev
+                        </span>
+                        <motion.button
+                          onClick={togglePortfolioMode}
+                          className={`relative w-12 h-6 rounded-full transition-colors duration-300 ${
+                            portfolioMode === 'freelance' ? 'bg-primary' : 'bg-muted'
+                          }`}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <motion.div
+                            initial={false}
+                            animate={{
+                              x: portfolioMode === 'freelance' ? 24 : 2
+                            }}
+                            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                            className="absolute top-1 w-4 h-4 bg-white rounded-full shadow-md"
+                          />
+                        </motion.button>
+                        <span className={`text-xs ${portfolioMode === 'freelance' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}>
+                          Freelance
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </motion.div>

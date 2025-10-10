@@ -27,7 +27,11 @@ const contactInfo = [
   }
 ];
 
-export function ContactSection() {
+interface ContactSectionProps {
+  portfolioMode?: 'employee' | 'freelance';
+}
+
+export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -260,8 +264,10 @@ export function ContactSection() {
             transition={{ delay: 0.4 }}
             className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
           >
-            Cada gran proyecto comienza con una conversación. Cuéntame tu visión 
-            y transformémosla en una experiencia visual extraordinaria.
+            {portfolioMode === 'employee' 
+              ? 'Estoy abierto a nuevas oportunidades profesionales. Si tienes una propuesta interesante, me encantaría conocer más detalles.'
+              : 'Cada gran proyecto comienza con una conversación. Cuéntame tu visión y transformémosla en una experiencia visual extraordinaria.'
+            }
           </motion.p>
         </motion.div>
 
@@ -278,11 +284,23 @@ export function ContactSection() {
                 className="text-3xl font-bold"
                 whileHover={{ scale: 1.02 }}
               >
-                Comencemos una 
-                <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"> Conversación</span>
+                {portfolioMode === 'employee' ? (
+                  <>
+                    Hablemos sobre{' '}
+                    <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Oportunidades</span>
+                  </>
+                ) : (
+                  <>
+                    Comencemos una{' '}
+                    <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Conversación</span>
+                  </>
+                )}
               </motion.h3>
               <p className="text-muted-foreground text-lg">
-                Cada detalle cuenta. Mientras más me cuentes, mejor podré ayudarte.
+                {portfolioMode === 'employee' 
+                  ? 'Estoy interesado en nuevas oportunidades profesionales. Cuéntame sobre el rol y tu empresa.'
+                  : 'Cada detalle cuenta. Mientras más me cuentes, mejor podré ayudarte.'
+                }
               </p>
             </div>
 
@@ -593,9 +611,14 @@ export function ContactSection() {
               className="relative p-8 bg-gradient-to-br from-primary/10 to-accent/20 rounded-3xl border border-border/50 overflow-hidden"
             >
               <div className="relative z-10">
-                <h4 className="text-xl font-bold mb-2">¡Trabajemos Juntos!</h4>
+                <h4 className="text-xl font-bold mb-2">
+                  {portfolioMode === 'employee' ? '¡Conversemos!' : '¡Trabajemos Juntos!'}
+                </h4>
                 <p className="text-muted-foreground text-sm">
-                  Estoy disponible para proyectos freelance y colaboraciones a tiempo completo.
+                  {portfolioMode === 'employee' 
+                    ? 'Estoy disponible para nuevas oportunidades profesionales y colaboraciones.'
+                    : 'Estoy disponible para proyectos freelance y colaboraciones a tiempo completo.'
+                  }
                 </p>
               </div>
               

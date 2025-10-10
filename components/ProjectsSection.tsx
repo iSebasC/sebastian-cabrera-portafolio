@@ -7,9 +7,10 @@ import { Project } from '../types/sanity';
 
 interface ProjectsSectionProps {
   onProjectSelect?: (projectId: string) => void;
+  portfolioMode?: 'employee' | 'freelance';
 }
 
-export function ProjectsSection({ onProjectSelect }: ProjectsSectionProps) {
+export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance' }: ProjectsSectionProps) {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -43,15 +44,16 @@ export function ProjectsSection({ onProjectSelect }: ProjectsSectionProps) {
     : projects.filter(project => project.category === selectedCategory);
 
   const getGridClass = (layout: string, index: number) => {
+    // Original desktop layout with responsive improvements
     switch (layout) {
       case 'wide':
-        return 'lg:col-span-2 h-80';
+        return 'lg:col-span-2 h-80 sm:h-96 lg:h-80';
       case 'tall':
-        return 'lg:row-span-2 h-[640px]';
+        return 'lg:row-span-2 h-80 sm:h-96 lg:h-[640px]';
       case 'square':
-        return 'h-80';
+        return 'h-80 sm:h-96 lg:h-80';
       default:
-        return 'h-80';
+        return 'h-80 sm:h-96 lg:h-80';
     }
   };
 
@@ -59,7 +61,7 @@ export function ProjectsSection({ onProjectSelect }: ProjectsSectionProps) {
 
   return (
     <section className="py-20 lg:py-32 bg-gradient-to-b from-background to-accent/5">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 sm:px-6">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -93,13 +95,13 @@ export function ProjectsSection({ onProjectSelect }: ProjectsSectionProps) {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12 px-2"
         >
           {categories.map((category, index) => (
             <motion.button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`relative px-6 py-3 rounded-full transition-all duration-300 overflow-hidden ${
+              className={`relative px-4 sm:px-6 py-2 sm:py-3 rounded-full transition-all duration-300 overflow-hidden text-sm sm:text-base ${
                 selectedCategory === category
                   ? 'bg-primary text-primary-foreground shadow-lg'
                   : 'bg-accent/50 hover:bg-accent text-muted-foreground hover:text-foreground border border-border/50'
@@ -177,7 +179,7 @@ export function ProjectsSection({ onProjectSelect }: ProjectsSectionProps) {
         {!loading && !error && (
           <motion.div
             layout
-            className="grid grid-cols-1 lg:grid-cols-3 gap-6 auto-rows-[320px]"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:auto-rows-[320px]"
           >
             <AnimatePresence mode="popLayout">
               {filteredProjects.map((project, index) => (
@@ -210,7 +212,7 @@ export function ProjectsSection({ onProjectSelect }: ProjectsSectionProps) {
                 </div>
 
                 {/* Content */}
-                <div className="absolute inset-0 p-6 flex flex-col justify-between">
+                <div className="absolute inset-0 p-4 sm:p-6 flex flex-col justify-between">
                   {/* Top Badge */}
                   <motion.div
                     initial={{ opacity: 0, y: -20 }}
@@ -365,13 +367,14 @@ export function ProjectsSection({ onProjectSelect }: ProjectsSectionProps) {
           </motion.div>
         )}
 
-        {/* Project Impact Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mt-20"
-        >
+        {/* Project Impact Banner - Only show in freelance mode */}
+        {portfolioMode === 'freelance' && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-20"
+          >
           <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary/10 via-accent/20 to-primary/10 border border-border/50 backdrop-blur-sm">
             <div className="absolute inset-0">
               <motion.div
@@ -454,6 +457,7 @@ export function ProjectsSection({ onProjectSelect }: ProjectsSectionProps) {
             </div>
           </div>
         </motion.div>
+        )}
       </div>
     </section>
   );
