@@ -155,7 +155,7 @@ export function App() {
   const handleBackToPortfolio = () => {
     setCurrentView('portfolio');
     setSelectedProject(null);
-    setActiveSection('projects');
+    setActiveSection('hero');
   };
 
   // Handle quote page navigation

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { ArrowLeft, Calendar, User2, Target, Palette, Code, ExternalLink, ChevronRight } from 'lucide-react';
+import { ArrowLeft, Calendar, User2, Target, Palette, Code, ExternalLink, ChevronRight, Github, Globe } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Button } from './ui/button';
 import { Project } from '../types/sanity';
@@ -127,6 +127,70 @@ export function ProjectDetail({ project, onBack, onContact, isDark, toggleTheme 
                   ))}
                 </div>
               </motion.div>
+
+              {/* Project Links */}
+              {(project.liveUrl || project.githubUrl || project.behanceUrl || project.figmaUrl) && (
+                <motion.div variants={itemVariants} className="space-y-3">
+                  <h3 className="font-semibold">Enlaces del Proyecto</h3>
+                  <div className="flex flex-wrap gap-3">
+                    {project.liveUrl && (
+                      <motion.a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl hover:bg-primary/90 transition-colors"
+                      >
+                        <Globe className="w-4 h-4" />
+                        <span className="text-sm">Ver Proyecto</span>
+                      </motion.a>
+                    )}
+                    
+                    {project.githubUrl && (
+                      <motion.a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 px-4 py-2 bg-accent/50 rounded-xl border border-border/50 hover:bg-accent transition-colors"
+                      >
+                        <Github className="w-4 h-4" />
+                        <span className="text-sm">GitHub</span>
+                      </motion.a>
+                    )}
+                    
+                    {project.behanceUrl && (
+                      <motion.a
+                        href={project.behanceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 px-4 py-2 bg-accent/50 rounded-xl border border-border/50 hover:bg-accent transition-colors"
+                      >
+                        <Palette className="w-4 h-4" />
+                        <span className="text-sm">Behance</span>
+                      </motion.a>
+                    )}
+
+                    {project.figmaUrl && (
+                      <motion.a
+                        href={project.figmaUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.05, y: -2 }}
+                        whileTap={{ scale: 0.95 }}
+                        className="flex items-center gap-2 px-4 py-2 bg-accent/50 rounded-xl border border-border/50 hover:bg-accent transition-colors"
+                      >
+                        <Palette className="w-4 h-4" />
+                        <span className="text-sm">Figma</span>
+                      </motion.a>
+                    )}
+                  </div>
+                </motion.div>
+              )}
             </div>
 
             {/* Hero Image */}
