@@ -102,7 +102,13 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance' }: H
               className="flex flex-col sm:flex-row gap-4"
             >
                 <motion.button
-                onClick={() => setActiveSection('projects')}
+                onClick={() => {
+                  setActiveSection('projects');
+                  document.getElementById('projects')?.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                  });
+                }}
                 className="group px-6 sm:px-8 py-3 sm:py-4 bg-primary text-primary-foreground rounded-2xl hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl text-sm sm:text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -118,7 +124,13 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance' }: H
               
               {/* Contact button - text changes based on mode */}
               <motion.button
-                onClick={() => setActiveSection('contact')}
+                onClick={() => {
+                  setActiveSection('contact');
+                  document.getElementById('contact')?.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                  });
+                }}
                 className="px-6 sm:px-8 py-3 sm:py-4 border border-border hover:bg-accent transition-all duration-300 rounded-2xl font-medium text-sm sm:text-base"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

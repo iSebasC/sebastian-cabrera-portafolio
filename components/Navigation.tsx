@@ -120,20 +120,28 @@ export function Navigation({ activeSection, setActiveSection, isDark, toggleThem
                 <motion.button
                   key={section.id}
                   onClick={() => handleSectionClick(section.id)}
-                  className={`relative px-4 py-2 rounded-lg transition-all duration-300 ${
+                  className={`relative px-6 py-2.5 rounded-xl transition-all duration-300 font-medium hover:bg-accent/50 ${
                     activeSection === section.id
-                      ? 'text-primary'
+                      ? 'text-black'
                       : 'text-muted-foreground hover:text-foreground'
                   }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <span className="relative z-10 font-medium">{section.label}</span>
+                  <span className="relative z-10">{section.label}</span>
                   {activeSection === section.id && (
                     <motion.div
                       layoutId="activeTab"
-                      className="absolute inset-0 bg-primary/10 rounded-lg"
-                      transition={{ duration: 0.3 }}
+                      className="absolute inset-0 rounded-xl shadow-lg"
+                      style={{
+                        backgroundColor: isDark ? '#242424' : 'rgba(3, 2, 19, 0.1)'
+                      }}
+                      transition={{ 
+                        type: "spring",
+                        stiffness: 500,
+                        damping: 30,
+                        duration: 0.3 
+                      }}
                     />
                   )}
                 </motion.button>

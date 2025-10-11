@@ -107,10 +107,10 @@ export function App() {
   // Handle scroll spy for navigation
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'projects', 'about', 'testimonials', 'contact'];
+      const sections = ['contact', 'testimonials', 'projects', 'about', 'home'];
       const scrollPosition = window.scrollY + 100;
 
-      for (const section of sections.reverse()) {
+      for (const section of sections) {
         const element = document.getElementById(section);
         if (element && element.offsetTop <= scrollPosition) {
           setActiveSection(section);
