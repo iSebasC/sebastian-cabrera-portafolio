@@ -7,6 +7,7 @@ import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { ProjectDetail } from './components/ProjectDetail';
 import { QuotePage } from './components/QuotePage';
+import { CurrencyProvider } from './contexts/CurrencyContext';
 import { getAllProjects } from './services/sanityService';
 import type { Project } from './types/sanity';
 
@@ -198,31 +199,36 @@ export function App() {
   // Show project detail view
   if (currentView === 'project' && selectedProject) {
     return (
-      <ProjectDetail
-        project={selectedProject}
-        onBack={handleBackToPortfolio}
-        onContact={handleContactNavigation}
-        isDark={isDark}
-        toggleTheme={toggleTheme}
-      />
+      <CurrencyProvider>
+        <ProjectDetail
+          project={selectedProject}
+          onBack={handleBackToPortfolio}
+          onContact={handleContactNavigation}
+          isDark={isDark}
+          toggleTheme={toggleTheme}
+        />
+      </CurrencyProvider>
     );
   }
 
   // Show quote page view
   if (currentView === 'quote') {
     return (
-      <QuotePage 
-        onNavigateToContact={handleContactFromQuote}
-        onBack={handleBackFromQuote}
-        isDark={isDark}
-        toggleTheme={toggleTheme}
-      />
+      <CurrencyProvider>
+        <QuotePage 
+          onNavigateToContact={handleContactFromQuote}
+          onBack={handleBackFromQuote}
+          isDark={isDark}
+          toggleTheme={toggleTheme}
+        />
+      </CurrencyProvider>
     );
   }
 
   // Show main portfolio view
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <CurrencyProvider>
+      <div className="min-h-screen bg-background text-foreground">
       <Navigation 
         activeSection={activeSection} 
         setActiveSection={setActiveSection}
@@ -301,6 +307,7 @@ export function App() {
         </div>
       </footer>
     </div>
+    </CurrencyProvider>
   );
 }
 

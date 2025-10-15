@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Code, Server, Layers, Sparkles, Calculator, X, TrendingUp, CheckCircle2, Minus, Plus } from 'lucide-react';
+import { ArrowRight, Code, Server, Layers, Calculator, X, TrendingUp, CheckCircle2, Minus, Plus } from 'lucide-react';
 import { Button } from './ui/button';
+import { useCurrencyContext } from '../contexts/CurrencyContext';
+import { CurrencySelector } from './CurrencySelector';
 
 interface ServiceType {
   id: string;
@@ -147,6 +149,20 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
   const [showCalculator, setShowCalculator] = useState(false);
   const [selectedServiceForCalc, setSelectedServiceForCalc] = useState<ServiceType | null>(null);
   
+  // Currency management
+  const { formatPrice, currentCurrency } = useCurrencyContext();
+  
+  // Force re-render when currency changes
+  const [renderKey, setRenderKey] = useState(0);
+  
+  useEffect(() => {
+    // Reset calculator state when currency changes
+    setShowCalculator(false);
+    setSelectedServiceForCalc(null);
+    // Force re-render
+    setRenderKey(prev => prev + 1);
+  }, [currentCurrency]);
+  
   // Calculator state
   const [selectedOptionals, setSelectedOptionals] = useState<string[]>([]);
   const [hasDesign, setHasDesign] = useState(false);
@@ -234,14 +250,24 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
           viewport={{ once: true }}
           className="mb-8"
         >
-          <h2 className="text-3xl md:text-4xl mb-3">
-            <span className="bg-gradient-to-r from-foreground via-primary to-accent-foreground bg-clip-text text-transparent">
-              Servicios & Precios
-            </span>
-          </h2>
-          <p className="text-base text-muted-foreground">
-            Elige tu especialidad y encuentra el servicio ideal
-          </p>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <h2 className="text-3xl md:text-4xl mb-3">
+                <span className="bg-gradient-to-r from-foreground via-primary to-accent-foreground bg-clip-text text-transparent">
+                  Servicios & Precios
+                </span>
+              </h2>
+              <p className="text-base text-muted-foreground">
+                Elige tu especialidad y encuentra el servicio ideal
+              </p>
+            </div>
+            
+            {/* Currency Selector */}
+            <div className="flex items-center gap-3">
+              <span className="text-sm text-muted-foreground hidden md:inline">Moneda:</span>
+              <CurrencySelector />
+            </div>
+          </div>
         </motion.div>
 
         {/* Specialty Filter - Compact */}
@@ -288,6 +314,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
 
         {/* Services - Compact Grid */}
         <motion.div
+          key={`services-${renderKey}`}
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10"
         >
@@ -296,7 +323,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
             
             return (
               <motion.div
-                key={service.id}
+                key={`${service.id}-${currentCurrency}`}
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -330,7 +357,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                   {/* Price */}
                   <div className="flex items-baseline gap-2 mb-4">
                     <span className="text-xs text-muted-foreground">desde</span>
-                    <span className="text-2xl">S/ {service.priceBase.toLocaleString()}</span>
+                    <span className="text-2xl">{formatPrice(service.priceBase)}</span>
                   </div>
 
                   {/* Base Features - Compact */}
@@ -439,7 +466,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
               <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 mb-6">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Precio base</span>
-                  <span className="text-xl">S/ {selectedServiceForCalc.priceBase.toLocaleString()}</span>
+                  <span className="text-xl">{formatPrice(selectedServiceForCalc.priceBase)}</span>
                 </div>
               </div>
 
@@ -453,7 +480,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                         ¿Ya tienes el diseño listo?
                       </label>
                       <p className="text-xs text-muted-foreground mt-1">
-                        Si no, agregamos diseño UI/UX +S/ {UI_UX_DESIGN_PRICE}
+                        Si no, agregamos diseño UI/UX +{formatPrice(UI_UX_DESIGN_PRICE)}
                       </p>
                     </div>
                     <input
@@ -475,7 +502,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                     <div>
                       <span className="text-sm">Agregar secciones extra</span>
                       <p className="text-xs text-muted-foreground mt-1">
-                        +S/ 200 por sección
+                        +{formatPrice(200)} por sección
                       </p>
                     </div>
                     <div className="flex items-center gap-3">
@@ -521,7 +548,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                           </label>
                         </div>
                         <span className="text-sm text-muted-foreground">
-                          +S/ {feature.price}
+                          +{formatPrice(feature.price)}
                         </span>
                       </div>
                     ))}
@@ -533,7 +560,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
               <div className="p-5 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 border-2 border-primary/30 mb-6">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm text-muted-foreground">Total Estimado</span>
-                  <span className="text-3xl">S/ {calculateTotal().toLocaleString()}</span>
+                  <span className="text-3xl">{formatPrice(calculateTotal())}</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
                   * Precio referencial. Puede ajustarse según requerimientos específicos.
