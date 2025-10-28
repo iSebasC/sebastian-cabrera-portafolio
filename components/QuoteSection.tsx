@@ -21,7 +21,7 @@ const services: ServiceType[] = [
     id: 'landing-basic',
     name: 'Landing Básica',
     description: 'Una sección impactante',
-    priceBase: 800,
+    priceBase: 700,
     specialty: 'frontend',
     includesDesign: false,
     baseFeatures: [
@@ -31,8 +31,8 @@ const services: ServiceType[] = [
     ],
     optionalFeatures: [
       {name: 'SEO básico', price: 150},
-      {name: 'Animaciones', price: 200},
-      {name: 'Analytics', price: 100}
+      {name: 'Animaciones', price: 150},
+      // {name: 'Analytics', price: 100}
     ]
   },
   {
@@ -50,7 +50,7 @@ const services: ServiceType[] = [
     optionalFeatures: [
       {name: 'Animaciones Motion', price: 300},
       {name: 'SEO avanzado', price: 250},
-      {name: 'Analytics + Tracking', price: 150},
+      // {name: 'Analytics + Tracking', price: 150},
       {name: 'Chat integrado', price: 200}
     ]
   },
