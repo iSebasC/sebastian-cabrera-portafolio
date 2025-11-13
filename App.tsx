@@ -222,6 +222,9 @@ export function App() {
           isDark={isDark}
           toggleTheme={toggleTheme}
         />
+        
+        {/* WhatsApp Floating Button */}
+        <WhatsAppButton />
       </CurrencyProvider>
     );
   }
