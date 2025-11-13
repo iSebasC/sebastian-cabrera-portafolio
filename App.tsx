@@ -7,6 +7,7 @@ import { AboutSection } from './components/AboutSection';
 import { ContactSection } from './components/ContactSection';
 import { ProjectDetail } from './components/ProjectDetail';
 import { QuotePage } from './components/QuotePage';
+import { WhatsAppButton } from './components/WhatsAppButton';
 import { CurrencyProvider } from './contexts/CurrencyContext';
 import { getAllProjects } from './services/sanityService';
 import type { Project } from './types/sanity';
@@ -307,6 +308,9 @@ export function App() {
         </div>
       </footer>
     </div>
+    
+    {/* WhatsApp Floating Button */}
+    <WhatsAppButton />
     </CurrencyProvider>
   );
 }

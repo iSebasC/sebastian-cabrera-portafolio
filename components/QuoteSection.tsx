@@ -77,7 +77,7 @@ const services: ServiceType[] = [
     id: 'ecommerce',
     name: 'E-Commerce',
     description: 'Tienda online funcional',
-    priceBase: 3000,
+    priceBase: 2400,
     specialty: 'fullstack',
     includesDesign: true,
     baseFeatures: [
@@ -86,17 +86,17 @@ const services: ServiceType[] = [
       {name: 'Panel vendedor', included: true}
     ],
     optionalFeatures: [
-      {name: 'Pasarela de pago', price: 800},
-      {name: 'Inventario avanzado', price: 600},
-      {name: 'Sistema cupones', price: 400},
-      {name: 'Envíos automáticos', price: 500}
+      {name: 'Pasarela de pago', price: 500},
+      {name: 'Inventario avanzado', price: 450},
+      {name: 'Sistema cupones', price: 250},
+      {name: 'Envíos automáticos', price: 350}
     ]
   },
   {
     id: 'dashboard',
     name: 'Dashboard',
     description: 'Panel de control empresarial',
-    priceBase: 2500,
+    priceBase: 2000,
     specialty: 'fullstack',
     includesDesign: true,
     baseFeatures: [
@@ -105,17 +105,17 @@ const services: ServiceType[] = [
       {name: 'Reportes básicos', included: true}
     ],
     optionalFeatures: [
-      {name: 'Charts avanzados', price: 500},
-      {name: 'Exportación datos', price: 350},
-      {name: 'Notificaciones real-time', price: 450},
-      {name: 'API REST', price: 600}
+      {name: 'Charts avanzados', price: 350},
+      {name: 'Exportación datos', price: 250},
+      {name: 'Notificaciones real-time', price: 300},
+      {name: 'API REST', price: 400}
     ]
   },
   {
     id: 'api-backend',
     name: 'API Backend',
     description: 'Sistema backend robusto',
-    priceBase: 2000,
+    priceBase: 1600,
     specialty: 'backend',
     includesDesign: false,
     baseFeatures: [
@@ -124,10 +124,10 @@ const services: ServiceType[] = [
       {name: 'Autenticación JWT', included: true}
     ],
     optionalFeatures: [
-      {name: 'Microservicios', price: 800},
-      {name: 'Websockets', price: 450},
-      {name: 'Caché Redis', price: 350},
-      {name: 'Documentación API', price: 300}
+      {name: 'Microservicios', price: 500},
+      {name: 'Websockets', price: 300},
+      {name: 'Caché Redis', price: 250},
+      {name: 'Documentación API', price: 200}
     ]
   }
 ];
@@ -208,7 +208,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
     
     // Add extra sections (for frontend/fullstack)
     if (selectedServiceForCalc.specialty !== 'backend') {
-      total += extraSections * 200;
+      total += extraSections * 150;
     }
     
     // Add UI/UX if needed and user doesn't have design
@@ -502,7 +502,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                     <div>
                       <span className="text-sm">Agregar secciones extra</span>
                       <p className="text-xs text-muted-foreground mt-1">
-                        +{formatPrice(200)} por sección
+                        +{formatPrice(150)} por sección
                       </p>
                     </div>
                     <div className="flex items-center gap-3">
