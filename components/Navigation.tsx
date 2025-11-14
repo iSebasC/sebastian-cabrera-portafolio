@@ -165,6 +165,7 @@ export function Navigation({ activeSection, setActiveSection, isDark, toggleThem
                       portfolioMode === 'freelance' ? 'bg-primary' : 'bg-muted'
                     }`}
                     whileTap={{ scale: 0.95 }}
+                    aria-label={`Cambiar a modo ${portfolioMode === 'freelance' ? 'empleado' : 'freelance'}`}
                   >
                     <motion.div
                       className="w-4 h-4 bg-white rounded-full shadow-sm"

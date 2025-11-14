@@ -23,6 +23,7 @@ export function WhatsAppButton() {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        aria-label="Abrir chat de WhatsApp"
       >
         {/* Ícono de WhatsApp oficial */}
         <svg className="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
@@ -56,6 +57,7 @@ export function WhatsAppButton() {
                 <button
                   onClick={() => setIsOpen(false)}
                   className="absolute top-4 right-4 text-white hover:bg-white/20 rounded-full p-1 transition-colors"
+                  aria-label="Cerrar ventana de WhatsApp"
                 >
                   <X className="w-5 h-5" />
                 </button>

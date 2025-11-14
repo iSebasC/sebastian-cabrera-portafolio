@@ -31,8 +31,7 @@ const services: ServiceType[] = [
     ],
     optionalFeatures: [
       {name: 'SEO básico', price: 150},
-      {name: 'Animaciones', price: 150},
-      // {name: 'Analytics', price: 100}
+      {name: 'Animaciones', price: 150}
     ]
   },
   {
@@ -50,7 +49,6 @@ const services: ServiceType[] = [
     optionalFeatures: [
       {name: 'Animaciones Motion', price: 300},
       {name: 'SEO avanzado', price: 250},
-      // {name: 'Analytics + Tracking', price: 150},
       {name: 'Chat integrado', price: 200}
     ]
   },
@@ -138,7 +136,7 @@ const specialties = [
   { id: 'fullstack', name: 'Full Stack', icon: Layers, color: 'from-orange-500 to-red-500' }
 ];
 
-const UI_UX_DESIGN_PRICE = 600;
+
 
 interface QuoteSectionProps {
   onNavigateToContact?: (serviceId?: string, specialty?: string, calculatedPrice?: number) => void;
@@ -165,7 +163,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
   
   // Calculator state
   const [selectedOptionals, setSelectedOptionals] = useState<string[]>([]);
-  const [hasDesign, setHasDesign] = useState(false);
+
   const [extraSections, setExtraSections] = useState(0);
 
   const filteredServices = selectedSpecialty
@@ -181,7 +179,6 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
   const openCalculator = (service: ServiceType) => {
     setSelectedServiceForCalc(service);
     setSelectedOptionals([]);
-    setHasDesign(false);
     setExtraSections(0);
     setShowCalculator(true);
   };
@@ -210,10 +207,10 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
     if (selectedServiceForCalc.specialty !== 'backend') {
       total += extraSections * 150;
     }
-    
-    // Add UI/UX if needed and user doesn't have design
-    if (selectedServiceForCalc.specialty === 'frontend' && !hasDesign) {
-      total += UI_UX_DESIGN_PRICE;
+
+    // Add UI/UX Design if selected as optional
+    if (selectedOptionals.includes('Diseño UI/UX')) {
+      total += 600;
     }
     
     return total;
@@ -476,18 +473,21 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                   <h4 className="text-sm mb-3">Diseño UI/UX</h4>
                   <div className="flex items-center justify-between p-4 rounded-xl border border-border/50 bg-background/50">
                     <div>
-                      <label htmlFor="hasDesign" className="text-sm cursor-pointer">
-                        ¿Ya tienes el diseño listo?
-                      </label>
+                      <span className="text-sm">Diseño UI/UX</span>
                       <p className="text-xs text-muted-foreground mt-1">
-                        Si no, agregamos diseño UI/UX +{formatPrice(UI_UX_DESIGN_PRICE)}
+                        +{formatPrice(600)}
                       </p>
                     </div>
                     <input
-                      id="hasDesign"
                       type="checkbox"
-                      checked={hasDesign}
-                      onChange={(e) => setHasDesign(e.target.checked)}
+                      checked={selectedOptionals.includes('Diseño UI/UX')}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setSelectedOptionals(prev => [...prev, 'Diseño UI/UX']);
+                        } else {
+                          setSelectedOptionals(prev => prev.filter(opt => opt !== 'Diseño UI/UX'));
+                        }
+                      }}
                       className="w-5 h-5 accent-primary cursor-pointer"
                     />
                   </div>

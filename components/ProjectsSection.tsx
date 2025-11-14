@@ -293,6 +293,7 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance' }
                           className="relative flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors text-sm border border-white/20 overflow-hidden"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
+                          aria-label={`Ver detalles del proyecto ${project.title}`}
                         >
                           <motion.div
                             animate={{ 
@@ -335,6 +336,7 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance' }
                           className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors border border-white/20"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
+                          aria-label={`Abrir ${project.title} en nueva ventana`}
                         >
                           <motion.div
                             animate={{ 
