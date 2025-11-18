@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Send, Mail, Phone, MapPin, MessageCircle, CheckCircle } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Send, Mail, Phone, MapPin, MessageCircle, CheckCircle, X } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
@@ -144,11 +144,11 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
       
       setIsSubmitted(true);
       
-      // Reset form after 3 seconds
+      // Reset form after 5 seconds
       setTimeout(() => {
         setIsSubmitted(false);
         setFormData({ name: '', email: '', subject: '', message: '' });
-      }, 3000);
+      }, 5000);
       
     } catch (error) {
       console.error('❌ Error al enviar formulario:', error);
@@ -166,7 +166,7 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
         setTimeout(() => {
           setIsSubmitted(false);
           setFormData({ name: '', email: '', subject: '', message: '' });
-        }, 3000);
+        }, 5000);
       }
       
     } finally {
@@ -510,7 +510,7 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
                 <Button
                   type="submit"
                   className="group relative w-full h-16 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground rounded-3xl overflow-hidden transition-all duration-500 shadow-lg hover:shadow-2xl"
-                  disabled={isSubmitting || isSubmitted}
+                  disabled={isSubmitting}
                 >
                   <motion.div
                     className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
@@ -523,16 +523,7 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
                     }}
                   />
                   
-                  {isSubmitted ? (
-                    <motion.div
-                      initial={{ scale: 0, rotate: -10 }}
-                      animate={{ scale: 1, rotate: 0 }}
-                      className="flex items-center gap-3 text-lg font-semibold"
-                    >
-                      <CheckCircle className="w-6 h-6" />
-                      ¡Mensaje Enviado! 🎉
-                    </motion.div>
-                  ) : isSubmitting ? (
+                  {isSubmitting ? (
                     <motion.div
                       className="flex items-center gap-3 text-lg font-semibold"
                     >
@@ -652,6 +643,93 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
           </motion.div>
         </div>
       </div>
+
+      {/* Success Modal */}
+      <AnimatePresence>
+        {isSubmitted && (
+          <>
+            {/* Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              onClick={() => setIsSubmitted(false)}
+            >
+              {/* Modal */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, y: 50 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.8, y: 50 }}
+                transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                className="relative bg-background rounded-3xl p-8 max-w-md w-full shadow-2xl border border-border"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Close Button */}
+                <button
+                  onClick={() => setIsSubmitted(false)}
+                  className="absolute top-4 right-4 p-2 hover:bg-accent/50 rounded-full transition-colors"
+                  aria-label="Cerrar modal"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+
+                {/* Success Icon */}
+                <motion.div
+                  initial={{ scale: 0, rotate: -180 }}
+                  animate={{ scale: 1, rotate: 0 }}
+                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                  className="flex justify-center mb-6"
+                >
+                  <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
+                    <CheckCircle className="w-12 h-12 text-white" strokeWidth={2.5} />
+                  </div>
+                </motion.div>
+
+                {/* Success Message */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="text-center space-y-4"
+                >
+                  <h3 className="text-3xl font-bold">
+                    ¡Mensaje Enviado! 🎉
+                  </h3>
+                  <p className="text-muted-foreground text-lg">
+                    Gracias por contactarme. Te responderé lo antes posible.
+                  </p>
+                </motion.div>
+
+                {/* Animated confetti effect */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+                  {[...Array(12)].map((_, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ y: -20, opacity: 1 }}
+                      animate={{ 
+                        y: 400,
+                        opacity: 0,
+                        x: Math.sin(i) * 100
+                      }}
+                      transition={{ 
+                        duration: 2,
+                        delay: i * 0.1,
+                        ease: "easeOut"
+                      }}
+                      className="absolute w-2 h-2 rounded-full"
+                      style={{
+                        left: `${(i * 8) + 10}%`,
+                        background: ['#7c3aed', '#ec4899', '#3b82f6', '#10b981'][i % 4]
+                      }}
+                    />
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
