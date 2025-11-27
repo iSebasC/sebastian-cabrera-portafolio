@@ -4,7 +4,7 @@ import { X } from 'lucide-react';
 
 export function WhatsAppButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const phoneNumber = '51993106111'; // Formato internacional para Perú
+  const phoneNumber = '51914866361'; // Formato internacional para Perú
 
   const handleWhatsAppClick = () => {
     const message = encodeURIComponent('¡Hola Sebastian! Me gustaría contactarte.');
