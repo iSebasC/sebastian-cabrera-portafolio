@@ -60,6 +60,7 @@ const tools = [
   // Frontend
   { name: 'Next.js', level: 92, category: 'Frontend' },
   { name: 'React', level: 95, category: 'Frontend' },
+  { name: 'Astro', level: 85, category: 'Frontend' },
   
   // Diseño & UI/UX
   { name: 'Figma', level: 98, category: 'Design' }

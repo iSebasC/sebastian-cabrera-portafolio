@@ -132,6 +132,12 @@
       "experience": "Experto"
     },
     {
+      "name": "Astro",
+      "level": 85,
+      "category": "Development",
+      "experience": "Avanzado"
+    },
+    {
       "name": "Three.js",
       "level": 80,
       "category": "WebGL",
@@ -141,7 +147,7 @@
 
   "arsenalSummary": [
     {
-      "number": "6+",
+      "number": "7+",
       "label": "Herramientas\nDominadas"
     },
     {
