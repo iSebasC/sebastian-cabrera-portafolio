@@ -7,6 +7,16 @@ export function WhatsAppButton() {
   const phoneNumber = '51914866361'; // Formato internacional para Perú
 
   const handleWhatsAppClick = () => {
+    // Disparar evento de conversión de Google Ads
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', {
+        'send_to': 'AW-17736571582/fkDNCOXwvccbEL61uolC',
+        'value': 1.0,
+        'currency': 'PEN'
+      });
+      console.log('📊 Evento de conversión de Google Ads enviado (WhatsApp)');
+    }
+    
     const message = encodeURIComponent('¡Hola Sebastian! Me gustaría contactarte.');
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
     setIsOpen(false);

@@ -126,6 +126,16 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
         
         console.log('✅ Formulario enviado exitosamente vía Netlify');
         
+        // Disparar evento de conversión de Google Ads
+        if (typeof window !== 'undefined' && (window as any).gtag) {
+          (window as any).gtag('event', 'conversion', {
+            'send_to': 'AW-17736571582/fkDNCOXwvccbEL61uolC',
+            'value': 1.0,
+            'currency': 'PEN'
+          });
+          console.log('📊 Evento de conversión de Google Ads enviado');
+        }
+        
       } else {
         console.log('🧪 Modo desarrollo - simulando envío');
         
