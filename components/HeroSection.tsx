@@ -185,7 +185,13 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance' }: H
             className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 hidden md:block"
           >
             <motion.button
-              onClick={() => setActiveSection('projects')}
+              onClick={() => {
+                setActiveSection('about');
+                document.getElementById('about')?.scrollIntoView({ 
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }}
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider"
