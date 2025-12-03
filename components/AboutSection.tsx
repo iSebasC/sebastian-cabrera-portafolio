@@ -137,7 +137,7 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
   const [hoveredTool, setHoveredTool] = useState<string | null>(null);
 
   return (
-    <section className="py-20 lg:py-32 relative overflow-hidden">
+    <section id="about" className="scroll-mt-24 pt-24 md:pt-32 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 relative overflow-hidden">
       {/* Dynamic Background */}
       <div className="absolute inset-0">
         <motion.div
@@ -177,7 +177,7 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
             <span className="font-medium">El Arte de Crear Experiencias</span>
           </motion.div>
 
-          <h2 className="text-4xl lg:text-6xl xl:text-7xl font-bold mb-6">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6">
             <span className="bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent">
               Diseño que
             </span>

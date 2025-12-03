@@ -30,7 +30,7 @@ export function TestimonialsSection({ portfolioMode = 'freelance' }: Testimonial
   // Loading state
   if (loading) {
     return (
-      <section id="testimonials" className="py-24 lg:py-32 relative overflow-hidden">
+      <section id="testimonials" className="scroll-mt-24 pt-24 md:pt-32 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
         
         <div className="container mx-auto px-4">
@@ -44,7 +44,7 @@ export function TestimonialsSection({ portfolioMode = 'freelance' }: Testimonial
               <span className="text-sm text-muted-foreground">Testimonios</span>
             </motion.div>
             
-            <h2 className="text-3xl lg:text-5xl font-bold mb-16">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-16">
               <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
                 Cargando Testimonios
               </span>
@@ -63,7 +63,7 @@ export function TestimonialsSection({ portfolioMode = 'freelance' }: Testimonial
   // Error state
   if (error) {
     return (
-      <section id="testimonials" className="py-24 lg:py-32 relative overflow-hidden">
+      <section id="testimonials" className="scroll-mt-24 pt-24 md:pt-32 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
         
         <div className="container mx-auto px-4">
@@ -77,7 +77,7 @@ export function TestimonialsSection({ portfolioMode = 'freelance' }: Testimonial
               <span className="text-sm text-muted-foreground">Testimonios</span>
             </motion.div>
             
-            <h2 className="text-3xl lg:text-5xl font-bold mb-8">
+            <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-8">
               <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
                 Error al Cargar Testimonios
               </span>
@@ -106,7 +106,7 @@ export function TestimonialsSection({ portfolioMode = 'freelance' }: Testimonial
   // No testimonials state
   if (testimonials.length === 0) {
     return (
-      <section id="testimonials" className="py-24 lg:py-32 relative overflow-hidden">
+      <section id="testimonials" className="scroll-mt-24 pt-24 md:pt-32 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
         
         <div className="container mx-auto px-4">
@@ -136,7 +136,7 @@ export function TestimonialsSection({ portfolioMode = 'freelance' }: Testimonial
   }
 
   return (
-    <section id="testimonials" className="py-24 lg:py-32 relative overflow-hidden">
+    <section id="testimonials" className="scroll-mt-24 pt-24 md:pt-32 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
       <motion.div

@@ -18,7 +18,7 @@ export function QuotePage({ onNavigateToContact, onBack, isDark, toggleTheme }: 
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="bg-background text-foreground">
       {/* Header Navigation */}
       <motion.header
         initial={{ y: -50, opacity: 0 }}

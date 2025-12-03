@@ -175,7 +175,7 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
   };
 
   return (
-    <section className="py-20 lg:py-32 relative overflow-hidden">
+    <section id="contact" className="scroll-mt-24 pt-24 md:pt-32 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 relative overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <motion.div

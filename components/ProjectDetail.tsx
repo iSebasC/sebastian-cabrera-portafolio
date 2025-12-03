@@ -34,7 +34,7 @@ export function ProjectDetail({ project, onBack, onContact, isDark, toggleTheme 
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="bg-background text-foreground overflow-x-hidden">
       {/* Fixed Header */}
       <motion.header
         initial={{ y: -100 }}

@@ -60,8 +60,8 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance' }
 
 
   return (
-    <section className="py-20 lg:py-32 bg-gradient-to-b from-background to-accent/5">
-      <div className="container mx-auto px-4 sm:px-6">
+    <section id="projects" className="scroll-mt-24 pt-24 md:pt-32 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 bg-gradient-to-b from-background to-accent/5">
+      <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -79,7 +79,7 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance' }
             <span className="text-sm text-muted-foreground">Presentación de portafolios</span>
           </motion.div>
           
-          <h2 className="text-3xl lg:text-5xl font-bold mb-6">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6">
             <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
               Proyectos Destacados
             </span>
