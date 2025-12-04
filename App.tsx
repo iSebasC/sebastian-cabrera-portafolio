@@ -245,7 +245,7 @@ export function App() {
       
       <main>
         <section id="home">
-          <HeroSection setActiveSection={setActiveSection} portfolioMode={portfolioMode} />
+          <HeroSection setActiveSection={setActiveSection} portfolioMode={portfolioMode} onQuoteClick={handleQuoteNavigation} />
         </section>
 
         <section id="about">
