@@ -77,7 +77,7 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.5 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
             className="space-y-0.5 sm:space-y-1 md:space-y-2 lg:order-1"
           >
             <h1 className="text-[40px] xs:text-[50px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] 2xl:text-[140px] font-bold leading-[0.85] tracking-tighter">
@@ -91,25 +91,16 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
                 transition={{ duration: 2, repeat: Infinity }}
               ></motion.span>
             </h1>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 1.2 }}
-              className="text-[40px] xs:text-[50px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] 2xl:text-[140px] font-bold leading-[0.85] tracking-tighter text-primary/20"
-            >
+            <div className="text-[40px] xs:text-[50px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] 2xl:text-[140px] font-bold leading-[0.85] tracking-tighter text-primary/20">
               QUE VENDEN
-            </motion.div>
+            </div>
 
             {/* Garantía visible en desktop */}
             {portfolioMode === 'freelance' && (
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5 }}
-                className="hidden lg:block text-sm text-muted-foreground pt-4"
-              >
+              <p className="hidden lg:block text-sm text-muted-foreground pt-4">
+                
                 ✅ Resultados en 30 días o mejoras gratis
-              </motion.p>
+              </p>
             )}
           </motion.div>
 
@@ -117,16 +108,11 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.8 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             className="space-y-5 sm:space-y-6 lg:space-y-8 lg:pl-8 xl:pl-12 lg:order-2"
           >
             {/* Prueba Social Mejorada */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1 }}
-              className="space-y-3"
-            >
+            <div className="space-y-3">
               {/* Rating prominente */}
               <div className="flex items-center gap-3">
                 <div className="flex items-center gap-0.5">
@@ -149,34 +135,29 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
                   <span className="text-xs font-medium">95% tasa de éxito</span>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Value Proposition mejorada */}
             <div className="space-y-3">
               <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed">
-                Desarrollo plataformas web modernas con <span className="text-foreground font-semibold">Next.js, Astro y Node.js</span> que 
-                <span className="text-primary font-bold"> convierten visitantes en clientes reales</span>.
+                Desarrollo plataformas web modernas con <span className="text-foreground font-semibold">Next.js, Astro y Node.js</span> que<span className="text-primary font-bold"> convierten visitantes en clientes reales</span>.
               </p>
 
               {/* Benefits list */}
               {portfolioMode === 'freelance' && (
                 <ul className="space-y-2">
-                  {[
-                    'Diseño optimizado para conversión',
-                    'Entrega en 7-14 días',
-                    'Soporte post-lanzamiento incluido'
-                  ].map((benefit, i) => (
-                    <motion.li
-                      key={benefit}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 1.2 + (i * 0.1) }}
-                      className="flex items-center gap-2 text-sm text-muted-foreground"
-                    >
-                      <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
-                      {benefit}
-                    </motion.li>
-                  ))}
+                  <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    Diseño optimizado para conversión
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    Entrega en 7-14 días
+                  </li>
+                  <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />
+                    Soporte post-lanzamiento incluido
+                  </li>
                 </ul>
               )}
             </div>
@@ -198,6 +179,7 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
                     });
                   }
                 }}
+                aria-label={portfolioMode === 'freelance' ? 'Ver precios y solicitar cotización desde 189 dólares' : 'Solicitar entrevista laboral'}
                 className="group w-full sm:w-auto px-8 py-4 bg-primary text-primary-foreground rounded-2xl hover:bg-primary/90 transition-all duration-300 shadow-2xl hover:shadow-primary/50 relative overflow-hidden"
                 whileHover={{ scale: 1.02, y: -2 }}
                 whileTap={{ scale: 0.98 }}
@@ -237,6 +219,7 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
                       block: 'start'
                     });
                   }}
+                  aria-label="Ver portfolio de proyectos"
                   className="flex-1 px-6 py-3 border border-border hover:bg-accent transition-all duration-300 rounded-xl font-medium text-sm"
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.98 }}
@@ -252,6 +235,7 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
                       block: 'start'
                     });
                   }}
+                  aria-label={portfolioMode === 'freelance' ? 'Contactar para consulta de proyecto' : 'Enviar mensaje de contacto'}
                   className="flex-1 px-6 py-3 border border-border hover:bg-accent transition-all duration-300 rounded-xl font-medium text-sm"
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.98 }}
@@ -304,6 +288,7 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
                   block: 'start'
                 });
               }}
+              aria-label="Desplazarse a la sección Sobre Mí"
               animate={{ y: [0, 8, 0] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               className="text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-wider"
