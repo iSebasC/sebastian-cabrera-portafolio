@@ -15,7 +15,13 @@ import type { Project } from './types/sanity';
 export function App() {
   const [activeSection, setActiveSection] = useState('home');
   const [isDark, setIsDark] = useState(false);
-  const [currentView, setCurrentView] = useState<'portfolio' | 'project' | 'quote'>('portfolio');
+  const [currentView, setCurrentView] = useState<'portfolio' | 'project' | 'quote'>(() => {
+    // Detectar la ruta inicial desde la URL
+    const path = window.location.pathname;
+    if (path === '/cotizar') return 'quote';
+    if (path.startsWith('/proyecto/')) return 'project';
+    return 'portfolio';
+  });
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [portfolioMode, setPortfolioMode] = useState<'employee' | 'freelance'>('freelance');
@@ -32,6 +38,34 @@ export function App() {
     };
     loadProjects();
   }, []);
+
+  // Sincronizar con el historial del navegador
+  useEffect(() => {
+    const handlePopState = () => {
+      const path = window.location.pathname;
+      if (path === '/cotizar') {
+        setCurrentView('quote');
+        setActiveSection('quote');
+      } else if (path.startsWith('/proyecto/')) {
+        const projectId = path.replace('/proyecto/', '');
+        const project = getProjectById(projectId);
+        if (project) {
+          setSelectedProject(project);
+          setCurrentView('project');
+        } else {
+          window.history.pushState({}, '', '/');
+          setCurrentView('portfolio');
+          setActiveSection('home');
+        }
+      } else {
+        setCurrentView('portfolio');
+        setActiveSection('home');
+      }
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [projects]);
 
   const getProjectById = (id: string): Project | null => {
     return projects.find(project => project.id === id) || null;
@@ -145,6 +179,7 @@ export function App() {
     const project = getProjectById(projectId);
     console.log('📝 Found project:', project);
     if (project) {
+      window.history.pushState({}, '', `/proyecto/${projectId}`);
       setSelectedProject(project);
       setCurrentView('project');
       console.log('✅ Set current view to project');
@@ -155,6 +190,7 @@ export function App() {
 
   // Handle back to portfolio
   const handleBackToPortfolio = () => {
+    window.history.pushState({}, '', '/');
     setCurrentView('portfolio');
     setSelectedProject(null);
     setActiveSection('hero');
@@ -162,18 +198,21 @@ export function App() {
 
   // Handle quote page navigation
   const handleQuoteNavigation = () => {
+    window.history.pushState({}, '', '/cotizar');
     setCurrentView('quote');
     setActiveSection('quote');
   };
 
   // Handle back from quote to portfolio
   const handleBackFromQuote = () => {
+    window.history.pushState({}, '', '/');
     setCurrentView('portfolio');
     setActiveSection('home');
   };
 
   // Handle contact navigation from quote page
   const handleContactFromQuote = (serviceId?: string, specialty?: string, calculatedPrice?: number) => {
+    window.history.pushState({}, '', '/');
     setCurrentView('portfolio');
     setActiveSection('contact');
     setTimeout(() => {
@@ -188,6 +227,7 @@ export function App() {
   // Handle contact navigation
   const handleContactNavigation = () => {
     if (currentView === 'project') {
+      window.history.pushState({}, '', '/');
       setCurrentView('portfolio');
       setSelectedProject(null);
     }

@@ -57,19 +57,6 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
               <span className="uppercase tracking-wider hidden sm:inline">Disponible para Proyectos</span>
               <span className="uppercase tracking-wider sm:hidden">Disponible</span>
             </div>
-            {portfolioMode === 'freelance' && (
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="bg-destructive/10 border border-destructive/20 px-3 py-1 rounded-full"
-              >
-                <span className="text-[10px] sm:text-xs text-destructive font-medium flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
-                  Solo 2 espacios este mes
-                </span>
-              </motion.div>
-            )}
           </motion.div>
 
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 xl:gap-16 items-center">
@@ -94,14 +81,6 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
             <div className="text-[40px] xs:text-[50px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] 2xl:text-[140px] font-bold leading-[0.85] tracking-tighter text-primary/20">
               QUE VENDEN
             </div>
-
-            {/* Garantía visible en desktop */}
-            {portfolioMode === 'freelance' && (
-              <p className="hidden lg:block text-sm text-muted-foreground pt-4">
-                
-                ✅ Resultados en 30 días o mejoras gratis
-              </p>
-            )}
           </motion.div>
 
           {/* Right: Content */}
@@ -128,7 +107,7 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
               <div className="flex items-center gap-4 flex-wrap">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/5 border border-primary/10 rounded-full">
                   <Award className="w-3.5 h-3.5 text-primary" />
-                  <span className="text-xs font-medium">+10 proyectos exitosos</span>
+                  <span className="text-xs font-medium">+5 proyectos exitosos</span>
                 </div>
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-500/5 border border-green-500/10 rounded-full">
                   <TrendingUp className="w-3.5 h-3.5 text-green-500" />
