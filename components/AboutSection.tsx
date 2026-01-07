@@ -368,10 +368,11 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
                 }}
                 className="relative overflow-hidden rounded-3xl shadow-2xl"
               >
-                <ImageWithFallback
+                <img
                   src="/img/profilesebastian_2026.webp"
                   alt="Sebastian - Diseñador Gráfico"
                   className="w-full h-[400px] sm:h-[500px] lg:h-[600px] object-cover object-center"
+                  loading="eager"
                 />
                 
                 {/* Professional Badge Overlay */}
