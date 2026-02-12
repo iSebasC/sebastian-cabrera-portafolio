@@ -1,15 +1,13 @@
 import { QuoteSection } from './QuoteSection';
 import { motion } from 'framer-motion';
-import { ArrowDown, ArrowLeft, Moon, Sun } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 
 interface QuotePageProps {
   onNavigateToContact?: (serviceId?: string, specialty?: string, calculatedPrice?: number) => void;
-  onBack?: () => void;
-  isDark?: boolean;
-  toggleTheme?: () => void;
 }
 
-export function QuotePage({ onNavigateToContact, onBack, isDark, toggleTheme }: QuotePageProps = {}) {
+export function QuotePage({ onNavigateToContact }: QuotePageProps = {}) {
   const scrollToServices = () => {
     const servicesSection = document.getElementById('services-section');
     if (servicesSection) {
@@ -19,44 +17,12 @@ export function QuotePage({ onNavigateToContact, onBack, isDark, toggleTheme }: 
 
   return (
     <div className="bg-background text-foreground">
-      {/* Header Navigation */}
-      <motion.header
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border"
-      >
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <motion.button
-            onClick={onBack}
-            whileHover={{ x: -5 }}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span>Volver al Portfolio</span>
-          </motion.button>
-          
-          <div className="flex items-center gap-4">
-            <span className="text-sm font-medium">Cotización</span>
-            {toggleTheme && (
-              <motion.button
-                onClick={toggleTheme}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                className="p-2 rounded-full bg-primary/10 text-primary hover:bg-primary/20 transition-colors"
-              >
-                {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-              </motion.button>
-            )}
-          </div>
-        </div>
-      </motion.header>
-
       {/* Hero Section - Compact */}
       <motion.section
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative min-h-[60vh] flex items-center justify-center px-4 overflow-hidden pt-16"
+        className="relative min-h-[60vh] flex items-center justify-center px-4 overflow-hidden"
       >
         {/* Background Effects */}
         <div className="absolute inset-0 pointer-events-none">
@@ -135,7 +101,7 @@ export function QuotePage({ onNavigateToContact, onBack, isDark, toggleTheme }: 
         transition={{ duration: 0.6 }}
         className="py-16 px-4"
       >
-        <div className="container mx-auto max-w-6xl">
+        <div className="container mx-auto">
           <div className="mb-8">
             <h2 className="text-2xl md:text-3xl mb-2">
               <span className="bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
@@ -200,7 +166,7 @@ export function QuotePage({ onNavigateToContact, onBack, isDark, toggleTheme }: 
         transition={{ duration: 0.6 }}
         className="py-16 px-4 bg-gradient-to-b from-background to-accent/5"
       >
-        <div className="container mx-auto max-w-3xl">
+        <div className="container mx-auto">
           <div className="mb-8">
             <h2 className="text-2xl md:text-3xl mb-2">
               <span className="bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
@@ -209,46 +175,44 @@ export function QuotePage({ onNavigateToContact, onBack, isDark, toggleTheme }: 
             </h2>
           </div>
 
-          <div className="space-y-3">
-            <motion.div
-              whileHover={{ x: 5 }}
-              className="p-4 rounded-xl bg-background/80 backdrop-blur-sm border border-border/50"
-            >
-              <h3 className="text-sm mb-1">¿Incluyen revisiones?</h3>
-              <p className="text-xs text-muted-foreground">
-                Sí, revisiones ilimitadas hasta tu satisfacción completa.
-              </p>
-            </motion.div>
+          <div className="rounded-xl bg-background/80 backdrop-blur-sm border border-border/50 px-4">
+            <Accordion type="single" collapsible className="w-full">
+              <AccordionItem value="rev">
+                <AccordionTrigger className="text-base">
+                  ¿Incluyen revisiones?
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground">
+                  Sí, revisiones ilimitadas hasta tu satisfacción completa.
+                </AccordionContent>
+              </AccordionItem>
 
-            <motion.div
-              whileHover={{ x: 5 }}
-              className="p-4 rounded-xl bg-background/80 backdrop-blur-sm border border-border/50"
-            >
-              <h3 className="text-sm mb-1">¿Cuánto demora?</h3>
-              <p className="text-xs text-muted-foreground">
-                Landing pages: 1-2 semanas. Proyectos complejos: 3-4 semanas.
-              </p>
-            </motion.div>
+              <AccordionItem value="time">
+                <AccordionTrigger className="text-base">
+                  ¿Cuánto demora?
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground">
+                  Landing pages: 1-2 semanas. Proyectos complejos: 3-4 semanas.
+                </AccordionContent>
+              </AccordionItem>
 
-            <motion.div
-              whileHover={{ x: 5 }}
-              className="p-4 rounded-xl bg-background/80 backdrop-blur-sm border border-border/50"
-            >
-              <h3 className="text-sm mb-1">¿Formas de pago?</h3>
-              <p className="text-xs text-muted-foreground">
-                Transferencias, Yape, Plin, tarjetas. Plan: 50% inicio, 50% final.
-              </p>
-            </motion.div>
+              <AccordionItem value="pay">
+                <AccordionTrigger className="text-base">
+                  ¿Formas de pago?
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground">
+                  Transferencias, Yape, Plin, tarjetas. Plan: 50% inicio, 50% final.
+                </AccordionContent>
+              </AccordionItem>
 
-            <motion.div
-              whileHover={{ x: 5 }}
-              className="p-4 rounded-xl bg-background/80 backdrop-blur-sm border border-border/50"
-            >
-              <h3 className="text-sm mb-1">¿Qué incluye el soporte?</h3>
-              <p className="text-xs text-muted-foreground">
-                30 días post-entrega para ajustes menores y resolución de dudas.
-              </p>
-            </motion.div>
+              <AccordionItem value="support">
+                <AccordionTrigger className="text-base">
+                  ¿Qué incluye el soporte?
+                </AccordionTrigger>
+                <AccordionContent className="text-sm text-muted-foreground">
+                  30 días post-entrega para ajustes menores y resolución de dudas.
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </div>
       </motion.section>

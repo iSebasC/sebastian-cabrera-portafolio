@@ -1,13 +1,14 @@
 import { motion } from 'framer-motion';
-import { Sparkles, Star, Award, TrendingUp, CheckCircle2, Clock } from 'lucide-react';
+import { Sparkles, Star, Award, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface HeroSectionProps {
-  setActiveSection: (section: string) => void;
   portfolioMode?: 'employee' | 'freelance';
-  onQuoteClick?: () => void;
 }
 
-export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQuoteClick }: HeroSectionProps) {
+export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
+  const navigate = useNavigate();
+
   return (
     <section className="min-h-screen relative overflow-hidden bg-background flex items-center">
       {/* Subtle 3D Background Visual */}
@@ -45,20 +46,6 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-0 relative z-10 flex items-center min-h-screen">
         {/* Main Content Grid - Full width */}
         <div className="w-full">
-          {/* Etiqueta de disponibilidad + Urgencia */}
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="absolute top-4 sm:top-6 md:top-8 right-4 sm:right-6 lg:right-8 flex flex-col items-end gap-2"
-          >
-            <div className="flex items-center gap-2 text-[10px] sm:text-xs text-muted-foreground">
-              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="uppercase tracking-wider hidden sm:inline">Disponible para Proyectos</span>
-              <span className="uppercase tracking-wider sm:hidden">Disponible</span>
-            </div>
-          </motion.div>
-
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 xl:gap-16 items-center">
           {/* Left: Giant Title */}
           <motion.div
@@ -67,20 +54,18 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
             transition={{ duration: 0.5, delay: 0.2 }}
             className="space-y-0.5 sm:space-y-1 md:space-y-2 lg:order-1"
           >
-            <h1 className="text-[40px] xs:text-[50px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] 2xl:text-[140px] font-bold leading-[0.85] tracking-tighter">
-              LANDING
+            <h1 className="text-[clamp(40px,8vw,120px)] font-bold leading-[0.85] tracking-tighter">
+              <span className="block">Desarrollo</span>
+              <span className="block">Web</span>
+              <span className="block">
+                que Convierte
+                <motion.span
+                  className="inline-block w-2 h-2 xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 bg-primary ml-1.5 xs:ml-2 sm:ml-3 md:ml-4 mb-2 xs:mb-3 sm:mb-4 md:mb-5 lg:mb-7 xl:mb-9"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                ></motion.span>
+              </span>
             </h1>
-            <h1 className="text-[40px] xs:text-[50px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] 2xl:text-[140px] font-bold leading-[0.85] tracking-tighter">
-              PAGES
-              <motion.span 
-                className="inline-block w-2 h-2 xs:w-2.5 xs:h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 bg-primary ml-1.5 xs:ml-2 sm:ml-3 md:ml-4 mb-2 xs:mb-3 sm:mb-4 md:mb-5 lg:mb-7 xl:mb-9"
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              ></motion.span>
-            </h1>
-            <div className="text-[40px] xs:text-[50px] sm:text-[60px] md:text-[80px] lg:text-[100px] xl:text-[120px] 2xl:text-[140px] font-bold leading-[0.85] tracking-tighter text-primary/20">
-              QUE VENDEN
-            </div>
           </motion.div>
 
           {/* Right: Content */}
@@ -90,36 +75,22 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
             transition={{ duration: 0.6, delay: 0.3 }}
             className="space-y-5 sm:space-y-6 lg:space-y-8 lg:pl-8 xl:pl-12 lg:order-2"
           >
-            {/* Prueba Social Mejorada */}
-            <div className="space-y-3">
-              {/* Rating prominente */}
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-0.5">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-5 h-5 fill-yellow-500 text-yellow-500" />
-                  ))}
-                </div>
-                <div className="text-lg font-bold">5.0</div>
-                <div className="text-sm text-muted-foreground">en Google</div>
+            {/* Stats row */}
+            <div className="flex items-center gap-4 flex-wrap">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/5 border border-primary/10 rounded-full">
+                <Award className="w-3.5 h-3.5 text-primary" />
+                <span className="text-xs font-medium">+5 proyectos exitosos</span>
               </div>
-
-              {/* Stats row */}
-              <div className="flex items-center gap-4 flex-wrap">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/5 border border-primary/10 rounded-full">
-                  <Award className="w-3.5 h-3.5 text-primary" />
-                  <span className="text-xs font-medium">+5 proyectos exitosos</span>
-                </div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-500/5 border border-green-500/10 rounded-full">
-                  <TrendingUp className="w-3.5 h-3.5 text-green-500" />
-                  <span className="text-xs font-medium">95% tasa de éxito</span>
-                </div>
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-green-500/5 border border-green-500/10 rounded-full">
+                <TrendingUp className="w-3.5 h-3.5 text-green-500" />
+                <span className="text-xs font-medium">95% tasa de éxito</span>
               </div>
             </div>
 
             {/* Value Proposition mejorada */}
             <div className="space-y-3">
               <p className="text-sm sm:text-base lg:text-lg text-muted-foreground leading-relaxed">
-                Desarrollo plataformas web modernas con <span className="text-foreground font-semibold">Next.js, Astro y Node.js</span> que<span className="text-primary font-bold"> convierten visitantes en clientes reales</span>.
+                Desarrollo páginas web, sistemas web y plataformas digitales modernas con <span className="text-foreground font-semibold">Next.js, Astro y Node.js</span> que<span className="text-primary font-bold"> convierten visitantes en clientes reales</span> en Perú y Latinoamérica.
               </p>
 
               {/* Benefits list */}
@@ -147,15 +118,9 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
               <motion.button
                 onClick={() => {
                   if (portfolioMode === 'freelance') {
-                    if (onQuoteClick) {
-                      onQuoteClick();
-                    }
+                    navigate('/cotizar');
                   } else {
-                    setActiveSection('contact');
-                    document.getElementById('contact')?.scrollIntoView({ 
-                      behavior: 'smooth',
-                      block: 'start'
-                    });
+                    navigate('/contacto');
                   }
                 }}
                 aria-label={portfolioMode === 'freelance' ? 'Ver precios y solicitar cotización desde 189 dólares' : 'Solicitar entrevista laboral'}
@@ -192,11 +157,7 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
               <div className="flex gap-3">
                 <motion.button
                   onClick={() => {
-                    setActiveSection('projects');
-                    document.getElementById('projects')?.scrollIntoView({ 
-                      behavior: 'smooth',
-                      block: 'start'
-                    });
+                    navigate('/proyectos');
                   }}
                   aria-label="Ver portfolio de proyectos"
                   className="flex-1 px-6 py-3 border border-border hover:bg-accent transition-all duration-300 rounded-xl font-medium text-sm"
@@ -208,11 +169,7 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
                 
                 <motion.button
                   onClick={() => {
-                    setActiveSection('contact');
-                    document.getElementById('contact')?.scrollIntoView({ 
-                      behavior: 'smooth',
-                      block: 'start'
-                    });
+                    navigate('/contacto');
                   }}
                   aria-label={portfolioMode === 'freelance' ? 'Contactar para consulta de proyecto' : 'Enviar mensaje de contacto'}
                   className="flex-1 px-6 py-3 border border-border hover:bg-accent transition-all duration-300 rounded-xl font-medium text-sm"
@@ -257,15 +214,11 @@ export function HeroSection({ setActiveSection, portfolioMode = 'freelance', onQ
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2, duration: 0.5 }}
-            className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 hidden md:block"
+            className="absolute bottom-2 lg:bottom-6 left-1/2 -translate-x-1/2 hidden md:block"
           >
             <motion.button
               onClick={() => {
-                setActiveSection('about');
-                document.getElementById('about')?.scrollIntoView({ 
-                  behavior: 'smooth',
-                  block: 'start'
-                });
+                navigate('/sobre-mi');
               }}
               aria-label="Desplazarse a la sección Sobre Mí"
               animate={{ y: [0, 8, 0] }}

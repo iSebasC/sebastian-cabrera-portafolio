@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { 
   Brain, Rocket, Sparkles, Zap, Layers, Palette, 
   Monitor, Trophy, Coffee, Heart, Star,
@@ -133,6 +134,7 @@ const workProcess = [
 ];
 
 export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: AboutSectionProps) {
+  const navigate = useNavigate();
   const [selectedPrinciple, setSelectedPrinciple] = useState('creativity');
   const [hoveredTool, setHoveredTool] = useState<string | null>(null);
 
@@ -314,7 +316,7 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => {
-                      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                      navigate('/contacto');
                       setActiveSection?.('contact');
                     }}
                     className="px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl font-medium shadow-lg hover:shadow-xl transition-all"
@@ -329,7 +331,7 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => {
-                      document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' });
+                      navigate('/proyectos');
                       setActiveSection?.('projects');
                     }}
                     className="px-8 py-3 bg-background border border-border hover:border-primary/50 rounded-xl font-medium transition-all"
@@ -761,7 +763,7 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
             </p>
             <motion.button
               onClick={() => {
-                document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                navigate('/contacto');
                 setActiveSection?.('contact');
               }}
               className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-2xl hover:from-primary/90 hover:to-accent/90 transition-all duration-300 shadow-lg hover:shadow-xl"

@@ -1,29 +1,28 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Moon, Sun, Menu, X } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
 
 interface NavigationProps {
   activeSection: string;
-  setActiveSection: (section: string) => void;
   isDark: boolean;
   toggleTheme: () => void;
-  onQuoteClick?: () => void;
   portfolioMode?: 'employee' | 'freelance';
   togglePortfolioMode?: () => void;
 }
 
-export function Navigation({ activeSection, setActiveSection, isDark, toggleTheme, onQuoteClick, portfolioMode = 'freelance', togglePortfolioMode }: NavigationProps) {
+export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode = 'freelance', togglePortfolioMode }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   const sections = [
-    { id: 'home', label: 'Inicio' },
-    { id: 'about', label: 'Sobre Mí' },
-    { id: 'projects', label: 'Proyectos' },
-    ...(portfolioMode === 'freelance' ? [{ id: 'quote', label: 'Cotizar' }] : []),
-    { id: 'testimonials', label: 'Testimonios' },
-    { id: 'contact', label: 'Contacto' }
+    { id: 'home', label: 'Inicio', to: '/' },
+    { id: 'about', label: 'Sobre Mí', to: '/sobre-mi' },
+    { id: 'projects', label: 'Proyectos', to: '/proyectos' },
+    ...(portfolioMode === 'freelance' ? [{ id: 'quote', label: 'Cotizar', to: '/cotizar' }] : []),
+    { id: 'testimonials', label: 'Testimonios', to: '/testimonios' },
+    { id: 'contact', label: 'Contacto', to: '/contacto' }
   ];
 
   useEffect(() => {
@@ -46,35 +45,6 @@ export function Navigation({ activeSection, setActiveSection, isDark, toggleThem
       window.removeEventListener('resize', handleResize);
     };
   }, []);
-
-  const handleSectionClick = (sectionId: string) => {
-    // Si es la sección de cotización, usar la función especial
-    if (sectionId === 'quote' && onQuoteClick) {
-      onQuoteClick();
-      return;
-    }
-    
-    setActiveSection(sectionId);
-    
-    // Hacer scroll suave a la sección
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const navHeight = window.innerWidth < 1024 ? 64 : 80; // Altura diferente para móvil
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - navHeight;
-
-      // Scroll más compatible con móviles
-      if ('scrollBehavior' in document.documentElement.style) {
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      } else {
-        // Fallback para navegadores que no soportan smooth scroll
-        window.scrollTo(0, offsetPosition);
-      }
-    }
-  };
 
   return (
     <>
@@ -109,42 +79,46 @@ export function Navigation({ activeSection, setActiveSection, isDark, toggleThem
               className="flex items-center"
               whileHover={{ scale: 1.05 }}
             >
-              <h1 className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text">
+              <div className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text">
                 S
-              </h1>
+              </div>
             </motion.div>
 
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center gap-1">
               {sections.map((section) => (
-                <motion.button
+                <motion.div
                   key={section.id}
-                  onClick={() => handleSectionClick(section.id)}
-                  className={`relative px-6 py-2.5 rounded-xl transition-all duration-300 font-medium hover:bg-accent/50 ${
-                    activeSection === section.id
-                      ? 'text-black'
-                      : 'text-muted-foreground hover:text-foreground'
-                  }`}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <span className="relative z-10">{section.label}</span>
-                  {activeSection === section.id && (
-                    <motion.div
-                      layoutId="activeTab"
-                      className="absolute inset-0 rounded-xl shadow-lg"
-                      style={{
-                        backgroundColor: isDark ? '#242424' : 'rgba(3, 2, 19, 0.1)'
-                      }}
-                      transition={{ 
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 30,
-                        duration: 0.3 
-                      }}
-                    />
-                  )}
-                </motion.button>
+                  <NavLink
+                    to={section.to}
+                    end={section.to === '/'}
+                    className={`relative px-6 py-2.5 rounded-xl transition-all duration-300 font-medium hover:bg-accent/50 ${
+                      activeSection === section.id
+                        ? 'text-black'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    <span className="relative z-10">{section.label}</span>
+                    {activeSection === section.id && (
+                      <motion.div
+                        layoutId="activeTab"
+                        className="absolute inset-0 rounded-xl shadow-lg"
+                        style={{
+                          backgroundColor: isDark ? '#242424' : 'rgba(3, 2, 19, 0.1)'
+                        }}
+                        transition={{
+                          type: 'spring',
+                          stiffness: 500,
+                          damping: 30,
+                          duration: 0.3
+                        }}
+                      />
+                    )}
+                  </NavLink>
+                </motion.div>
               ))}
             </div>
 
@@ -222,22 +196,23 @@ export function Navigation({ activeSection, setActiveSection, isDark, toggleThem
           <div className="container mx-auto px-6 py-6">
             <div className="flex flex-col gap-1">
               {sections.map((section) => (
-                <motion.button
+                <motion.div
                   key={section.id}
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    // Pequeño delay para que el menú se cierre antes del scroll
-                    setTimeout(() => handleSectionClick(section.id), 100);
-                  }}
-                  className={`text-left px-4 py-3 rounded-lg transition-all duration-300 font-medium ${
-                    activeSection === section.id
-                      ? 'bg-primary text-primary-foreground shadow-sm'
-                      : 'hover:bg-accent hover:text-foreground text-muted-foreground'
-                  }`}
                   whileTap={{ scale: 0.98 }}
                 >
-                  {section.label}
-                </motion.button>
+                  <NavLink
+                    to={section.to}
+                    end={section.to === '/'}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className={`block text-left px-4 py-3 rounded-lg transition-all duration-300 font-medium ${
+                      activeSection === section.id
+                        ? 'bg-primary text-primary-foreground shadow-sm'
+                        : 'hover:bg-accent hover:text-foreground text-muted-foreground'
+                    }`}
+                  >
+                    {section.label}
+                  </NavLink>
+                </motion.div>
               ))}
               
               {/* Portfolio Mode Toggle for Mobile */}

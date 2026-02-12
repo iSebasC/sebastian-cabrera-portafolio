@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Quote, Star, ChevronLeft, ChevronRight, Users, Loader2, AlertCircle, RefreshCcw, Linkedin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useTestimonials } from '../hooks/useTestimonials';
 import { TestimonialAvatar } from './TestimonialAvatar';
 
@@ -11,6 +12,7 @@ interface TestimonialsSectionProps {
 }
 
 export function TestimonialsSection({ portfolioMode = 'freelance' }: TestimonialsSectionProps) {
+  const navigate = useNavigate();
   const { data: testimonials, loading, error, refetch } = useTestimonials();
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -434,7 +436,7 @@ export function TestimonialsSection({ portfolioMode = 'freelance' }: Testimonial
                 className="text-center mt-12"
               >
                 <motion.button
-                  onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() => navigate('/contacto')}
                   className="px-8 py-4 bg-gradient-to-r from-primary to-accent text-primary-foreground rounded-2xl hover:from-primary/90 hover:to-accent/90 transition-all duration-300 shadow-lg hover:shadow-xl"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}

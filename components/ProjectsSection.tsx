@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Eye, ChevronRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { getAllProjects } from '../services/sanityService';
 import { Project } from '../types/sanity';
@@ -11,6 +12,7 @@ interface ProjectsSectionProps {
 }
 
 export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance' }: ProjectsSectionProps) {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
@@ -423,7 +425,7 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance' }
                     </motion.button>
                     
                     <motion.button
-                      onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                      onClick={() => navigate('/contacto')}
                       className="px-8 py-4 border border-border hover:bg-accent transition-all duration-300 rounded-2xl"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
