@@ -133,8 +133,8 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
             {/* Quick Stats Inline */}
             <div className="flex flex-wrap items-center gap-8 mt-10">
               {[
-                { label: 'Años', value: '5+' },
-                { label: 'Proyectos', value: '150+' },
+                { label: 'Años', value: '+3' },
+                { label: 'Proyectos', value: '+6' },
                 { label: 'Satisfacción', value: '98%' }
               ].map((stat, i) => (
                 <motion.div
