@@ -9,15 +9,18 @@ import { Project } from '../types/sanity';
 interface ProjectsSectionProps {
   onProjectSelect?: (projectId: string) => void;
   portfolioMode?: 'employee' | 'freelance';
+  headingLevel?: 'h1' | 'h2';
 }
 
-export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance' }: ProjectsSectionProps) {
+export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', headingLevel = 'h2' }: ProjectsSectionProps) {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const HeadingTag = headingLevel as 'h1' | 'h2';
 
   // Cargar proyectos de Sanity
   useEffect(() => {
@@ -45,7 +48,7 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance' }
     ? projects 
     : projects.filter(project => project.category === selectedCategory);
 
-  const getGridClass = (layout: string, index: number) => {
+  const getGridClass = (layout: string) => {
     // Original desktop layout with responsive improvements
     switch (layout) {
       case 'wide':
@@ -69,27 +72,29 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance' }
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="mb-16"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-accent/50 rounded-full border border-border/50 mb-6"
-          >
-            <Eye className="w-4 h-4 text-primary" />
-            <span className="text-sm text-muted-foreground">Presentación de portafolios</span>
-          </motion.div>
-          
-          <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-foreground via-primary to-foreground bg-clip-text text-transparent">
-              Proyectos Destacados
-            </span>
-          </h2>
-          
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Una selección de mis trabajos más representativos, desde identidad visual hasta experiencias digitales innovadoras.
-          </p>
+          <div className="max-w-5xl">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-4 mb-6"
+            >
+              <span className="font-mono text-6xl lg:text-8xl font-bold text-muted-foreground opacity-30">03</span>
+              <div className="h-px flex-1 bg-border" />
+            </motion.div>
+
+            <HeadingTag className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">
+              Proyectos<br />Destacados
+            </HeadingTag>
+
+            <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
+              Una selección de trabajos que demuestran mi capacidad para transformar{' '}
+              <span className="text-foreground font-semibold">ideas complejas</span> en{' '}
+              <span className="text-foreground font-semibold">experiencias visuales impactantes</span>.
+            </p>
+          </div>
         </motion.div>
 
         {/* Category Filter */}
@@ -192,7 +197,7 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance' }
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`group relative overflow-hidden rounded-3xl ${getGridClass(project.layout, index)} cursor-pointer`}
+                className={`group relative overflow-hidden rounded-3xl ${getGridClass(project.layout)} cursor-pointer`}
                 onMouseEnter={() => setHoveredProject(project.id)}
                 onMouseLeave={() => setHoveredProject(null)}
                 onClick={() => {

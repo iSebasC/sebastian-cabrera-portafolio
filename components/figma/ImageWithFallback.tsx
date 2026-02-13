@@ -48,6 +48,12 @@ export const ImageWithFallback = React.memo<ImageWithFallbackProps>(function Ima
     // Para imágenes locales, generar versiones optimizadas
     if (typeof src === 'string' && src.startsWith('/img/')) {
       const ext = src.split('.').pop()
+      const normalizedExt = (ext ?? '').toLowerCase()
+
+      // Si ya se está pasando un formato moderno, no intentes variantes que pueden no existir.
+      if (normalizedExt === 'webp' || normalizedExt === 'avif') {
+        return { optimizedSrc: src, webpSrc: null, avifSrc: null }
+      }
       const baseName = src.replace(`.${ext}`, '')
       
       return {

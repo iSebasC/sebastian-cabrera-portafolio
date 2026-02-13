@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { Moon, Sun, Menu, X } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 
@@ -16,14 +16,36 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  // Scroll progress bar
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
   const sections = [
-    { id: 'home', label: 'Inicio', to: '/' },
-    { id: 'about', label: 'Sobre Mí', to: '/sobre-mi' },
-    { id: 'projects', label: 'Proyectos', to: '/proyectos' },
-    ...(portfolioMode === 'freelance' ? [{ id: 'quote', label: 'Cotizar', to: '/cotizar' }] : []),
-    { id: 'testimonials', label: 'Testimonios', to: '/testimonios' },
-    { id: 'contact', label: 'Contacto', to: '/contacto' }
+    { id: 'home', label: 'Inicio', number: '01', to: '/' },
+    { id: 'about', label: 'Sobre Mí', number: '02', to: '/sobre-mi' },
+    { id: 'projects', label: 'Proyectos', number: '03', to: '/proyectos' },
+    ...(portfolioMode === 'freelance'
+      ? [{ id: 'quote', label: 'Cotizar', number: '04', to: '/cotizar' }]
+      : []),
+    {
+      id: 'testimonials',
+      label: 'Testimonios',
+      number: portfolioMode === 'freelance' ? '05' : '04',
+      to: '/testimonios'
+    },
+    {
+      id: 'contact',
+      label: 'Contacto',
+      number: portfolioMode === 'freelance' ? '06' : '05',
+      to: '/contacto'
+    }
   ];
+
+  const isActive = (id: string) => activeSection === id;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -72,53 +94,83 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
               : 'bg-background/80 backdrop-blur-sm'  // Solo en desktop cambia con scroll
         }`}
       >
+        {/* Scroll Progress Bar */}
+        <motion.div
+          className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary via-primary/80 to-primary origin-left"
+          style={{ scaleX }}
+        />
+
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <motion.div
-              className="flex items-center"
-              whileHover={{ scale: 1.05 }}
-            >
-              <div className="text-xl lg:text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text">
-                S
-              </div>
-            </motion.div>
+            <NavLink to="/" end aria-label="Ir al inicio">
+              <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <div className="relative">
+                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center">
+                    <img
+                      src="/logo/logo.ico?v=2"
+                      alt="Logo Sebastian Cabrera"
+                      className="w-6 h-6 lg:w-7 lg:h-7 object-contain"
+                      loading="eager"
+                      decoding="async"
+                    />
+                  </div>
+                  <motion.div
+                    className="absolute -inset-1 rounded-full bg-gradient-to-br from-primary to-primary/70 opacity-20 blur-md"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                </div>
+              </motion.div>
+            </NavLink>
 
-            {/* Desktop Menu */}
+            {/* Desktop Menu - Magazine Style */}
             <div className="hidden lg:flex items-center gap-1">
               {sections.map((section) => (
-                <motion.div
-                  key={section.id}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <NavLink
-                    to={section.to}
-                    end={section.to === '/'}
-                    className={`relative px-6 py-2.5 rounded-xl transition-all duration-300 font-medium hover:bg-accent/50 ${
-                      activeSection === section.id
-                        ? 'text-black'
-                        : 'text-muted-foreground hover:text-foreground'
-                    }`}
+                <NavLink key={section.id} to={section.to} end={section.to === '/'}>
+                  <motion.div
+                    className="relative px-4 py-2 group cursor-pointer"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <span className="relative z-10">{section.label}</span>
-                    {activeSection === section.id && (
-                      <motion.div
-                        layoutId="activeTab"
-                        className="absolute inset-0 rounded-xl shadow-lg"
-                        style={{
-                          backgroundColor: isDark ? '#242424' : 'rgba(3, 2, 19, 0.1)'
-                        }}
-                        transition={{
-                          type: 'spring',
-                          stiffness: 500,
-                          damping: 30,
-                          duration: 0.3
-                        }}
-                      />
-                    )}
-                  </NavLink>
-                </motion.div>
+                    <div
+                      className={`flex items-center gap-2 transition-all duration-300 ${
+                        isActive(section.id)
+                          ? 'text-primary'
+                          : 'text-muted-foreground group-hover:text-foreground'
+                      }`}
+                    >
+                      {/* Dot indicator para active */}
+                      {isActive(section.id) && (
+                        <motion.div
+                          layoutId="activeDot"
+                          className="w-1.5 h-1.5 rounded-full bg-primary"
+                          transition={{ duration: 0.3 }}
+                        />
+                      )}
+
+                      {/* Número tipo magazine */}
+                      <span
+                        className={`text-xs font-mono transition-all duration-300 ${
+                          isActive(section.id) ? 'font-bold' : 'font-normal'
+                        }`}
+                      >
+                        {section.number}
+                      </span>
+
+                      {/* Label */}
+                      <span className="text-sm font-medium">{section.label}</span>
+                    </div>
+
+                    {/* Línea animada desde abajo en hover */}
+                    <motion.div
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary origin-left"
+                      initial={{ scaleX: 0 }}
+                      whileHover={{ scaleX: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </motion.div>
+                </NavLink>
               ))}
             </div>
 
@@ -191,28 +243,27 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
             opacity: isMobileMenuOpen ? 1 : 0 
           }}
           transition={{ duration: 0.3 }}
-          className="lg:hidden overflow-hidden bg-background border-t border-border shadow-lg"
+          className="lg:hidden overflow-hidden bg-background/98 backdrop-blur-md border-t border-border/50"
         >
-          <div className="container mx-auto px-6 py-6">
-            <div className="flex flex-col gap-1">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex flex-col gap-2">
               {sections.map((section) => (
-                <motion.div
-                  key={section.id}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <NavLink
-                    to={section.to}
-                    end={section.to === '/'}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`block text-left px-4 py-3 rounded-lg transition-all duration-300 font-medium ${
-                      activeSection === section.id
-                        ? 'bg-primary text-primary-foreground shadow-sm'
+                <NavLink key={section.id} to={section.to} end={section.to === '/'}>
+                  <motion.button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`w-full text-left p-4 rounded-lg transition-all duration-300 flex items-center gap-3 ${
+                      isActive(section.id)
+                        ? 'bg-primary text-primary-foreground'
                         : 'hover:bg-accent hover:text-foreground text-muted-foreground'
                     }`}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    {section.label}
-                  </NavLink>
-                </motion.div>
+                    <span className="text-xs font-mono font-bold">{section.number}</span>
+                    <span className="font-medium">{section.label}</span>
+                  </motion.button>
+                </NavLink>
               ))}
               
               {/* Portfolio Mode Toggle for Mobile */}

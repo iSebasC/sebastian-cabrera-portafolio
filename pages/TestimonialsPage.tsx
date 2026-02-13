@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { TestimonialsSection } from '../components/TestimonialsSection';
+import { FinalCTASection } from '../components/FinalCTASection';
 
 interface TestimonialsPageProps {
   portfolioMode?: 'employee' | 'freelance';
@@ -16,7 +17,9 @@ export function TestimonialsPage({ portfolioMode = 'freelance' }: TestimonialsPa
         />
       </Helmet>
 
-      <TestimonialsSection portfolioMode={portfolioMode} />
+      <TestimonialsSection portfolioMode={portfolioMode} headerVariant="magazine" headingLevel="h1" />
+
+      <FinalCTASection />
     </>
   );
 }

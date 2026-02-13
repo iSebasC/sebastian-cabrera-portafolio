@@ -16,7 +16,7 @@ export function ContactPage({ portfolioMode = 'freelance' }: ContactPageProps) {
         />
       </Helmet>
 
-      <ContactSection portfolioMode={portfolioMode} />
+      <ContactSection portfolioMode={portfolioMode} headerVariant="magazine" headingLevel="h1" />
     </>
   );
 }

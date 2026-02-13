@@ -29,9 +29,15 @@ const contactInfo = [
 
 interface ContactSectionProps {
   portfolioMode?: 'employee' | 'freelance';
+  headingLevel?: 'h1' | 'h2';
+  headerVariant?: 'default' | 'magazine';
 }
 
-export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionProps) {
+export function ContactSection({
+  portfolioMode = 'freelance',
+  headingLevel = 'h2',
+  headerVariant = 'default',
+}: ContactSectionProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -42,6 +48,9 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
+
+  const HeadingTag = headingLevel as 'h1' | 'h2';
+  const magazineNumber = portfolioMode === 'freelance' ? '06' : '05';
 
   // Función de validación
   const validateForm = () => {
@@ -175,7 +184,7 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
   };
 
   return (
-    <section id="contact" className="scroll-mt-24 pt-24 md:pt-32 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 relative overflow-hidden">
+    <section id="contact" className="scroll-mt-24 pt-24 md:pt-32 lg:pt-40 pb-40 sm:pb-20 lg:pb-24 relative">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <motion.div
@@ -192,84 +201,126 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Enhanced Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-20"
-        >
+        {headerVariant === 'magazine' ? (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-primary/10 to-accent/20 rounded-full border border-border/50 mb-8"
+            className="mb-20"
+          >
+            <div className="max-w-5xl">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="flex items-center gap-4 mb-6"
+              >
+                <span className="font-mono text-6xl lg:text-8xl font-bold text-muted-foreground opacity-30">
+                  {magazineNumber}
+                </span>
+                <div className="h-px flex-1 bg-border" />
+              </motion.div>
+
+              <HeadingTag className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">
+                Contacto<br />Directo
+              </HeadingTag>
+
+              <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
+                {portfolioMode === 'employee' ? (
+                  <>
+                    Estoy abierto a nuevas oportunidades profesionales. Si tienes una{' '}
+                    <span className="text-foreground font-semibold">propuesta interesante</span>, me encantará conocer los
+                    detalles.
+                  </>
+                ) : (
+                  <>
+                    Cada gran proyecto comienza con una conversación. Cuéntame tu visión y transformémosla en una{' '}
+                    <span className="text-foreground font-semibold">experiencia clara</span> que{' '}
+                    <span className="text-primary font-semibold">convierta</span>.
+                  </>
+                )}
+              </p>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
           >
             <motion.div
-              animate={{ 
-                rotate: [0, 10, -10, 0],
-                scale: [1, 1.1, 1]
-              }}
-              transition={{ 
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-primary/10 to-accent/20 rounded-full border border-border/50 mb-8"
             >
-              <MessageCircle className="w-5 h-5 text-primary" />
-            </motion.div>
-            <span className="font-medium">¡Conectemos!</span>
-          </motion.div>
-          
-          <h2 className="text-4xl lg:text-6xl xl:text-7xl font-bold mb-8">
-            <motion.span
-              animate={{
-                backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-              }}
-              transition={{ duration: 5, repeat: Infinity }}
-              className="bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent bg-[length:200%]"
-            >
-              ¿Listo para
-            </motion.span>
-            <br />
-            <span className="relative">
-              <motion.span
-                animate={{
-                  color: ['#000', '#7c3aed', '#ec4899', '#000']
-                }}
-                transition={{ duration: 4, repeat: Infinity }}
-                className="relative z-10"
-              >
-                Crear Juntos?
-              </motion.span>
               <motion.div
-                animate={{
-                  scaleX: [0, 1, 0],
-                  opacity: [0, 0.3, 0]
+                animate={{ 
+                  rotate: [0, 10, -10, 0],
+                  scale: [1, 1.1, 1]
                 }}
                 transition={{ 
-                  duration: 3,
+                  duration: 2,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="absolute bottom-2 left-0 w-full h-3 bg-gradient-to-r from-primary to-accent rounded-full"
-              />
-            </span>
-          </h2>
-          
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
-          >
-            {portfolioMode === 'employee' 
-              ? 'Estoy abierto a nuevas oportunidades profesionales. Si tienes una propuesta interesante, me encantaría conocer más detalles.'
-              : 'Cada gran proyecto comienza con una conversación. Cuéntame tu visión y transformémosla en una experiencia visual extraordinaria.'
-            }
-          </motion.p>
-        </motion.div>
+              >
+                <MessageCircle className="w-5 h-5 text-primary" />
+              </motion.div>
+              <span className="font-medium">¡Conectemos!</span>
+            </motion.div>
+            
+            <h2 className="text-4xl lg:text-6xl xl:text-7xl font-bold mb-8">
+              <motion.span
+                animate={{
+                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
+                }}
+                transition={{ duration: 5, repeat: Infinity }}
+                className="bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent bg-[length:200%]"
+              >
+                ¿Listo para
+              </motion.span>
+              <br />
+              <span className="relative">
+                <motion.span
+                  animate={{
+                    color: ['#000', '#7c3aed', '#ec4899', '#000']
+                  }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className="relative z-10"
+                >
+                  Crear Juntos?
+                </motion.span>
+                <motion.div
+                  animate={{
+                    scaleX: [0, 1, 0],
+                    opacity: [0, 0.3, 0]
+                  }}
+                  transition={{ 
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute bottom-2 left-0 w-full h-3 bg-gradient-to-r from-primary to-accent rounded-full"
+                />
+              </span>
+            </h2>
+            
+            <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+            >
+              {portfolioMode === 'employee' 
+                ? 'Estoy abierto a nuevas oportunidades profesionales. Si tienes una propuesta interesante, me encantaría conocer más detalles.'
+                : 'Cada gran proyecto comienza con una conversación. Cuéntame tu visión y transformémosla en una experiencia visual extraordinaria.'
+              }
+            </motion.p>
+          </motion.div>
+        )}
 
         <div className="grid lg:grid-cols-2 gap-20 items-start">
           {/* Enhanced Interactive Form */}
@@ -280,10 +331,7 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
             className="space-y-8"
           >
             <div className="space-y-4">
-              <motion.h3 
-                className="text-3xl font-bold"
-                whileHover={{ scale: 1.02 }}
-              >
+              <motion.h3 className="text-3xl font-bold">
                 {portfolioMode === 'employee' ? (
                   <>
                     Hablemos sobre{' '}
@@ -317,7 +365,6 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
                 {/* Name Field */}
                 <motion.div 
                   className="relative space-y-3"
-                  whileHover={{ scale: 1.02 }}
                 >
                   <label htmlFor="name" className="text-sm font-medium flex items-center gap-2">
                     <span className="text-base leading-none">👋</span>
@@ -363,7 +410,6 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
                 {/* Email Field */}
                 <motion.div 
                   className="relative space-y-3"
-                  whileHover={{ scale: 1.02 }}
                 >
                   <label htmlFor="email" className="text-sm font-medium flex items-center gap-2">
                     <span className="text-base leading-none">📧</span>
@@ -411,7 +457,6 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
               {/* Subject Field */}
               <motion.div 
                 className="relative space-y-3"
-                whileHover={{ scale: 1.01 }}
               >
                 <label htmlFor="subject" className="text-sm font-medium flex items-center gap-2">
                   <span className="text-base leading-none">🎯</span>
@@ -457,7 +502,6 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
               {/* Message Field */}
               <motion.div 
                 className="relative space-y-3"
-                whileHover={{ scale: 1.005 }}
               >
                 <label htmlFor="message" className="text-sm font-medium flex items-center gap-2">
                   <span className="text-base leading-none">💭</span>
@@ -503,7 +547,6 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
 
               {/* Enhanced Submit Button */}
               <motion.div
-                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="pt-4"
               >
@@ -576,17 +619,16 @@ export function ContactSection({ portfolioMode = 'freelance' }: ContactSectionPr
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
                   className="group flex items-center gap-4 p-4 bg-accent/30 rounded-2xl border border-border/50 hover:bg-accent/50 transition-all duration-300"
-                  whileHover={{ scale: 1.02 }}
                 >
                   <div className="p-3 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
                     <info.icon className="w-6 h-6 text-primary" />
                   </div>
                   
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <div className="font-medium text-sm text-muted-foreground">
                       {info.label}
                     </div>
-                    <div className="font-semibold group-hover:text-primary transition-colors">
+                    <div className="font-semibold group-hover:text-primary transition-colors break-words">
                       {info.value}
                     </div>
                   </div>

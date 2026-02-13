@@ -1,90 +1,46 @@
 import { QuoteSection } from './QuoteSection';
 import { motion } from 'framer-motion';
-import { ArrowDown } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 
 interface QuotePageProps {
   onNavigateToContact?: (serviceId?: string, specialty?: string, calculatedPrice?: number) => void;
+  headingLevel?: 'h1' | 'h2';
 }
 
-export function QuotePage({ onNavigateToContact }: QuotePageProps = {}) {
-  const scrollToServices = () => {
-    const servicesSection = document.getElementById('services-section');
-    if (servicesSection) {
-      servicesSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+export function QuotePage({ onNavigateToContact, headingLevel = 'h1' }: QuotePageProps = {}) {
+  const HeadingTag = headingLevel as 'h1' | 'h2';
 
   return (
     <div className="bg-background text-foreground">
-      {/* Hero Section - Compact */}
+      {/* Header / Hero */}
       <motion.section
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative min-h-[60vh] flex items-center justify-center px-4 overflow-hidden"
+        className="scroll-mt-24 pt-24 md:pt-32 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 bg-gradient-to-b from-background to-accent/5"
       >
-        {/* Background Effects */}
-        <div className="absolute inset-0 pointer-events-none">
-          <motion.div
-            animate={{ 
-              scale: [1, 1.2, 1],
-              rotate: [0, 90, 0],
-              opacity: [0.05, 0.1, 0.05]
-            }}
-            transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/10 rounded-full blur-3xl"
-          />
-        </div>
-
-        <div className="container mx-auto max-w-4xl text-center relative z-10">
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-5 py-2 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 rounded-full mb-6"
-          >
-            <span className="text-xl">💰</span>
-            <span className="text-sm">Precios Transparentes</span>
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-4xl md:text-6xl lg:text-7xl mb-4"
-          >
-            <span className="bg-gradient-to-r from-foreground via-primary to-accent-foreground bg-clip-text text-transparent">
-              Cotiza tu Proyecto
-            </span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8"
-          >
-            Inversión transparente en resultados reales
-          </motion.p>
-
-          {/* Scroll Indicator */}
-          <motion.button
-            onClick={scrollToServices}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            whileHover={{ y: 5 }}
-            className="inline-flex flex-col items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <span className="text-sm">Ver servicios</span>
+        <div className="container mx-auto px-4">
+          <div className="max-w-5xl">
             <motion.div
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.15 }}
+              className="flex items-center gap-4 mb-6"
             >
-              <ArrowDown className="w-5 h-5" />
+              <span className="font-mono text-6xl lg:text-8xl font-bold text-muted-foreground opacity-30">04</span>
+              <div className="h-px flex-1 bg-border" />
             </motion.div>
-          </motion.button>
+
+            <HeadingTag className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">
+              Cotizar<br />Proyecto
+            </HeadingTag>
+
+            <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
+              Precios claros y una estimación orientativa para transformar tu idea en una{' '}
+              <span className="text-foreground font-semibold">solución funcional</span>, con foco en{' '}
+              <span className="text-primary font-semibold">resultados medibles</span>.
+            </p>
+          </div>
         </div>
       </motion.section>
 

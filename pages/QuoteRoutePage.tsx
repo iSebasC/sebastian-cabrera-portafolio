@@ -17,6 +17,7 @@ export function QuoteRoutePage() {
 
       <QuotePage
         onNavigateToContact={() => navigate('/contacto')}
+        headingLevel="h1"
       />
     </>
   );

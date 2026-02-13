@@ -21,6 +21,7 @@ export function ProjectsPage({ portfolioMode = 'freelance' }: ProjectsPageProps)
 
       <ProjectsSection
         portfolioMode={portfolioMode}
+        headingLevel="h1"
         onProjectSelect={(projectId) => navigate(`/proyecto/${projectId}`)}
       />
     </>

@@ -1,5 +1,8 @@
 import { Helmet } from 'react-helmet-async';
 import { HeroSection } from '../components/HeroSection';
+import { MiniServicesSection } from '../components/MiniServicesSection';
+import { TestimonialsSection } from '../components/TestimonialsSection';
+import { FinalCTASection } from '../components/FinalCTASection';
 
 interface HomePageProps {
   portfolioMode?: 'employee' | 'freelance';
@@ -26,6 +29,12 @@ export function HomePage({ portfolioMode = 'freelance' }: HomePageProps) {
       <section id="home">
         <HeroSection portfolioMode={portfolioMode} />
       </section>
+
+      <MiniServicesSection />
+
+      <TestimonialsSection portfolioMode={portfolioMode} />
+
+      <FinalCTASection />
     </>
   );
 }
