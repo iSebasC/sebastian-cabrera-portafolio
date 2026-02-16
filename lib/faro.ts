@@ -6,6 +6,7 @@ import {
 } from '@grafana/faro-react';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
 import {
+  Routes as RouterRoutes,
   useLocation,
   useNavigationType,
 } from 'react-router-dom';
@@ -22,24 +23,52 @@ export function initFaro() {
   if (!isFaroEnabled) return;
   if (!collectorUrl) return;
 
-  initializeFaro({
-    url: collectorUrl,
-    app: {
-      name: (import.meta.env.VITE_APP_NAME as string | undefined) ?? 'Portafolio Sebastian',
-      version: (import.meta.env.VITE_APP_VERSION as string | undefined) ?? 'dev',
-      environment: import.meta.env.MODE,
-    },
-    instrumentations: [
-      ...getWebInstrumentations(),
-      new TracingInstrumentation(),
-      new ReactIntegration({
-        router: createReactRouterV7Options({
-          useLocation,
-          useNavigationType,
-          createRoutesFromChildren,
-          matchRoutes,
-        }),
-      }),
-    ],
-  });
+  const app = {
+    name: (import.meta.env.VITE_APP_NAME as string | undefined) ?? 'Portafolio Sebastian',
+    version: (import.meta.env.VITE_APP_VERSION as string | undefined) ?? 'dev',
+    environment: import.meta.env.MODE,
+  };
+
+  const baseInstrumentations = [...getWebInstrumentations(), new TracingInstrumentation()];
+
+  const hasRouterDeps =
+    typeof RouterRoutes === 'function' &&
+    typeof useLocation === 'function' &&
+    typeof useNavigationType === 'function' &&
+    typeof createRoutesFromChildren === 'function' &&
+    typeof matchRoutes === 'function';
+
+  if (hasRouterDeps) {
+    try {
+      initializeFaro({
+        url: collectorUrl,
+        app,
+        instrumentations: [
+          ...baseInstrumentations,
+          new ReactIntegration({
+            router: createReactRouterV7Options({
+              Routes: RouterRoutes,
+              useLocation,
+              useNavigationType,
+              createRoutesFromChildren,
+              matchRoutes,
+            }),
+          }),
+        ],
+      });
+      return;
+    } catch {
+      // fall through
+    }
+  }
+
+  try {
+    initializeFaro({
+      url: collectorUrl,
+      app,
+      instrumentations: baseInstrumentations,
+    });
+  } catch {
+    // ignore
+  }
 }
