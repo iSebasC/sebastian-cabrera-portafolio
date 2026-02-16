@@ -1,20 +1,25 @@
 import {
   ReactIntegration,
-  createReactRouterV6Options,
+  createReactRouterV7Options,
   getWebInstrumentations,
   initializeFaro,
 } from '@grafana/faro-react';
 import { TracingInstrumentation } from '@grafana/faro-web-tracing';
 import {
-  createRoutesFromChildren,
-  matchRoutes,
   useLocation,
   useNavigationType,
 } from 'react-router-dom';
+import { createRoutesFromChildren, matchRoutes } from 'react-router';
 
 const collectorUrl = import.meta.env.VITE_FARO_COLLECTOR_URL as string | undefined;
+const faroEnabledEnv = import.meta.env.VITE_FARO_ENABLED as string | undefined;
+
+const isFaroEnabled = faroEnabledEnv
+  ? faroEnabledEnv.toLowerCase() === 'true'
+  : import.meta.env.PROD;
 
 export function initFaro() {
+  if (!isFaroEnabled) return;
   if (!collectorUrl) return;
 
   initializeFaro({
@@ -28,7 +33,7 @@ export function initFaro() {
       ...getWebInstrumentations(),
       new TracingInstrumentation(),
       new ReactIntegration({
-        router: createReactRouterV6Options({
+        router: createReactRouterV7Options({
           useLocation,
           useNavigationType,
           createRoutesFromChildren,
