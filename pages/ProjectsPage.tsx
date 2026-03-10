@@ -1,5 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ProjectsSection } from '../components/ProjectsSection';
 
 interface ProjectsPageProps {
@@ -8,14 +9,15 @@ interface ProjectsPageProps {
 
 export function ProjectsPage({ portfolioMode = 'freelance' }: ProjectsPageProps) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <>
       <Helmet>
-        <title>Proyectos | Sebastian Cabrera</title>
+        <title>{t('projects.pageTitle')}</title>
         <meta
           name="description"
-          content="Explora proyectos destacados de Sebastian Cabrera: UI/UX, Frontend, Backend y FullStack. Casos reales con resultados."
+          content={t('projects.pageDescription')}
         />
       </Helmet>
 

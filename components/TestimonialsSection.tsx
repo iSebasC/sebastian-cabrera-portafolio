@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, ChevronLeft, ChevronRight, Loader2, Quote, RefreshCcw, Star } from 'lucide-react';
 import { useTestimonials } from '../hooks/useTestimonials';
+import { useTranslation } from 'react-i18next';
 
 interface TestimonialsSectionProps {
   portfolioMode?: 'employee' | 'freelance';
@@ -14,6 +15,7 @@ export function TestimonialsSection({
   headingLevel = 'h2',
   headerVariant = 'default',
 }: TestimonialsSectionProps) {
+  const { t } = useTranslation();
   const { data: testimonials, loading, error, refetch } = useTestimonials();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -90,13 +92,11 @@ export function TestimonialsSection({
               </motion.div>
 
               <HeadingTag className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">
-                Testimonios<br />Reales
+                {t('testimonials.realTestimonials')}
               </HeadingTag>
 
               <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
-                Opiniones y resultados de personas que confiaron en mi trabajo para construir{' '}
-                <span className="text-foreground font-semibold">productos sólidos</span> y{' '}
-                <span className="text-primary font-semibold">experiencias memorables</span>.
+                {t('testimonials.pageDescription')}
               </p>
             </div>
           </motion.div>
@@ -110,13 +110,10 @@ export function TestimonialsSection({
               className="max-w-xl"
             >
               <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tighter mb-4 leading-tight">
-                Lo Que Dicen
-                <br />
-                <span className="text-primary">Mis Colaboradores</span>
+                <span className="text-primary">{t('testimonials.title')}</span>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                Testimonios reales de profesionales que han trabajado conmigo y confían en mi trabajo para
-                sus proyectos más importantes.
+                {t('testimonials.description')}
               </p>
             </motion.div>
           </div>
@@ -139,7 +136,7 @@ export function TestimonialsSection({
               }`}
               whileHover={canScrollLeft ? { scale: 1.1 } : {}}
               whileTap={canScrollLeft ? { scale: 0.95 } : {}}
-              aria-label="Anterior"
+              aria-label={t('testimonials.previous')}
             >
               <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
             </motion.button>
@@ -154,7 +151,7 @@ export function TestimonialsSection({
               }`}
               whileHover={canScrollRight ? { scale: 1.1 } : {}}
               whileTap={canScrollRight ? { scale: 0.95 } : {}}
-              aria-label="Siguiente"
+              aria-label={t('testimonials.next')}
             >
               <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
             </motion.button>
@@ -163,7 +160,7 @@ export function TestimonialsSection({
         {loading && (
           <div className="flex items-center gap-2 text-muted-foreground">
             <Loader2 className="w-5 h-5 animate-spin" />
-            <span>Cargando testimonios...</span>
+            <span>{t('testimonials.loading')}</span>
           </div>
         )}
 
@@ -175,7 +172,7 @@ export function TestimonialsSection({
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-foreground text-background"
             >
               <RefreshCcw className="w-4 h-4" />
-              Reintentar
+              {t('testimonials.retry')}
             </button>
           </div>
         )}
@@ -273,19 +270,19 @@ export function TestimonialsSection({
           >
             <div className="text-center mb-12">
               <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-                Por Qué Confían en Mi Trabajo
+                {t('testimonials.whyTrust')}
               </h3>
               <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-                Resultados que mis colaboradores experimentan consistentemente
+                {t('testimonials.whyTrustDescription')}
               </p>
             </div>
 
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { value: '95%', label: 'Proyectos Exitosos', gradient: 'from-green-500 to-emerald-500' },
-                { value: '100%', label: 'Entrega Puntual', gradient: 'from-blue-500 to-cyan-500' },
-                { value: '+250%', label: 'ROI Promedio', gradient: 'from-purple-500 to-pink-500' },
-                { value: '98%', label: 'Recomendación', gradient: 'from-orange-500 to-yellow-500' },
+                { value: '95%', label: t('testimonials.metrics.successful'), gradient: 'from-green-500 to-emerald-500' },
+                { value: '100%', label: t('testimonials.metrics.delivery'), gradient: 'from-blue-500 to-cyan-500' },
+                { value: '+250%', label: t('testimonials.metrics.roi'), gradient: 'from-purple-500 to-pink-500' },
+                { value: '98%', label: t('testimonials.metrics.recommendation'), gradient: 'from-orange-500 to-yellow-500' },
               ].map((metric, index) => (
                 <motion.div
                   key={metric.label}

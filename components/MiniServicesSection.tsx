@@ -1,46 +1,37 @@
 import { motion } from 'framer-motion';
 import { CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 export function MiniServicesSection() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
+  const { t } = useTranslation();
 
   const services = [
     {
-      title: 'LANDING PAGES QUE VENDEN',
+      title: t('services.service1.title'),
       items: [
-        'Páginas optimizadas con copy persuasivo y A/B testing',
-        'Análisis de conversiones y métricas empresariales reales',
-        'Diseño responsive y carga ultra-rápida',
-        'Integración con herramientas de marketing',
+        t('services.service1.item1'),
+        t('services.service1.item2'),
       ],
     },
     {
-      title: 'SISTEMAS WEB Y PLATAFORMAS',
+      title: t('services.service2.title'),
       items: [
-        'Dashboards, SaaS y plataformas escalables',
-        'React, Next.js, Node.js y tecnologías modernas',
-        'Arquitectura robusta y mantenible',
-        '99.9% uptime garantizado',
+        t('services.service2.item1'),
       ],
     },
     {
-      title: 'BACKEND + APIS',
+      title: t('services.service3.title'),
       items: [
-        'Integraciones, webhooks y automatizaciones',
-        'APIs RESTful y GraphQL escalables',
-        'Bases de datos optimizadas',
-        'Seguridad y autenticación avanzada',
+        t('services.service3.item1'),
       ],
     },
     {
-      title: 'SOPORTE Y MANTENIMIENTO',
+      title: t('services.service4.title'),
       items: [
-        'Respuesta urgente en menos de 2 horas',
-        'Updates inmediatos y revisiones incluidas',
-        'Monitoreo 24/7 y backups automáticos',
-        'Chat directo para cambios críticos',
+        t('services.service4.item1'),
       ],
     },
   ];
@@ -58,11 +49,10 @@ export function MiniServicesSection() {
               className="mb-12"
             >
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6">
-                QUÉ PUEDO HACER POR TI
+                {t('services.title')}
               </h2>
               <p className="text-base text-muted-foreground max-w-lg">
-                Desarrollo páginas web, sistemas web y plataformas digitales que convierten visitantes en clientes
-                reales.
+                {t('services.description')}
               </p>
             </motion.div>
 

@@ -1,0 +1,389 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Sobre Mí",
+    "projects": "Proyectos",
+    "quote": "Cotizar",
+    "testimonials": "Testimonios",
+    "contact": "Contacto",
+    "portfolioMode": "Modo Portfolio",
+    "dev": "Dev",
+    "freelance": "Freelance",
+    "language": "Idioma"
+  },
+  "hero": {
+    "name": "Sebastian Cabrera A.",
+    "title1": "SISTEMAS",
+    "title2": "QUE",
+    "title3": "CONVIERTEN",
+    "description": "Desarrollo landing pages, sistemas web y plataformas digitales modernas que ayudan a los negocios a convertir visitantes en clientes reales.",
+    "btnProjects": "Ver Proyectos",
+    "btnQuote": "Solicitar Cotización",
+    "btnContact": "Contactar",
+    "knowMe": "¡Conóceme!"
+  },
+  "services": {
+    "title": "Qué puedo hacer por tu negocio",
+    "description": "Desarrollo soluciones web modernas enfocadas en rendimiento, experiencia de usuario y generación de clientes.",
+    "service1": {
+      "title": "Landing Pages de Alta Conversión",
+      "item1": "Diseño y desarrollo landing pages optimizadas para captar clientes potenciales.",
+      "item2": "Incluye estructura persuasiva, velocidad optimizada y adaptación completa a dispositivos móviles."
+    },
+    "service2": {
+      "title": "Sistemas Web Personalizados",
+      "item1": "Desarrollo sistemas web a medida para gestionar procesos de negocio, automatizar tareas y mejorar la productividad."
+    },
+    "service3": {
+      "title": "Desarrollo Backend y APIs",
+      "item1": "Construcción de arquitecturas backend robustas e integración de APIs para aplicaciones modernas y escalables."
+    },
+    "service4": {
+      "title": "Soporte y Mantenimiento",
+      "item1": "Mantenimiento técnico, actualizaciones, mejoras continuas y soporte para garantizar que tu plataforma funcione de forma estable y segura."
+    }
+  },
+  "cta": {
+    "title": "¿Tienes una idea o proyecto en mente?",
+    "description": "Puedo ayudarte a transformar tu idea en una solución web funcional y escalable.",
+    "btnQuote": "Solicitar cotización",
+    "responseTime": "Respuesta en menos de 24 horas."
+  },
+  "footer": {
+    "name": "Sebastian Cabrera",
+    "role": "Desarrollador Full Stack especializado en desarrollo de sistemas web, landing pages y plataformas digitales modernas.",
+    "navigate": "Navegar",
+    "social": "Social",
+    "contact": "Contacto",
+    "contactText": "¿Tienes un proyecto en mente?",
+    "quoteBtn": "Cotizar Proyecto",
+    "designedWith": "Diseñado con",
+    "passion": "pasión y precisión",
+    "copyright": "Desarrollador FullStack & Diseñador Creativo © 2026"
+  },
+  "projects": {
+    "magazineNumber": "03",
+    "title": "Proyectos Destacados",
+    "subtitle": "Una selección de trabajos que demuestran mi capacidad para transformar ideas complejas en experiencias visuales impactantes.",
+    "categories": {
+      "all": "Todos",
+      "uiux": "UI UX",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "fullstack": "FullStack",
+      "app": "App"
+    },
+    "loading": "Cargando proyectos...",
+    "error": "Error al cargar proyectos",
+    "errorMessage": "Error al cargar los proyectos",
+    "viewProject": "Ver Proyecto",
+    "openExternal": "Abrir en nueva ventana",
+    "noProjects": "No hay proyectos para mostrar",
+    "pageTitle": "Proyectos | Sebastian Cabrera",
+    "pageDescription": "Explora proyectos destacados de Sebastian Cabrera: UI/UX, Frontend, Backend y FullStack. Casos reales con resultados."
+  },
+  "testimonials": {
+    "title": "Lo Que Dicen Mis Colaboradores",
+    "realTestimonials": "Testimonios Reales",
+    "description": "Testimonios reales de profesionales que han trabajado conmigo y confían en mi trabajo para sus proyectos más importantes.",
+    "pageDescription": "Opiniones y resultados de personas que confiaron en mi trabajo para construir productos sólidos y experiencias memorables.",
+    "whyTrust": "Por Qué Confían en Mi Trabajo",
+    "whyTrustDescription": "Resultados que mis colaboradores experimentan consistentemente",
+    "metrics": {
+      "successful": "Proyectos Exitosos",
+      "delivery": "Entrega Puntual",
+      "roi": "ROI Promedio",
+      "recommendation": "Recomendación"
+    },
+    "loading": "Cargando testimonios...",
+    "error": "Error al cargar testimonios",
+    "retry": "Reintentar",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "pageTitle": "Testimonios | Sebastian Cabrera",
+    "pageMetaDescription": "Testimonios y resultados de clientes: experiencia, calidad y entrega en proyectos web y diseño digital."
+  },
+  "about": {
+    "title": "Sobre Mí",
+    "subtitle": "Más que un diseñador, soy un estratega visual que convierte ideas complejas en experiencias memorables que conectan, inspiran y generan resultados medibles.",
+    "stats": {
+      "years": "Años",
+      "projects": "Proyectos",
+      "satisfaction": "Satisfacción"
+    },
+    "bio": "Bio",
+    "bioDescription": "Desarrollador y Diseñador Web con experiencia en backend, frontend y diseño visual. Creo soluciones digitales seguras, escalables y atractivas que combinan funcionalidad, diseño y una buena experiencia de usuario.",
+    "philosophy": "Mi Filosofía",
+    "philosophyText": "El diseño excepcional surge cuando la creatividad encuentra la estrategia. No creo en diseño bonito sin propósito, sino en soluciones visuales que conectan emocionalmente y generan resultados medibles.",
+    "conversationBtn": "Conversemos sobre tu proyecto",
+    "contactBtn": "Contáctame",
+    "process": {
+      "title": "Mi Proceso Creativo",
+      "description": "Un enfoque metódico que combina investigación, creatividad y ejecución técnica impecable.",
+      "discover": {
+        "title": "Descubrir",
+        "description": "Investigo, analizo y entiendo cada detalle del desafío creativo."
+      },
+      "conceptualize": {
+        "title": "Conceptualizar",
+        "description": "Desarrollo múltiples conceptos y exploro direcciones creativas únicas."
+      },
+      "design": {
+        "title": "Diseñar",
+        "description": "Ejecuto la visión con precisión técnica y atención al detalle."
+      },
+      "deliver": {
+        "title": "Entregar",
+        "description": "Presento soluciones que superan expectativas y generan impacto."
+      }
+    },
+    "arsenal": "Arsenal Creativo",
+    "principles": {
+      "title": "Pilares de mi Metodología",
+      "creativity": {
+        "title": "Creatividad",
+        "description": "Cada proyecto es una oportunidad para innovar"
+      },
+      "strategy": {
+        "title": "Estrategia",
+        "description": "Diseño con propósito y objetivos claros"
+      },
+      "execution": {
+        "title": "Ejecución",
+        "description": "Perfección técnica en cada detalle"
+      },
+      "innovation": {
+        "title": "Innovación",
+        "description": "Siempre un paso adelante"
+      }
+    },
+    "available": "Disponible",
+    "roleTitle": "Desarrollador y Diseñador Web",
+    "pageTitle": "Sobre mí | Sebastian Cabrera",
+    "pageDescription": "Conoce a Sebastian Cabrera: desarrollador FullStack y diseñador web. Proceso creativo, metodología y experiencia profesional."
+  },
+  "contact": {
+    "magazineNumber": "06",
+    "title": "Contacto Directo",
+    "employeeDescription": "Estoy abierto a nuevas oportunidades profesionales. Si tienes una propuesta interesante, me encantará conocer los detalles.",
+    "freelanceDescription": "Cada gran proyecto comienza con una conversación. Cuéntame tu visión y transformémosla en una experiencia clara que convierta.",
+    "connectLabel": "¡Conectemos!",
+    "readyTitle": "¿Listo para",
+    "createTitle": "Crear Juntos?",
+    "employeeSubtitle": "Estoy abierto a nuevas oportunidades profesionales. Si tienes una propuesta interesante, me encantaría conocer más detalles.",
+    "freelanceSubtitle": "Cada gran proyecto comienza con una conversación. Cuéntame tu visión y transformémosla en una experiencia visual extraordinaria.",
+    "form": {
+      "opportunitiesTitle": "Hablemos sobre Oportunidades",
+      "conversationTitle": "Comencemos una Conversación",
+      "opportunitiesDescription": "Estoy interesado en nuevas oportunidades profesionales. Cuéntame sobre el rol y tu empresa.",
+      "conversationDescription": "Cada detalle cuenta. Mientras más me cuentes, mejor podré ayudarte.",
+      "nameLabel": "¿Cómo te llamas?",
+      "namePlaceholder": "Tu nombre",
+      "emailLabel": "¿Cuál es tu email?",
+      "emailPlaceholder": "tu@email.com",
+      "subjectLabel": "¿Qué tienes en mente?",
+      "subjectPlaceholder": "Proyecto web, branding, ilustración...",
+      "messageLabel": "Cuéntame los detalles",
+      "messagePlaceholder": "Describe tu proyecto, objetivos, plazos, presupuesto estimado... ¡Todo lo que consideres importante!",
+      "sendButton": "Enviar Mensaje",
+      "sending": "Enviando tu mensaje...",
+      "validation": {
+        "nameRequired": "El nombre es requerido",
+        "nameMinLength": "El nombre debe tener al menos 2 caracteres",
+        "emailRequired": "El email es requerido",
+        "emailInvalid": "Por favor ingresa un email válido",
+        "subjectRequired": "El asunto es requerido",
+        "subjectMinLength": "El asunto debe tener al menos 3 caracteres",
+        "messageRequired": "El mensaje es requerido",
+        "messageMinLength": "El mensaje debe tener al menos 10 caracteres"
+      }
+    },
+    "infoTitle": "Información de Contacto",
+    "infoDescription": "También puedes contactarme directamente a través de cualquiera de estos medios.",
+    "info": {
+      "emailLabel": "Email",
+      "phoneLabel": "Teléfono",
+      "locationLabel": "Ubicación",
+      "locationValue": "Lima, Perú"
+    },
+    "availability": {
+      "employee": "¡Conversemos!",
+      "freelance": "¡Trabajemos Juntos!"
+    },
+    "availabilityDesc": {
+      "employee": "Estoy disponible para nuevas oportunidades profesionales y colaboraciones.",
+      "freelance": "Estoy disponible para proyectos freelance y colaboraciones a tiempo completo."
+    },
+    "success": {
+      "title": "¡Mensaje Enviado! 🎉",
+      "message": "Gracias por contactarme. Te responderé lo antes posible.",
+      "closeLabel": "Cerrar modal"
+    },
+    "pageTitle": "Contacto | Sebastian Cabrera",
+    "pageDescription": "Contacta a Sebastian Cabrera para desarrollo web y diseño. Cuéntame sobre tu proyecto y recibe una propuesta."
+  },
+  "quote": {
+    "magazineNumber": "04",
+    "title": "Cotizar Proyecto",
+    "subtitle": "Precios claros y una estimación orientativa para transformar tu idea en una solución funcional, con foco en resultados medibles.",
+    "whyInvest": "¿Por qué invertir?",
+    "benefits": {
+      "roi": {
+        "title": "ROI Comprobado",
+        "description": "+40% conversión promedio en proyectos"
+      },
+      "agile": {
+        "title": "Entregas Ágiles",
+        "description": "De 2 a 4 semanas según complejidad"
+      },
+      "strategy": {
+        "title": "Estrategia Clara",
+        "description": "Diseño orientado a objetivos medibles"
+      },
+      "support": {
+        "title": "Soporte Continuo",
+        "description": "Revisiones ilimitadas incluidas"
+      }
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "revisions": {
+        "question": "¿Incluyen revisiones?",
+        "answer": "Sí, revisiones ilimitadas hasta tu satisfacción completa."
+      },
+      "time": {
+        "question": "¿Cuánto demora?",
+        "answer": "Landing pages: 1-2 semanas. Proyectos complejos: 3-4 semanas."
+      },
+      "payment": {
+        "question": "¿Formas de pago?",
+        "answer": "Transferencias, Yape, Plin, tarjetas. Plan: 50% inicio, 50% final."
+      },
+      "support": {
+        "question": "¿Qué incluye el soporte?",
+        "answer": "30 días post-entrega para ajustes menores y resolución de dudas."
+      }
+    },
+    "pageTitle": "Cotizar | Sebastian Cabrera",
+    "pageDescription": "Cotiza tu proyecto con precios transparentes. Selecciona el servicio y recibe una estimación orientativa."
+  },
+  "priceCalculator": {
+    "title": "Servicios & Precios",
+    "subtitle": "Elige tu especialidad y encuentra el servicio ideal",
+    "currency": "Moneda:",
+    "servicesCount": "servicios",
+    "from": "desde",
+    "popular": "Popular",
+    "optionals": "opcionales",
+    "buttonCalculate": "Calcular",
+    "buttonQuote": "Cotizar",
+    "specialties": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "fullstack": "Full Stack"
+    },
+    "services": {
+      "landingBasic": {
+        "name": "Landing Básica",
+        "description": "Una sección impactante",
+        "features": {
+          "heroSection": "Hero section",
+          "responsiveDesign": "Diseño responsivo",
+          "contactForm": "Formulario contacto",
+          "basicSEO": "SEO básico",
+          "animations": "Animaciones"
+        }
+      },
+      "landingComplete": {
+        "name": "Landing Completa",
+        "description": "Scroll largo con animaciones",
+        "features": {
+          "multipleSections": "Múltiples secciones",
+          "responsiveDesign": "Diseño responsivo",
+          "advancedForm": "Formulario avanzado",
+          "motionAnimations": "Animaciones Motion",
+          "advancedSEO": "SEO avanzado",
+          "integratedChat": "Chat integrado"
+        }
+      },
+      "webInstitutional": {
+        "name": "Web Institucional",
+        "description": "Sitio completo profesional",
+        "features": {
+          "pages": "4-6 páginas",
+          "navigation": "Sistema navegación",
+          "adminPanel": "Panel admin básico",
+          "integratedBlog": "Blog integrado",
+          "multiLanguage": "Multi-idioma",
+          "userSystem": "Sistema usuarios",
+          "completeSEO": "SEO completo"
+        }
+      },
+      "ecommerce": {
+        "name": "E-Commerce",
+        "description": "Tienda online funcional",
+        "features": {
+          "productCatalog": "Catálogo productos",
+          "shoppingCart": "Carrito compras",
+          "sellerPanel": "Panel vendedor",
+          "paymentGateway": "Pasarela de pago",
+          "advancedInventory": "Inventario avanzado",
+          "couponSystem": "Sistema cupones",
+          "autoShipping": "Envíos automáticos"
+        }
+      },
+      "dashboard": {
+        "name": "Dashboard",
+        "description": "Panel de control empresarial",
+        "features": {
+          "dataVisualization": "Visualización datos",
+          "userManagement": "Gestión usuarios",
+          "basicReports": "Reportes básicos",
+          "advancedCharts": "Charts avanzados",
+          "dataExport": "Exportación datos",
+          "realtimeNotifications": "Notificaciones real-time",
+          "restAPI": "API REST"
+        }
+      },
+      "apiBackend": {
+        "name": "API Backend",
+        "description": "Sistema backend robusto",
+        "features": {
+          "restEndpoints": "Endpoints REST",
+          "database": "Base de datos",
+          "jwtAuth": "Autenticación JWT",
+          "microservices": "Microservicios",
+          "websockets": "Websockets",
+          "redisCache": "Caché Redis",
+          "apiDocs": "Documentación API"
+        }
+      }
+    },
+    "trustIndicators": {
+      "fastDelivery": {
+        "title": "Entrega Rápida",
+        "description": "2-4 semanas"
+      },
+      "premiumQuality": {
+        "title": "Calidad Premium",
+        "description": "+40% conversión"
+      },
+      "totalGuarantee": {
+        "title": "Garantía Total",
+        "description": "Revisiones incluidas"
+      }
+    },
+    "calculator": {
+      "title": "Calculadora de Precio",
+      "basePrice": "Precio base",
+      "uiuxDesign": "Diseño UI/UX",
+      "additionalSections": "Secciones Adicionales",
+      "addExtraSections": "Agregar secciones extra",
+      "perSection": "por sección",
+      "optionalFeatures": "Características Opcionales",
+      "estimatedTotal": "Total Estimado",
+      "disclaimer": "* Precio referencial. Puede ajustarse según requerimientos específicos.",
+      "requestQuote": "Solicitar Cotización con este Precio"
+    }
+  }
+}

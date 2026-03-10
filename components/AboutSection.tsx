@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { 
   Brain, Rocket, Sparkles, Zap, Palette,
   Coffee, Heart,
@@ -13,80 +14,81 @@ interface AboutSectionProps {
   portfolioMode?: 'employee' | 'freelance';
 }
 
-const designPrinciples = [
-  {
-    id: 'creativity',
-    icon: Sparkles,
-    title: 'Creatividad',
-    description: 'Cada proyecto es una oportunidad para innovar',
-    value: 98
-  },
-  {
-    id: 'strategy',
-    icon: Brain,
-    title: 'Estrategia',
-    description: 'Diseño con propósito y objetivos claros',
-    value: 95
-  },
-  {
-    id: 'execution',
-    icon: Zap,
-    title: 'Ejecución',
-    description: 'Perfección técnica en cada detalle',
-    value: 92
-  },
-  {
-    id: 'innovation',
-    icon: Rocket,
-    title: 'Innovación',
-    description: 'Siempre un paso adelante',
-    value: 90
-  }
-];
-
-const tools = [
-  { name: 'Laravel (PHP)', level: 95, category: 'Backend', color: 'from-orange-500 to-red-500' },
-  { name: 'Node.js / NestJS', level: 90, category: 'Backend', color: 'from-orange-400 to-yellow-500' },
-  { name: 'MySQL / SQL Server', level: 88, category: 'Database', color: 'from-green-500 to-emerald-500' },
-  { name: 'Next.js', level: 92, category: 'Frontend', color: 'from-cyan-500 to-blue-500' },
-  { name: 'React', level: 95, category: 'Frontend', color: 'from-blue-500 to-cyan-500' },
-  { name: 'Astro', level: 85, category: 'Frontend', color: 'from-indigo-500 to-purple-500' },
-  { name: 'Figma', level: 98, category: 'Design', color: 'from-purple-500 to-pink-500' }
-];
-
-const workProcess = [
-  {
-    step: '01',
-    title: 'Descubrir',
-    description: 'Investigo, analizo y entiendo cada detalle del desafío creativo.',
-    icon: Eye,
-    color: 'from-blue-400 to-blue-600'
-  },
-  {
-    step: '02',
-    title: 'Conceptualizar',
-    description: 'Desarrollo múltiples conceptos y exploro direcciones creativas únicas.',
-    icon: Lightbulb,
-    color: 'from-yellow-400 to-orange-500'
-  },
-  {
-    step: '03',
-    title: 'Diseñar',
-    description: 'Ejecuto la visión con precisión técnica y atención al detalle.',
-    icon: Palette,
-    color: 'from-purple-400 to-pink-500'
-  },
-  {
-    step: '04',
-    title: 'Entregar',
-    description: 'Presento soluciones que superan expectativas y generan impacto.',
-    icon: Target,
-    color: 'from-green-400 to-emerald-500'
-  }
-];
-
 export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: AboutSectionProps) {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  const designPrinciples = [
+    {
+      id: 'creativity',
+      icon: Sparkles,
+      title: t('about.principles.creativity.title'),
+      description: t('about.principles.creativity.description'),
+      value: 98
+    },
+    {
+      id: 'strategy',
+      icon: Brain,
+      title: t('about.principles.strategy.title'),
+      description: t('about.principles.strategy.description'),
+      value: 95
+    },
+    {
+      id: 'execution',
+      icon: Zap,
+      title: t('about.principles.execution.title'),
+      description: t('about.principles.execution.description'),
+      value: 92
+    },
+    {
+      id: 'innovation',
+      icon: Rocket,
+      title: t('about.principles.innovation.title'),
+      description: t('about.principles.innovation.description'),
+      value: 90
+    }
+  ];
+
+  const tools = [
+    { name: 'Laravel (PHP)', level: 95, category: 'Backend', color: 'from-orange-500 to-red-500' },
+    { name: 'Node.js / NestJS', level: 90, category: 'Backend', color: 'from-orange-400 to-yellow-500' },
+    { name: 'MySQL / SQL Server', level: 88, category: 'Database', color: 'from-green-500 to-emerald-500' },
+    { name: 'Next.js', level: 92, category: 'Frontend', color: 'from-cyan-500 to-blue-500' },
+    { name: 'React', level: 95, category: 'Frontend', color: 'from-blue-500 to-cyan-500' },
+    { name: 'Astro', level: 85, category: 'Frontend', color: 'from-indigo-500 to-purple-500' },
+    { name: 'Figma', level: 98, category: 'Design', color: 'from-purple-500 to-pink-500' }
+  ];
+
+  const workProcess = [
+    {
+      step: '01',
+      title: t('about.process.discover.title'),
+      description: t('about.process.discover.description'),
+      icon: Eye,
+      color: 'from-blue-400 to-blue-600'
+    },
+    {
+      step: '02',
+      title: t('about.process.conceptualize.title'),
+      description: t('about.process.conceptualize.description'),
+      icon: Lightbulb,
+      color: 'from-yellow-400 to-orange-500'
+    },
+    {
+      step: '03',
+      title: t('about.process.design.title'),
+      description: t('about.process.design.description'),
+      icon: Palette,
+      color: 'from-purple-400 to-pink-500'
+    },
+    {
+      step: '04',
+      title: t('about.process.deliver.title'),
+      description: t('about.process.deliver.description'),
+      icon: Target,
+      color: 'from-green-400 to-emerald-500'
+    }
+  ];
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -122,20 +124,18 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
               <div className="h-px flex-1 bg-border" />
             </motion.div>
 
-            <h1 className="text-5xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">Sobre Mí</h1>
+            <h1 className="text-5xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">{t('about.title')}</h1>
 
             <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
-              Más que un diseñador, soy un <span className="text-foreground font-semibold">estratega visual</span> que convierte
-              ideas complejas en experiencias memorables que conectan, inspiran y{' '}
-              <span className="text-primary font-semibold">generan resultados medibles</span>.
+              {t('about.subtitle')}
             </p>
 
             {/* Quick Stats Inline */}
             <div className="flex flex-wrap items-center gap-8 mt-10">
               {[
-                { label: 'Años', value: '+3' },
-                { label: 'Proyectos', value: '+6' },
-                { label: 'Satisfacción', value: '98%' }
+                { label: t('about.stats.years'), value: '+3' },
+                { label: t('about.stats.projects'), value: '+6' },
+                { label: t('about.stats.satisfaction'), value: '98%' }
               ].map((stat, i) => (
                 <motion.div
                   key={stat.label}
@@ -213,12 +213,11 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
             {/* Título de sección */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <span className="font-mono text-sm text-primary">Bio</span>
+                <span className="font-mono text-sm text-primary">{t('about.bio')}</span>
                 <div className="h-px flex-1 bg-border" />
               </div>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                <strong className="text-foreground">Desarrollador y Diseñador Web</strong> con experiencia en backend, frontend y diseño visual.
-                Creo soluciones digitales seguras, escalables y atractivas que combinan funcionalidad, diseño y una buena experiencia de usuario.
+                {t('about.bioDescription')}
               </p>
             </div>
 
@@ -229,12 +228,10 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
             >
               <div className="flex items-start gap-3 mb-3">
                 <Heart className="w-5 h-5 text-primary flex-shrink-0 mt-1" />
-                <h3 className="font-bold text-lg">Mi Filosofía</h3>
+                <h3 className="font-bold text-lg">{t('about.philosophy')}</h3>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                "El diseño excepcional surge cuando la creatividad encuentra la estrategia.
-                No creo en diseño bonito sin propósito, sino en soluciones visuales que
-                conectan emocionalmente y generan resultados medibles."
+                {t('about.philosophyText')}
               </p>
             </motion.div>
 
@@ -249,7 +246,7 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
               className="w-full px-6 py-4 bg-primary text-primary-foreground rounded-xl font-semibold flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-shadow"
             >
               <Coffee className="w-5 h-5" />
-              {portfolioMode === 'freelance' ? 'Conversemos sobre tu proyecto' : 'Contáctame'}
+              {portfolioMode === 'freelance' ? t('about.conversationBtn') : t('about.contactBtn')}
             </motion.button>
           </motion.div>
         </div>
@@ -259,10 +256,10 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
           {/* Left: Título */}
           <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
             <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
-              Mi Proceso<br />Creativo
+              {t('about.process.title')}
             </h2>
             <p className="text-lg text-muted-foreground">
-              Un enfoque metódico que combina investigación, creatividad y ejecución técnica impecable.
+              {t('about.process.description')}
             </p>
           </motion.div>
 
@@ -313,7 +310,7 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
           <div className="flex items-center justify-between gap-4 mb-12">
             <div className="flex items-center gap-4 flex-1">
               <div>
-                <h2 className="text-3xl lg:text-4xl font-bold">Arsenal Creativo</h2>
+                <h2 className="text-3xl lg:text-4xl font-bold">{t('about.arsenal')}</h2>
               </div>
               <div className="hidden lg:block h-px flex-1 bg-gradient-to-r from-border to-transparent" />
             </div>
@@ -377,7 +374,7 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
         {/* Pilares - Magazine Grid */}
         <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
           <div className="flex items-center gap-4 mb-12">
-            <h2 className="text-3xl lg:text-4xl font-bold">Pilares de mi Metodología</h2>
+            <h2 className="text-3xl lg:text-4xl font-bold">{t('about.principles.title')}</h2>
             <div className="h-px flex-1 bg-gradient-to-r from-border to-transparent" />
           </div>
 

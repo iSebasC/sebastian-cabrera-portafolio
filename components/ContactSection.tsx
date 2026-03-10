@@ -1,31 +1,11 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Mail, Phone, MapPin, MessageCircle, CheckCircle, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Textarea } from './ui/textarea';
 import { isProduction } from '../config/email';
-
-const contactInfo = [
-  {
-    icon: Mail,
-    label: "Email",
-    value: "sebastiandev@sebastiancabreraalcala.com",
-    href: "mailto:sebastiandev@sebastiancabreraalcala.com"
-  },
-  {
-    icon: Phone,
-    label: "Teléfono",
-    value: "+51 914 866 361",
-    href: "tel:+51914866361"
-  },
-  {
-    icon: MapPin,
-    label: "Ubicación",
-    value: "Lima, Perú",
-    href: "#"
-  }
-];
 
 interface ContactSectionProps {
   portfolioMode?: 'employee' | 'freelance';
@@ -38,6 +18,29 @@ export function ContactSection({
   headingLevel = 'h2',
   headerVariant = 'default',
 }: ContactSectionProps) {
+  const { t } = useTranslation();
+  
+  const contactInfo = [
+    {
+      icon: Mail,
+      label: t('contact.info.emailLabel'),
+      value: "sebastiandev@sebastiancabreraalcala.com",
+      href: "mailto:sebastiandev@sebastiancabreraalcala.com"
+    },
+    {
+      icon: Phone,
+      label: t('contact.info.phoneLabel'),
+      value: "+51 914 866 361",
+      href: "tel:+51914866361"
+    },
+    {
+      icon: MapPin,
+      label: t('contact.info.locationLabel'),
+      value: t('contact.info.locationValue'),
+      href: "#"
+    }
+  ];
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -57,27 +60,27 @@ export function ContactSection({
     const newErrors: {[key: string]: string} = {};
     
     if (!formData.name.trim()) {
-      newErrors.name = 'El nombre es requerido';
+      newErrors.name = t('contact.form.validation.nameRequired');
     } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'El nombre debe tener al menos 2 caracteres';
+      newErrors.name = t('contact.form.validation.nameMinLength');
     }
     
     if (!formData.email.trim()) {
-      newErrors.email = 'El email es requerido';
+      newErrors.email = t('contact.form.validation.emailRequired');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Por favor ingresa un email válido';
+      newErrors.email = t('contact.form.validation.emailInvalid');
     }
     
     if (!formData.subject.trim()) {
-      newErrors.subject = 'El asunto es requerido';
+      newErrors.subject = t('contact.form.validation.subjectRequired');
     } else if (formData.subject.trim().length < 3) {
-      newErrors.subject = 'El asunto debe tener al menos 3 caracteres';
+      newErrors.subject = t('contact.form.validation.subjectMinLength');
     }
     
     if (!formData.message.trim()) {
-      newErrors.message = 'El mensaje es requerido';
+      newErrors.message = t('contact.form.validation.messageRequired');
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'El mensaje debe tener al menos 10 caracteres';
+      newErrors.message = t('contact.form.validation.messageMinLength');
     }
     
     setErrors(newErrors);
@@ -222,23 +225,11 @@ export function ContactSection({
               </motion.div>
 
               <HeadingTag className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">
-                Contacto<br />Directo
+                {t('contact.title')}
               </HeadingTag>
 
               <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
-                {portfolioMode === 'employee' ? (
-                  <>
-                    Estoy abierto a nuevas oportunidades profesionales. Si tienes una{' '}
-                    <span className="text-foreground font-semibold">propuesta interesante</span>, me encantará conocer los
-                    detalles.
-                  </>
-                ) : (
-                  <>
-                    Cada gran proyecto comienza con una conversación. Cuéntame tu visión y transformémosla en una{' '}
-                    <span className="text-foreground font-semibold">experiencia clara</span> que{' '}
-                    <span className="text-primary font-semibold">convierta</span>.
-                  </>
-                )}
+                {portfolioMode === 'employee' ? t('contact.employeeDescription') : t('contact.freelanceDescription')}
               </p>
             </div>
           </motion.div>
@@ -269,7 +260,7 @@ export function ContactSection({
               >
                 <MessageCircle className="w-5 h-5 text-primary" />
               </motion.div>
-              <span className="font-medium">¡Conectemos!</span>
+              <span className="font-medium">{t('contact.connectLabel')}</span>
             </motion.div>
             
             <h2 className="text-4xl lg:text-6xl xl:text-7xl font-bold mb-8">
@@ -280,7 +271,7 @@ export function ContactSection({
                 transition={{ duration: 5, repeat: Infinity }}
                 className="bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent bg-[length:200%]"
               >
-                ¿Listo para
+                {t('contact.readyTitle')}
               </motion.span>
               <br />
               <span className="relative">
@@ -291,7 +282,7 @@ export function ContactSection({
                   transition={{ duration: 4, repeat: Infinity }}
                   className="relative z-10"
                 >
-                  Crear Juntos?
+                  {t('contact.createTitle')}
                 </motion.span>
                 <motion.div
                   animate={{
@@ -314,10 +305,7 @@ export function ContactSection({
               transition={{ delay: 0.4 }}
               className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
             >
-              {portfolioMode === 'employee' 
-                ? 'Estoy abierto a nuevas oportunidades profesionales. Si tienes una propuesta interesante, me encantaría conocer más detalles.'
-                : 'Cada gran proyecto comienza con una conversación. Cuéntame tu visión y transformémosla en una experiencia visual extraordinaria.'
-              }
+              {portfolioMode === 'employee' ? t('contact.employeeSubtitle') : t('contact.freelanceSubtitle')}
             </motion.p>
           </motion.div>
         )}
@@ -332,23 +320,10 @@ export function ContactSection({
           >
             <div className="space-y-4">
               <motion.h3 className="text-3xl font-bold">
-                {portfolioMode === 'employee' ? (
-                  <>
-                    Hablemos sobre{' '}
-                    <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Oportunidades</span>
-                  </>
-                ) : (
-                  <>
-                    Comencemos una{' '}
-                    <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Conversación</span>
-                  </>
-                )}
+                {portfolioMode === 'employee' ? t('contact.form.opportunitiesTitle') : t('contact.form.conversationTitle')}
               </motion.h3>
               <p className="text-muted-foreground text-lg">
-                {portfolioMode === 'employee' 
-                  ? 'Estoy interesado en nuevas oportunidades profesionales. Cuéntame sobre el rol y tu empresa.'
-                  : 'Cada detalle cuenta. Mientras más me cuentes, mejor podré ayudarte.'
-                }
+                {portfolioMode === 'employee' ? t('contact.form.opportunitiesDescription') : t('contact.form.conversationDescription')}
               </p>
             </div>
 
@@ -373,7 +348,7 @@ export function ContactSection({
                         color: focusedField === 'name' ? '#7c3aed' : 'inherit'
                       }}
                     >
-                      ¿Cómo te llamas?
+                      {t('contact.form.nameLabel')}
                     </motion.span>
                   </label>
                   <div className="relative">
@@ -390,7 +365,7 @@ export function ContactSection({
                           ? 'border-red-500 focus:border-red-500' 
                           : 'focus:border-primary/50'
                       }`}
-                      placeholder="Tu nombre"
+                      placeholder={t('contact.form.namePlaceholder')}
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 text-primary/60 flex items-center justify-center w-6 h-6">
                       <span className="text-lg leading-none">✨</span>
@@ -418,7 +393,7 @@ export function ContactSection({
                         color: focusedField === 'email' ? '#7c3aed' : 'inherit'
                       }}
                     >
-                      ¿Cuál es tu email?
+                      {t('contact.form.emailLabel')}
                     </motion.span>
                   </label>
                   <div className="relative">
@@ -436,7 +411,7 @@ export function ContactSection({
                           ? 'border-red-500 focus:border-red-500' 
                           : 'focus:border-primary/50'
                       }`}
-                      placeholder="tu@email.com"
+                      placeholder={t('contact.form.emailPlaceholder')}
                     />
                     <div className="absolute right-4 top-1/2 -translate-y-1/2 text-primary/60 flex items-center justify-center w-6 h-6">
                       <span className="text-lg leading-none">💌</span>
@@ -465,7 +440,7 @@ export function ContactSection({
                       color: focusedField === 'subject' ? '#7c3aed' : 'inherit'
                     }}
                   >
-                    ¿Qué tienes en mente?
+                    {t('contact.form.subjectLabel')}
                   </motion.span>
                 </label>
                 <div className="relative">
@@ -482,7 +457,7 @@ export function ContactSection({
                         ? 'border-red-500 focus:border-red-500' 
                         : 'focus:border-primary/50'
                     }`}
-                    placeholder="Proyecto web, branding, ilustración..."
+                    placeholder={t('contact.form.subjectPlaceholder')}
                   />
                   <div className="absolute right-4 top-1/2 -translate-y-1/2 text-primary/60 flex items-center justify-center w-6 h-6">
                     <span className="text-lg leading-none">🚀</span>
@@ -510,7 +485,7 @@ export function ContactSection({
                       color: focusedField === 'message' ? '#7c3aed' : 'inherit'
                     }}
                   >
-                    Cuéntame los detalles
+                    {t('contact.form.messageLabel')}
                   </motion.span>
                 </label>
                 <div className="relative">
@@ -523,7 +498,7 @@ export function ContactSection({
                     onBlur={() => setFocusedField(null)}
                     required
                     rows={6}
-                    placeholder="Describe tu proyecto, objetivos, plazos, presupuesto estimado... ¡Todo lo que consideres importante!"
+                    placeholder={t('contact.form.messagePlaceholder')}
                     className={`pl-4 pr-4 pt-4 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl hover:border-primary/30 resize-none ${
                       errors.message 
                         ? 'border-red-500 focus:border-red-500' 
@@ -576,7 +551,7 @@ export function ContactSection({
                       >
                         <div className="w-6 h-6 border-3 border-primary-foreground/20 border-t-primary-foreground rounded-full" />
                       </motion.div>
-                      Enviando tu mensaje...
+                      {t('contact.form.sending')}
                     </motion.div>
                   ) : (
                     <div className="flex items-center gap-3 text-lg font-semibold">
@@ -586,7 +561,7 @@ export function ContactSection({
                       >
                         <Send className="w-6 h-6" />
                       </motion.div>
-                      Enviar Mensaje
+                      {t('contact.form.sendButton')}
                       <span className="group-hover:translate-x-1 transition-transform">🚀</span>
                     </div>
                   )}
@@ -603,9 +578,9 @@ export function ContactSection({
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold mb-4">Información de Contacto</h3>
+              <h3 className="text-2xl font-bold mb-4">{t('contact.infoTitle')}</h3>
               <p className="text-muted-foreground">
-                También puedes contactarme directamente a través de cualquiera de estos medios.
+                {t('contact.infoDescription')}
               </p>
             </div>
 
@@ -645,13 +620,10 @@ export function ContactSection({
             >
               <div className="relative z-10">
                 <h4 className="text-xl font-bold mb-2">
-                  {portfolioMode === 'employee' ? '¡Conversemos!' : '¡Trabajemos Juntos!'}
+                  {portfolioMode === 'employee' ? t('contact.availability.employee') : t('contact.availability.freelance')}
                 </h4>
                 <p className="text-muted-foreground text-sm">
-                  {portfolioMode === 'employee' 
-                    ? 'Estoy disponible para nuevas oportunidades profesionales y colaboraciones.'
-                    : 'Estoy disponible para proyectos freelance y colaboraciones a tiempo completo.'
-                  }
+                  {portfolioMode === 'employee' ? t('contact.availabilityDesc.employee') : t('contact.availabilityDesc.freelance')}
                 </p>
               </div>
               
@@ -711,7 +683,7 @@ export function ContactSection({
                 <button
                   onClick={() => setIsSubmitted(false)}
                   className="absolute top-4 right-4 p-2 hover:bg-accent/50 rounded-full transition-colors"
-                  aria-label="Cerrar modal"
+                  aria-label={t('contact.success.closeLabel')}
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -736,10 +708,10 @@ export function ContactSection({
                   className="text-center space-y-4"
                 >
                   <h3 className="text-3xl font-bold">
-                    ¡Mensaje Enviado! 🎉
+                    {t('contact.success.title')}
                   </h3>
                   <p className="text-muted-foreground text-lg">
-                    Gracias por contactarme. Te responderé lo antes posible.
+                    {t('contact.success.message')}
                   </p>
                 </motion.div>
 

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Sparkles, ArrowRight, Briefcase } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 interface HeroSectionProps {
   portfolioMode?: 'employee' | 'freelance';
@@ -50,14 +51,8 @@ const useTypingAnimation = (
 
 export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
   const navigate = useNavigate();
-  const typedName = useTypingAnimation('Sebastian Cabrera A.', 100, 50, 2000);
-  const heroDescription = (
-    <>
-      Desarrollo páginas web, sistemas web y plataformas digitales modernas con{' '}
-      <span className="text-foreground font-semibold">Next.js, Astro y Node.js</span> que convierten
-      visitantes en clientes reales en Perú y Latinoamérica.
-    </>
-  );
+  const { t } = useTranslation();
+  const typedName = useTypingAnimation(t('hero.name'), 100, 50, 2000);
 
   return (
     <section
@@ -136,7 +131,7 @@ export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
                 whileHover={{ opacity: 1, scale: 1, y: -8 }}
                 className="absolute -top-12 left-1/2 -translate-x-1/2 bg-foreground text-background px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"
               >
-                ¡Conóceme!
+                {t('hero.knowMe')}
               </motion.div>
             </motion.button>
           </motion.div>
@@ -174,10 +169,10 @@ export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="space-y-1 w-fit"
             >
-              <h1 className="text-5xl xl:text-6xl font-bold tracking-tighter leading-tight">LANDING</h1>
-              <div className="text-5xl xl:text-6xl font-bold tracking-tighter leading-tight">PAGES</div>
+              <h1 className="text-5xl xl:text-6xl font-bold tracking-tighter leading-tight">{t('hero.title1')}</h1>
+              <div className="text-5xl xl:text-6xl font-bold tracking-tighter leading-tight">{t('hero.title2')}</div>
               <div className="text-4xl xl:text-5xl font-bold tracking-tighter text-muted-foreground opacity-40 leading-tight">
-                QUE VENDEN
+                {t('hero.title3')}
               </div>
             </motion.div>
             </motion.div>
@@ -200,7 +195,7 @@ export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
               transition={{ delay: 0.5, duration: 0.6 }}
               className="text-sm text-muted-foreground leading-relaxed max-w-md"
             >
-              {heroDescription}
+              {t('hero.description')}
             </motion.p>
 
             <motion.div
@@ -210,6 +205,17 @@ export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
               className="flex flex-row gap-3 items-center w-fit"
             >
               <motion.button
+                onClick={() => navigate('/proyectos')}
+                className="px-5 py-3 bg-white border-2 border-gray-200 text-black rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors whitespace-nowrap"
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                aria-label={t('hero.btnProjects')}
+              >
+                <Briefcase className="w-4 h-4" />
+                {t('hero.btnProjects')}
+              </motion.button>
+
+              <motion.button
                 onClick={() => {
                   if (portfolioMode === 'freelance') navigate('/cotizar');
                   else navigate('/contacto');
@@ -217,29 +223,13 @@ export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
                 className="group px-5 py-3 bg-black text-white rounded-xl font-bold text-xs flex items-center gap-2 shadow-xl hover:shadow-2xl transition-all hover:bg-black/90"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
-                aria-label={portfolioMode === 'freelance' ? 'Ver precios y cotizar' : 'Contactar'}
+                aria-label={portfolioMode === 'freelance' ? t('hero.btnQuote') : t('hero.btnContact')}
               >
                 <Sparkles className="w-4 h-4" />
-                <div className="flex flex-col items-start">
-                  {portfolioMode === 'freelance' && (
-                    <span className="text-[10px] opacity-70">Desde $189 USD</span>
-                  )}
-                  <span className="text-xs whitespace-nowrap">
-                    {portfolioMode === 'freelance' ? 'Ver Precios y Cotizar' : 'Contactar'}
-                  </span>
-                </div>
+                <span className="text-xs whitespace-nowrap">
+                  {portfolioMode === 'freelance' ? t('hero.btnQuote') : t('hero.btnContact')}
+                </span>
                 <ArrowRight className="w-4 h-4" />
-              </motion.button>
-
-              <motion.button
-                onClick={() => navigate('/proyectos')}
-                className="px-5 py-3 bg-white border-2 border-gray-200 text-black rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors whitespace-nowrap"
-                whileHover={{ scale: 1.03 }}
-                whileTap={{ scale: 0.97 }}
-                aria-label="Ver portfolio"
-              >
-                <Briefcase className="w-4 h-4" />
-                Ver Portfolio
               </motion.button>
             </motion.div>
             </motion.div>
@@ -278,14 +268,14 @@ export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
             className="text-center space-y-4"
           >
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tighter">
-              LANDING<br />PAGES
+              {t('hero.title1')}<br />{t('hero.title2')}
             </h1>
             <div className="text-3xl sm:text-4xl font-bold tracking-tighter text-muted-foreground opacity-30">
-              QUE VENDEN
+              {t('hero.title3')}
             </div>
 
             <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed pt-4">
-              {heroDescription}
+              {t('hero.description')}
             </p>
           </motion.div>
 
@@ -296,6 +286,16 @@ export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
             className="flex flex-col gap-3 w-full max-w-sm"
           >
             <motion.button
+              onClick={() => navigate('/proyectos')}
+              className="px-6 py-4 border-2 border-border rounded-xl font-bold text-sm flex items-center justify-center gap-2 bg-background"
+              whileTap={{ scale: 0.95 }}
+              aria-label={t('hero.btnProjects')}
+            >
+              <Briefcase className="w-4 h-4" />
+              {t('hero.btnProjects')}
+            </motion.button>
+
+            <motion.button
               onClick={() => {
                 if (portfolioMode === 'freelance') {
                   navigate('/cotizar');
@@ -305,26 +305,13 @@ export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
               }}
               className="px-6 py-4 bg-primary text-primary-foreground rounded-xl font-bold text-sm flex items-center justify-between gap-3 shadow-xl"
               whileTap={{ scale: 0.95 }}
-              aria-label={portfolioMode === 'freelance' ? 'Ver precios y cotizar' : 'Contactar'}
+              aria-label={portfolioMode === 'freelance' ? t('hero.btnQuote') : t('hero.btnContact')}
             >
               <div className="flex items-center gap-2">
                 <Sparkles className="w-4 h-4" />
-                <div className="flex flex-col items-start">
-                  {portfolioMode === 'freelance' && <span className="text-xs opacity-80">Desde $189 USD</span>}
-                  <span>{portfolioMode === 'freelance' ? 'Ver Precios y Cotizar' : 'Contactar'}</span>
-                </div>
+                <span>{portfolioMode === 'freelance' ? t('hero.btnQuote') : t('hero.btnContact')}</span>
               </div>
               <ArrowRight className="w-4 h-4" />
-            </motion.button>
-
-            <motion.button
-              onClick={() => navigate('/proyectos')}
-              className="px-6 py-4 border-2 border-border rounded-xl font-bold text-sm flex items-center justify-center gap-2 bg-background"
-              whileTap={{ scale: 0.95 }}
-              aria-label="Ver portfolio"
-            >
-              <Briefcase className="w-4 h-4" />
-              Ver Portfolio
             </motion.button>
           </motion.div>
         </div>

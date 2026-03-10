@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Rocket, Sparkles, Target, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 export function FinalCTASection() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <section className="py-16 sm:py-20 bg-background">
@@ -32,12 +34,11 @@ export function FinalCTASection() {
                   </div>
 
                   <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-3 leading-tight">
-                    ¿LISTO PARA EMPEZAR?
+                    {t('cta.title')}
                   </h2>
 
                   <p className="text-base sm:text-lg mb-6 lg:mb-0 max-w-2xl opacity-95 leading-relaxed">
-                    Transforma tu idea en una plataforma web que genere ingresos reales. Cotización en
-                    menos de 24h.
+                    {t('cta.description')}
                   </p>
                 </div>
 
@@ -53,7 +54,7 @@ export function FinalCTASection() {
                       whileTap={{ scale: 0.95 }}
                     >
                       <Sparkles className="w-4 h-4" />
-                      Cotizar Proyecto
+                      {t('cta.btnQuote')}
                       <ArrowRight className="w-4 h-4" />
                     </motion.button>
 
@@ -65,7 +66,7 @@ export function FinalCTASection() {
                       whileTap={{ scale: 0.95 }}
                     >
                       <Target className="w-4 h-4" />
-                      Ver Proyectos
+                      {t('hero.btnProjects')}
                     </motion.button>
                   </div>
 
@@ -73,17 +74,7 @@ export function FinalCTASection() {
                   <div className="flex items-center justify-center lg:justify-end gap-4 text-xs opacity-90 flex-wrap">
                     <div className="flex items-center gap-1.5">
                       <Zap className="w-3.5 h-3.5" />
-                      <span>Respuesta en 24h</span>
-                    </div>
-                    <div className="w-1 h-1 bg-white/40 rounded-full" />
-                    <div className="flex items-center gap-1.5">
-                      <Target className="w-3.5 h-3.5" />
-                      <span>Sin compromiso</span>
-                    </div>
-                    <div className="w-1 h-1 bg-white/40 rounded-full" />
-                    <div className="flex items-center gap-1.5">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>Cotización gratuita</span>
+                      <span>{t('cta.responseTime')}</span>
                     </div>
                   </div>
                 </div>

@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { Moon, Sun, Menu, X } from 'lucide-react';
+import { Moon, Sun, Menu, X, Globe, ChevronDown } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface NavigationProps {
   activeSection: string;
@@ -15,6 +17,10 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [showLangMenu, setShowLangMenu] = useState(false);
+  const { t } = useTranslation();
+  const { currentLanguage, changeLanguage } = useLanguage();
+  const langMenuRef = useRef<HTMLDivElement>(null);
 
   // Scroll progress bar
   const { scrollYProgress } = useScroll();
@@ -25,21 +31,21 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
   });
 
   const sections = [
-    { id: 'home', label: 'Inicio', number: '01', to: '/' },
-    { id: 'about', label: 'Sobre Mí', number: '02', to: '/sobre-mi' },
-    { id: 'projects', label: 'Proyectos', number: '03', to: '/proyectos' },
+    { id: 'home', label: t('nav.home'), number: '01', to: '/' },
+    { id: 'about', label: t('nav.about'), number: '02', to: '/sobre-mi' },
+    { id: 'projects', label: t('nav.projects'), number: '03', to: '/proyectos' },
     ...(portfolioMode === 'freelance'
-      ? [{ id: 'quote', label: 'Cotizar', number: '04', to: '/cotizar' }]
+      ? [{ id: 'quote', label: t('nav.quote'), number: '04', to: '/cotizar' }]
       : []),
     {
       id: 'testimonials',
-      label: 'Testimonios',
+      label: t('nav.testimonials'),
       number: portfolioMode === 'freelance' ? '05' : '04',
       to: '/testimonios'
     },
     {
       id: 'contact',
-      label: 'Contacto',
+      label: t('nav.contact'),
       number: portfolioMode === 'freelance' ? '06' : '05',
       to: '/contacto'
     }
@@ -67,6 +73,23 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
       window.removeEventListener('resize', handleResize);
     };
   }, []);
+
+  // Close language menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (langMenuRef.current && !langMenuRef.current.contains(event.target as Node)) {
+        setShowLangMenu(false);
+      }
+    };
+
+    if (showLangMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showLangMenu]);
 
   return (
     <>
@@ -174,7 +197,7 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
               ))}
             </div>
 
-            {/* Portfolio Mode Toggle, Theme Toggle & Mobile Menu */}
+            {/* Portfolio Mode Toggle, Language Selector, Theme Toggle & Mobile Menu */}
             <div className="flex items-center gap-2">
               {/* Portfolio Mode Toggle */}
               {togglePortfolioMode && (
@@ -183,7 +206,7 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
                   whileHover={{ scale: 1.02 }}
                 >
                   <span className={`text-xs transition-colors ${portfolioMode === 'employee' ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
-                    Dev
+                    {t('nav.dev')}
                   </span>
                   <motion.button
                     onClick={togglePortfolioMode}
@@ -202,10 +225,57 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
                     />
                   </motion.button>
                   <span className={`text-xs transition-colors ${portfolioMode === 'freelance' ? 'text-primary font-medium' : 'text-muted-foreground'}`}>
-                    Freelance
+                    {t('nav.freelance')}
                   </span>
                 </motion.div>
               )}
+
+              {/* Language Selector */}
+              <div className="hidden sm:block relative" ref={langMenuRef}>
+                <motion.button
+                  onClick={() => setShowLangMenu(!showLangMenu)}
+                  className="flex items-center gap-1.5 px-3 py-1.5 bg-accent/20 rounded-lg hover:bg-accent/30 transition-colors"
+                  whileHover={{ scale: 1.02 }}
+                >
+                  <Globe className="w-3.5 h-3.5 text-muted-foreground" />
+                  <span className="text-xs font-medium text-primary">
+                    {currentLanguage.toUpperCase()}
+                  </span>
+                  <ChevronDown className="w-3 h-3 text-muted-foreground" />
+                </motion.button>
+
+                {/* Language Dropdown */}
+                {showLangMenu && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="absolute right-0 mt-2 bg-background border border-border rounded-lg shadow-lg overflow-hidden z-50 min-w-[100px]"
+                  >
+                    <button
+                      onClick={() => {
+                        changeLanguage('es');
+                        setShowLangMenu(false);
+                      }}
+                      className={`w-full px-4 py-2 text-left text-sm hover:bg-accent transition-colors ${
+                        currentLanguage === 'es' ? 'bg-accent text-primary font-semibold' : 'text-muted-foreground'
+                      }`}
+                    >
+                      🇪🇸 Español
+                    </button>
+                    <button
+                      onClick={() => {
+                        changeLanguage('en');
+                        setShowLangMenu(false);
+                      }}
+                      className={`w-full px-4 py-2 text-left text-sm hover:bg-accent transition-colors ${
+                        currentLanguage === 'en' ? 'bg-accent text-primary font-semibold' : 'text-muted-foreground'
+                      }`}
+                    >
+                      🇺🇸 English
+                    </button>
+                  </motion.div>
+                )}
+              </div>
               
               <motion.button
                 onClick={toggleTheme}
@@ -271,10 +341,10 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
                 <div className="mt-4 pt-4 border-t border-border">
                   <div className="px-4 py-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-muted-foreground">Modo Portfolio</span>
+                      <span className="text-sm font-medium text-muted-foreground">{t('nav.portfolioMode')}</span>
                       <div className="flex items-center gap-2">
                         <span className={`text-xs ${portfolioMode === 'employee' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}>
-                          Dev
+                          {t('nav.dev')}
                         </span>
                         <motion.button
                           onClick={togglePortfolioMode}
@@ -293,13 +363,44 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
                           />
                         </motion.button>
                         <span className={`text-xs ${portfolioMode === 'freelance' ? 'text-primary font-semibold' : 'text-muted-foreground'}`}>
-                          Freelance
+                          {t('nav.freelance')}
                         </span>
                       </div>
                     </div>
                   </div>
                 </div>
               )}
+
+              {/* Language Selector for Mobile */}
+              <div className={`${togglePortfolioMode ? '' : 'mt-4 pt-4 border-t border-border'}`}>
+                <div className="px-4 py-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-medium text-muted-foreground">{t('nav.language')}</span>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => changeLanguage('es')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                          currentLanguage === 'es'
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-accent/20 text-muted-foreground hover:bg-accent/30'
+                        }`}
+                      >
+                        🇪🇸 ES
+                      </button>
+                      <button
+                        onClick={() => changeLanguage('en')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+                          currentLanguage === 'en'
+                            ? 'bg-primary text-primary-foreground'
+                            : 'bg-accent/20 text-muted-foreground hover:bg-accent/30'
+                        }`}
+                      >
+                        🇺🇸 EN
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Eye, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { getAllProjects } from '../services/sanityService';
 import { Project } from '../types/sanity';
@@ -14,7 +15,8 @@ interface ProjectsSectionProps {
 
 export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', headingLevel = 'h2' }: ProjectsSectionProps) {
   const navigate = useNavigate();
-  const [selectedCategory, setSelectedCategory] = useState("Todos");
+  const { t } = useTranslation();
+  const [selectedCategory, setSelectedCategory] = useState(t('projects.categories.all'));
   const [hoveredProject, setHoveredProject] = useState<string | null>(null);
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
@@ -32,19 +34,26 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', 
         setProjects(sanityProjects);
       } catch (err) {
         console.error('Error loading projects:', err);
-        setError('Error al cargar los proyectos');
+        setError(t('projects.errorMessage'));
       } finally {
         setLoading(false);
       }
     };
 
     fetchProjects();
-  }, []);
+  }, [t]);
 
-  // Categorías fijas que siempre se mostrarán
-  const categories = ["Todos", "UI UX", "Frontend", "Backend", "FullStack", "App"];
+  // Categorías traducidas
+  const categories = [
+    t('projects.categories.all'),
+    t('projects.categories.uiux'),
+    t('projects.categories.frontend'),
+    t('projects.categories.backend'),
+    t('projects.categories.fullstack'),
+    t('projects.categories.app')
+  ];
 
-  const filteredProjects = selectedCategory === "Todos" 
+  const filteredProjects = selectedCategory === t('projects.categories.all') 
     ? projects 
     : projects.filter(project => project.category === selectedCategory);
 
@@ -81,18 +90,16 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', 
               viewport={{ once: true }}
               className="flex items-center gap-4 mb-6"
             >
-              <span className="font-mono text-6xl lg:text-8xl font-bold text-muted-foreground opacity-30">03</span>
+              <span className="font-mono text-6xl lg:text-8xl font-bold text-muted-foreground opacity-30">{t('projects.magazineNumber')}</span>
               <div className="h-px flex-1 bg-border" />
             </motion.div>
 
             <HeadingTag className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">
-              Proyectos<br />Destacados
+              {t('projects.title')}
             </HeadingTag>
 
             <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
-              Una selección de trabajos que demuestran mi capacidad para transformar{' '}
-              <span className="text-foreground font-semibold">ideas complejas</span> en{' '}
-              <span className="text-foreground font-semibold">experiencias visuales impactantes</span>.
+              {t('projects.subtitle')}
             </p>
           </div>
         </motion.div>
@@ -165,7 +172,7 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', 
                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                 className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full"
               />
-              <span className="text-muted-foreground">Cargando proyectos...</span>
+              <span className="text-muted-foreground">{t('projects.loading')}</span>
             </div>
           </motion.div>
         )}
@@ -177,7 +184,7 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', 
             animate={{ opacity: 1, y: 0 }}
             className="bg-destructive/10 border border-destructive/20 rounded-lg p-6 text-center max-w-md mx-auto mb-12"
           >
-            <p className="text-destructive font-medium mb-2">Error al cargar proyectos</p>
+            <p className="text-destructive font-medium mb-2">{t('projects.error')}</p>
             <p className="text-muted-foreground text-sm">{error}</p>
           </motion.div>
         )}
@@ -300,7 +307,7 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', 
                           className="relative flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors text-sm border border-white/20 overflow-hidden"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          aria-label={`Ver detalles del proyecto ${project.title}`}
+                          aria-label={`${t('projects.viewProject')} ${project.title}`}
                         >
                           <motion.div
                             animate={{ 
@@ -315,7 +322,7 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', 
                           >
                             <Eye className="w-4 h-4" />
                           </motion.div>
-                          Ver Proyecto
+                          {t('projects.viewProject')}
                           
                           {/* Sparkle effect */}
                           {hoveredProject === project.id && [...Array(3)].map((_, i) => (
@@ -343,7 +350,7 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', 
                           className="p-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors border border-white/20"
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          aria-label={`Abrir ${project.title} en nueva ventana`}
+                          aria-label={t('projects.openExternal')}
                         >
                           <motion.div
                             animate={{ 

@@ -1,0 +1,389 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About Me",
+    "projects": "Projects",
+    "quote": "Get Quote",
+    "testimonials": "Testimonials",
+    "contact": "Contact",
+    "portfolioMode": "Portfolio Mode",
+    "dev": "Dev",
+    "freelance": "Freelance",
+    "language": "Language"
+  },
+  "hero": {
+    "name": "Sebastian Cabrera A.",
+    "title1": "SYSTEMS",
+    "title2": "THAT",
+    "title3": "CONVERT",
+    "description": "I develop landing pages, web systems and modern digital platforms that help businesses convert visitors into real clients.",
+    "btnProjects": "View Projects",
+    "btnQuote": "Request Quote",
+    "btnContact": "Contact",
+    "knowMe": "Get to know me!"
+  },
+  "services": {
+    "title": "What I can do for your business",
+    "description": "I develop modern web solutions focused on performance, user experience and client generation.",
+    "service1": {
+      "title": "High Conversion Landing Pages",
+      "item1": "Design and development of optimized landing pages to capture potential clients.",
+      "item2": "Includes persuasive structure, optimized speed and complete adaptation to mobile devices."
+    },
+    "service2": {
+      "title": "Custom Web Systems",
+      "item1": "I develop custom web systems to manage business processes, automate tasks and improve productivity."
+    },
+    "service3": {
+      "title": "Backend Development and APIs",
+      "item1": "Building robust backend architectures and API integration for modern and scalable applications."
+    },
+    "service4": {
+      "title": "Support and Maintenance",
+      "item1": "Technical maintenance, updates, continuous improvements and support to ensure your platform works stably and securely."
+    }
+  },
+  "cta": {
+    "title": "Do you have an idea or project in mind?",
+    "description": "I can help you transform your idea into a functional and scalable web solution.",
+    "btnQuote": "Request quote",
+    "responseTime": "Response in less than 24 hours."
+  },
+  "footer": {
+    "name": "Sebastian Cabrera",
+    "role": "Full Stack Developer specialized in web systems development, landing pages and modern digital platforms.",
+    "navigate": "Navigate",
+    "social": "Social",
+    "contact": "Contact",
+    "contactText": "Do you have a project in mind?",
+    "quoteBtn": "Get Quote",
+    "designedWith": "Designed with",
+    "passion": "passion and precision",
+    "copyright": "FullStack Developer & Creative Designer © 2026"
+  },
+  "projects": {
+    "magazineNumber": "03",
+    "title": "Featured Projects",
+    "subtitle": "A selection of works that demonstrate my ability to transform complex ideas into impactful visual experiences.",
+    "categories": {
+      "all": "All",
+      "uiux": "UI UX",
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "fullstack": "FullStack",
+      "app": "App"
+    },
+    "loading": "Loading projects...",
+    "error": "Error loading projects",
+    "errorMessage": "Error loading projects",
+    "viewProject": "View Project",
+    "openExternal": "Open in new window",
+    "noProjects": "No projects to show",
+    "pageTitle": "Projects | Sebastian Cabrera",
+    "pageDescription": "Explore featured projects by Sebastian Cabrera: UI/UX, Frontend, Backend and FullStack. Real cases with results."
+  },
+  "testimonials": {
+    "title": "What My Collaborators Say",
+    "realTestimonials": "Real Testimonials",
+    "description": "Real testimonials from professionals who have worked with me and trust my work for their most important projects.",
+    "pageDescription": "Opinions and results from people who trusted my work to build solid products and memorable experiences.",
+    "whyTrust": "Why They Trust My Work",
+    "whyTrustDescription": "Results my collaborators consistently experience",
+    "metrics": {
+      "successful": "Successful Projects",
+      "delivery": "On-Time Delivery",
+      "roi": "Average ROI",
+      "recommendation": "Recommendation"
+    },
+    "loading": "Loading testimonials...",
+    "error": "Error loading testimonials",
+    "retry": "Retry",
+    "previous": "Previous",
+    "next": "Next",
+    "pageTitle": "Testimonials | Sebastian Cabrera",
+    "pageMetaDescription": "Testimonials and client results: experience, quality and delivery in web projects and digital design."
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "More than a designer, I'm a visual strategist who converts complex ideas into memorable experiences that connect, inspire and generate measurable results.",
+    "stats": {
+      "years": "Years",
+      "projects": "Projects",
+      "satisfaction": "Satisfaction"
+    },
+    "bio": "Bio",
+    "bioDescription": "Web Developer and Designer with experience in backend, frontend and visual design. I create secure, scalable and attractive digital solutions that combine functionality, design and a good user experience.",
+    "philosophy": "My Philosophy",
+    "philosophyText": "Exceptional design emerges when creativity meets strategy. I don't believe in pretty design without purpose, but in visual solutions that connect emotionally and generate measurable results.",
+    "conversationBtn": "Let's talk about your project",
+    "contactBtn": "Contact me",
+    "process": {
+      "title": "My Creative Process",
+      "description": "A methodical approach that combines research, creativity and impeccable technical execution.",
+      "discover": {
+        "title": "Discover",
+        "description": "I investigate, analyze and understand every detail of the creative challenge."
+      },
+      "conceptualize": {
+        "title": "Conceptualize",
+        "description": "I develop multiple concepts and explore unique creative directions."
+      },
+      "design": {
+        "title": "Design",
+        "description": "I execute the vision with technical precision and attention to detail."
+      },
+      "deliver": {
+        "title": "Deliver",
+        "description": "I present solutions that exceed expectations and generate impact."
+      }
+    },
+    "arsenal": "Creative Arsenal",
+    "principles": {
+      "title": "Pillars of my Methodology",
+      "creativity": {
+        "title": "Creativity",
+        "description": "Each project is an opportunity to innovate"
+      },
+      "strategy": {
+        "title": "Strategy",
+        "description": "Design with purpose and clear objectives"
+      },
+      "execution": {
+        "title": "Execution",
+        "description": "Technical perfection in every detail"
+      },
+      "innovation": {
+        "title": "Innovation",
+        "description": "Always one step ahead"
+      }
+    },
+    "available": "Available",
+    "roleTitle": "Web Developer and Designer",
+    "pageTitle": "About Me | Sebastian Cabrera",
+    "pageDescription": "Meet Sebastian Cabrera: FullStack developer and web designer. Creative process, methodology and professional experience."
+  },
+  "contact": {
+    "magazineNumber": "06",
+    "title": "Direct Contact",
+    "employeeDescription": "I'm open to new professional opportunities. If you have an interesting proposal, I'd love to hear the details.",
+    "freelanceDescription": "Every great project starts with a conversation. Tell me your vision and let's transform it into a clear experience that converts.",
+    "connectLabel": "Let's Connect!",
+    "readyTitle": "Ready to",
+    "createTitle": "Create Together?",
+    "employeeSubtitle": "I'm open to new professional opportunities. If you have an interesting proposal, I'd love to know more details.",
+    "freelanceSubtitle": "Every great project starts with a conversation. Tell me your vision and let's transform it into an extraordinary visual experience.",
+    "form": {
+      "opportunitiesTitle": "Let's Talk About Opportunities",
+      "conversationTitle": "Let's Start a Conversation",
+      "opportunitiesDescription": "I'm interested in new professional opportunities. Tell me about the role and your company.",
+      "conversationDescription": "Every detail counts. The more you tell me, the better I can help you.",
+      "nameLabel": "What's your name?",
+      "namePlaceholder": "Your name",
+      "emailLabel": "What's your email?",
+      "emailPlaceholder": "your@email.com",
+      "subjectLabel": "What's on your mind?",
+      "subjectPlaceholder": "Web project, branding, illustration...",
+      "messageLabel": "Tell me the details",
+      "messagePlaceholder": "Describe your project, objectives, deadlines, estimated budget... Everything you consider important!",
+      "sendButton": "Send Message",
+      "sending": "Sending your message...",
+      "validation": {
+        "nameRequired": "Name is required",
+        "nameMinLength": "Name must be at least 2 characters",
+        "emailRequired": "Email is required",
+        "emailInvalid": "Please enter a valid email",
+        "subjectRequired": "Subject is required",
+        "subjectMinLength": "Subject must be at least 3 characters",
+        "messageRequired": "Message is required",
+        "messageMinLength": "Message must be at least 10 characters"
+      }
+    },
+    "infoTitle": "Contact Information",
+    "infoDescription": "You can also contact me directly through any of these channels.",
+    "info": {
+      "emailLabel": "Email",
+      "phoneLabel": "Phone",
+      "locationLabel": "Location",
+      "locationValue": "Lima, Peru"
+    },
+    "availability": {
+      "employee": "Let's Chat!",
+      "freelance": "Let's Work Together!"
+    },
+    "availabilityDesc": {
+      "employee": "I'm available for new professional opportunities and collaborations.",
+      "freelance": "I'm available for freelance projects and full-time collaborations."
+    },
+    "success": {
+      "title": "Message Sent! 🎉",
+      "message": "Thanks for contacting me. I'll respond as soon as possible.",
+      "closeLabel": "Close modal"
+    },
+    "pageTitle": "Contact | Sebastian Cabrera",
+    "pageDescription": "Contact Sebastian Cabrera for web development and design. Tell me about your project and receive a proposal."
+  },
+  "quote": {
+    "magazineNumber": "04",
+    "title": "Quote Project",
+    "subtitle": "Clear prices and an indicative estimate to transform your idea into a functional solution, focused on measurable results.",
+    "whyInvest": "Why invest?",
+    "benefits": {
+      "roi": {
+        "title": "Proven ROI",
+        "description": "+40% average conversion in projects"
+      },
+      "agile": {
+        "title": "Agile Deliveries",
+        "description": "2 to 4 weeks depending on complexity"
+      },
+      "strategy": {
+        "title": "Clear Strategy",
+        "description": "Design oriented to measurable objectives"
+      },
+      "support": {
+        "title": "Continuous Support",
+        "description": "Unlimited revisions included"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "revisions": {
+        "question": "Do they include revisions?",
+        "answer": "Yes, unlimited revisions until your complete satisfaction."
+      },
+      "time": {
+        "question": "How long does it take?",
+        "answer": "Landing pages: 1-2 weeks. Complex projects: 3-4 weeks."
+      },
+      "payment": {
+        "question": "Payment methods?",
+        "answer": "Transfers, Yape, Plin, cards. Plan: 50% start, 50% final."
+      },
+      "support": {
+        "question": "What does support include?",
+        "answer": "30 days post-delivery for minor adjustments and question resolution."
+      }
+    },
+    "pageTitle": "Get Quote | Sebastian Cabrera",
+    "pageDescription": "Quote your project with transparent prices. Select the service and receive an indicative estimate."
+  },
+  "priceCalculator": {
+    "title": "Services & Pricing",
+    "subtitle": "Choose your specialty and find the ideal service",
+    "currency": "Currency:",
+    "servicesCount": "services",
+    "from": "from",
+    "popular": "Popular",
+    "optionals": "optional",
+    "buttonCalculate": "Calculate",
+    "buttonQuote": "Get Quote",
+    "specialties": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "fullstack": "Full Stack"
+    },
+    "services": {
+      "landingBasic": {
+        "name": "Basic Landing",
+        "description": "One impactful section",
+        "features": {
+          "heroSection": "Hero section",
+          "responsiveDesign": "Responsive design",
+          "contactForm": "Contact form",
+          "basicSEO": "Basic SEO",
+          "animations": "Animations"
+        }
+      },
+      "landingComplete": {
+        "name": "Complete Landing",
+        "description": "Long scroll with animations",
+        "features": {
+          "multipleSections": "Multiple sections",
+          "responsiveDesign": "Responsive design",
+          "advancedForm": "Advanced form",
+          "motionAnimations": "Motion animations",
+          "advancedSEO": "Advanced SEO",
+          "integratedChat": "Integrated chat"
+        }
+      },
+      "webInstitutional": {
+        "name": "Institutional Website",
+        "description": "Professional complete site",
+        "features": {
+          "pages": "4-6 pages",
+          "navigation": "Navigation system",
+          "adminPanel": "Basic admin panel",
+          "integratedBlog": "Integrated blog",
+          "multiLanguage": "Multi-language",
+          "userSystem": "User system",
+          "completeSEO": "Complete SEO"
+        }
+      },
+      "ecommerce": {
+        "name": "E-Commerce",
+        "description": "Functional online store",
+        "features": {
+          "productCatalog": "Product catalog",
+          "shoppingCart": "Shopping cart",
+          "sellerPanel": "Seller panel",
+          "paymentGateway": "Payment gateway",
+          "advancedInventory": "Advanced inventory",
+          "couponSystem": "Coupon system",
+          "autoShipping": "Automatic shipping"
+        }
+      },
+      "dashboard": {
+        "name": "Dashboard",
+        "description": "Business control panel",
+        "features": {
+          "dataVisualization": "Data visualization",
+          "userManagement": "User management",
+          "basicReports": "Basic reports",
+          "advancedCharts": "Advanced charts",
+          "dataExport": "Data export",
+          "realtimeNotifications": "Real-time notifications",
+          "restAPI": "REST API"
+        }
+      },
+      "apiBackend": {
+        "name": "API Backend",
+        "description": "Robust backend system",
+        "features": {
+          "restEndpoints": "REST endpoints",
+          "database": "Database",
+          "jwtAuth": "JWT authentication",
+          "microservices": "Microservices",
+          "websockets": "Websockets",
+          "redisCache": "Redis cache",
+          "apiDocs": "API documentation"
+        }
+      }
+    },
+    "trustIndicators": {
+      "fastDelivery": {
+        "title": "Fast Delivery",
+        "description": "2-4 weeks"
+      },
+      "premiumQuality": {
+        "title": "Premium Quality",
+        "description": "+40% conversion"
+      },
+      "totalGuarantee": {
+        "title": "Total Guarantee",
+        "description": "Revisions included"
+      }
+    },
+    "calculator": {
+      "title": "Price Calculator",
+      "basePrice": "Base price",
+      "uiuxDesign": "UI/UX Design",
+      "additionalSections": "Additional Sections",
+      "addExtraSections": "Add extra sections",
+      "perSection": "per section",
+      "optionalFeatures": "Optional Features",
+      "estimatedTotal": "Estimated Total",
+      "disclaimer": "* Reference price. May adjust according to specific requirements.",
+      "requestQuote": "Request Quote with this Price"
+    }
+  }
+}

@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Navigate, Outlet, Route, Routes, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Navigation } from './components/Navigation';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { CurrencyProvider } from './contexts/CurrencyContext';
@@ -17,6 +18,7 @@ export function App() {
   const [isDark, setIsDark] = useState(false);
   const [portfolioMode, setPortfolioMode] = useState<'employee' | 'freelance'>('freelance');
   const location = useLocation();
+  const { t } = useTranslation();
 
   // Asegurar que cada navegación muestre el inicio de la sección/página
   useEffect(() => {
@@ -125,8 +127,8 @@ export function App() {
                   />
                 </div>
                 <div>
-                  <h3 className="font-bold text-foreground">Sebastian Cabrera</h3>
-                  <p className="text-xs text-muted-foreground">Desarrollador FullStack & Diseñador Creativo</p>
+                  <h3 className="font-bold text-foreground">{t('footer.name')}</h3>
+                  <p className="text-xs text-muted-foreground">{t('footer.role')}</p>
                 </div>
               </div>
             </motion.div>
@@ -138,22 +140,22 @@ export function App() {
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Navegar</h4>
+              <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">{t('footer.navigate')}</h4>
               <ul className="space-y-3">
                 {(
                   [
-                    { num: '01', label: 'Inicio', path: '/' },
-                    { num: '02', label: 'Sobre Mí', path: '/sobre-mi' },
-                    { num: '03', label: 'Proyectos', path: '/proyectos' },
-                    ...(portfolioMode === 'freelance' ? [{ num: '04', label: 'Cotizar', path: '/cotizar' }] : []),
+                    { num: '01', label: t('nav.home'), path: '/' },
+                    { num: '02', label: t('nav.about'), path: '/sobre-mi' },
+                    { num: '03', label: t('nav.projects'), path: '/proyectos' },
+                    ...(portfolioMode === 'freelance' ? [{ num: '04', label: t('nav.quote'), path: '/cotizar' }] : []),
                     {
                       num: portfolioMode === 'freelance' ? '05' : '04',
-                      label: 'Testimonios',
+                      label: t('nav.testimonials'),
                       path: '/testimonios'
                     },
                     {
                       num: portfolioMode === 'freelance' ? '06' : '05',
-                      label: 'Contacto',
+                      label: t('nav.contact'),
                       path: '/contacto'
                     }
                   ] as const
@@ -182,7 +184,7 @@ export function App() {
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
             >
-              <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Social</h4>
+              <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">{t('footer.social')}</h4>
               <ul className="space-y-3">
                 {[
                   { label: 'LinkedIn', url: 'https://linkedin.com/in/sebastian-cabrera-alcala' },
@@ -214,8 +216,8 @@ export function App() {
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
             >
-              <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Contacto</h4>
-              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">¿Tienes un proyecto en mente?</p>
+              <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">{t('footer.contact')}</h4>
+              <p className="text-sm text-muted-foreground mb-4 leading-relaxed">{t('footer.contactText')}</p>
               <div className="space-y-3">
                 <div className="flex items-start gap-2 text-sm">
                   <span className="text-primary mt-0.5">📧</span>
@@ -241,7 +243,7 @@ export function App() {
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
-                    Cotizar Proyecto
+                    {t('footer.quoteBtn')}
                   </motion.button>
                 </a>
               )}
@@ -260,17 +262,17 @@ export function App() {
             className="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-muted-foreground"
           >
             <div className="flex items-center gap-2">
-              <span>Desarrollador FullStack & Diseñador Creativo © 2026</span>
+              <span>{t('footer.copyright')}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span>Diseñado con</span>
+              <span>{t('footer.designedWith')}</span>
               <motion.span
                 animate={{ rotate: [0, 10, -10, 10, 0] }}
                 transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
               >
                 ✨
               </motion.span>
-              <span>pasión y precisión</span>
+              <span>{t('footer.passion')}</span>
             </div>
           </motion.div>
         </div>

@@ -4,6 +4,7 @@ import { ArrowRight, Code, Server, Layers, Calculator, X, TrendingUp, CheckCircl
 import { Button } from './ui/button';
 import { useCurrencyContext } from '../contexts/CurrencyContext';
 import { CurrencySelector } from './CurrencySelector';
+import { useTranslation } from 'react-i18next';
 
 interface ServiceType {
   id: string;
@@ -143,6 +144,7 @@ interface QuoteSectionProps {
 }
 
 export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
+  const { t } = useTranslation();
   const [selectedSpecialty, setSelectedSpecialty] = useState<string | null>(null);
   const [showCalculator, setShowCalculator] = useState(false);
   const [selectedServiceForCalc, setSelectedServiceForCalc] = useState<ServiceType | null>(null);
@@ -224,6 +226,85 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
     }
   };
 
+  // Helper function to get translated service name and description
+  const getServiceTranslation = (serviceId: string) => {
+    const serviceKeyMap: { [key: string]: string } = {
+      'landing-basic': 'landingBasic',
+      'landing-complete': 'landingComplete',
+      'web-institutional': 'webInstitutional',
+      'ecommerce': 'ecommerce',
+      'dashboard': 'dashboard',
+      'api-backend': 'apiBackend'
+    };
+    const key = serviceKeyMap[serviceId];
+    return {
+      name: t(`priceCalculator.services.${key}.name`),
+      description: t(`priceCalculator.services.${key}.description`)
+    };
+  };
+
+  // Helper function to get translated feature name
+  const getFeatureTranslation = (serviceId: string, featureName: string) => {
+    const serviceKeyMap: { [key: string]: string } = {
+      'landing-basic': 'landingBasic',
+      'landing-complete': 'landingComplete',
+      'web-institutional': 'webInstitutional',
+      'ecommerce': 'ecommerce',
+      'dashboard': 'dashboard',
+      'api-backend': 'apiBackend'
+    };
+    
+    const featureKeyMap: { [key: string]: string } = {
+      'Hero section': 'heroSection',
+      'Diseño responsivo': 'responsiveDesign',
+      'Formulario contacto': 'contactForm',
+      'SEO básico': 'basicSEO',
+      'Animaciones': 'animations',
+      'Múltiples secciones': 'multipleSections',
+      'Formulario avanzado': 'advancedForm',
+      'Animaciones Motion': 'motionAnimations',
+      'SEO avanzado': 'advancedSEO',
+      'Chat integrado': 'integratedChat',
+      '4-6 páginas': 'pages',
+      'Sistema navegación': 'navigation',
+      'Panel admin básico': 'adminPanel',
+      'Blog integrado': 'integratedBlog',
+      'Multi-idioma': 'multiLanguage',
+      'Sistema usuarios': 'userSystem',
+      'SEO completo': 'completeSEO',
+      'Catálogo productos': 'productCatalog',
+      'Carrito compras': 'shoppingCart',
+      'Panel vendedor': 'sellerPanel',
+      'Pasarela de pago': 'paymentGateway',
+      'Inventario avanzado': 'advancedInventory',
+      'Sistema cupones': 'couponSystem',
+      'Envíos automáticos': 'autoShipping',
+      'Visualización datos': 'dataVisualization',
+      'Gestión usuarios': 'userManagement',
+      'Reportes básicos': 'basicReports',
+      'Charts avanzados': 'advancedCharts',
+      'Exportación datos': 'dataExport',
+      'Notificaciones real-time': 'realtimeNotifications',
+      'API REST': 'restAPI',
+      'Endpoints REST': 'restEndpoints',
+      'Base de datos': 'database',
+      'Autenticación JWT': 'jwtAuth',
+      'Microservicios': 'microservices',
+      'Websockets': 'websockets',
+      'Caché Redis': 'redisCache',
+      'Documentación API': 'apiDocs'
+    };
+    
+    const serviceKey = serviceKeyMap[serviceId];
+    const featureKey = featureKeyMap[featureName];
+    
+    if (serviceKey && featureKey) {
+      return t(`priceCalculator.services.${serviceKey}.features.${featureKey}`);
+    }
+    
+    return featureName;
+  };
+
   return (
     <section className="relative py-12 px-4 overflow-hidden">
       {/* Background gradient */}
@@ -251,17 +332,17 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
             <div>
               <h2 className="text-3xl md:text-4xl mb-3">
                 <span className="bg-gradient-to-r from-foreground via-primary to-accent-foreground bg-clip-text text-transparent">
-                  Servicios & Precios
+                  {t('priceCalculator.title')}
                 </span>
               </h2>
               <p className="text-base text-muted-foreground">
-                Elige tu especialidad y encuentra el servicio ideal
+                {t('priceCalculator.subtitle')}
               </p>
             </div>
             
             {/* Currency Selector */}
             <div className="flex items-center gap-3">
-              <span className="text-sm text-muted-foreground hidden md:inline">Moneda:</span>
+              <span className="text-sm text-muted-foreground hidden md:inline">{t('priceCalculator.currency')}</span>
               <CurrencySelector />
             </div>
           </div>
@@ -299,9 +380,9 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                   <div className={`inline-flex p-2 rounded-lg bg-gradient-to-br ${specialty.color} mb-2`}>
                     <Icon className="w-5 h-5 text-white" />
                   </div>
-                  <h3 className="text-sm">{specialty.name}</h3>
+                  <h3 className="text-sm">{t(`priceCalculator.specialties.${specialty.id}`)}</h3>
                   <div className="text-xs text-muted-foreground mt-1">
-                    {services.filter(s => s.specialty === specialty.id).length} servicios
+                    {services.filter(s => s.specialty === specialty.id).length} {t('priceCalculator.servicesCount')}
                   </div>
                 </motion.button>
               );
@@ -333,27 +414,27 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                   <div className="flex items-center justify-between mb-3">
                     <div className="inline-flex items-center gap-2 px-2 py-1 rounded-lg bg-gradient-to-r from-primary/10 to-accent/10 border border-border/50">
                       {specialty && <specialty.icon className="w-3 h-3" />}
-                      <span className="text-xs">{specialty?.name}</span>
+                      <span className="text-xs">{t(`priceCalculator.specialties.${specialty.id}`)}</span>
                     </div>
                     {service.id === 'landing-complete' && (
                       <div className="px-2 py-1 bg-primary text-primary-foreground rounded-lg text-xs flex items-center gap-1">
                         <TrendingUp className="w-3 h-3" />
-                        Popular
+                        {t('priceCalculator.popular')}
                       </div>
                     )}
                   </div>
 
                   {/* Title & Description */}
                   <h3 className="text-lg mb-1 group-hover:text-primary transition-colors">
-                    {service.name}
+                    {getServiceTranslation(service.id).name}
                   </h3>
                   <p className="text-xs text-muted-foreground mb-3">
-                    {service.description}
+                    {getServiceTranslation(service.id).description}
                   </p>
 
                   {/* Price */}
                   <div className="flex items-baseline gap-2 mb-4">
-                    <span className="text-xs text-muted-foreground">desde</span>
+                    <span className="text-xs text-muted-foreground">{t('priceCalculator.from')}</span>
                     <span className="text-2xl">{formatPrice(service.priceBase)}</span>
                   </div>
 
@@ -362,13 +443,13 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                     {service.baseFeatures.slice(0, 3).map((feature, idx) => (
                       <div key={idx} className="flex items-start gap-2 text-xs">
                         <CheckCircle2 className="w-3 h-3 text-primary shrink-0 mt-0.5" />
-                        <span>{feature.name}</span>
+                        <span>{getFeatureTranslation(service.id, feature.name)}</span>
                       </div>
                     ))}
                     {service.optionalFeatures.length > 0 && (
                       <div className="flex items-start gap-2 text-xs text-muted-foreground">
                         <Plus className="w-3 h-3 shrink-0 mt-0.5" />
-                        <span>{service.optionalFeatures.length} opcionales</span>
+                        <span>{service.optionalFeatures.length} {t('priceCalculator.optionals')}</span>
                       </div>
                     )}
                   </div>
@@ -380,13 +461,13 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                       className="flex-1 flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary text-xs transition-all group/btn"
                     >
                       <Calculator className="w-3 h-3 group-hover/btn:rotate-12 transition-transform" />
-                      <span>Calcular</span>
+                      <span>{t('priceCalculator.buttonCalculate')}</span>
                     </button>
                     <button
                       onClick={() => handleServiceClick(service.id, service.specialty)}
                       className="flex-1 flex items-center justify-center gap-1 px-3 py-2 rounded-lg bg-primary text-primary-foreground text-xs hover:bg-primary/90 transition-all group/btn"
                     >
-                      <span>Cotizar</span>
+                      <span>{t('priceCalculator.buttonQuote')}</span>
                       <ArrowRight className="w-3 h-3 group-hover/btn:translate-x-1 transition-transform" />
                     </button>
                   </div>
@@ -405,20 +486,20 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
         >
           <div className="p-4 rounded-xl bg-gradient-to-br from-primary/5 to-transparent border border-border/50 text-center">
             <div className="text-2xl mb-1">⚡</div>
-            <h4 className="text-sm mb-1">Entrega Rápida</h4>
-            <p className="text-xs text-muted-foreground">2-4 semanas</p>
+            <h4 className="text-sm mb-1">{t('priceCalculator.trustIndicators.fastDelivery.title')}</h4>
+            <p className="text-xs text-muted-foreground">{t('priceCalculator.trustIndicators.fastDelivery.description')}</p>
           </div>
           
           <div className="p-4 rounded-xl bg-gradient-to-br from-accent/5 to-transparent border border-border/50 text-center">
             <div className="text-2xl mb-1">💎</div>
-            <h4 className="text-sm mb-1">Calidad Premium</h4>
-            <p className="text-xs text-muted-foreground">+40% conversión</p>
+            <h4 className="text-sm mb-1">{t('priceCalculator.trustIndicators.premiumQuality.title')}</h4>
+            <p className="text-xs text-muted-foreground">{t('priceCalculator.trustIndicators.premiumQuality.description')}</p>
           </div>
           
           <div className="p-4 rounded-xl bg-gradient-to-br from-primary/5 to-transparent border border-border/50 text-center">
             <div className="text-2xl mb-1">🛡️</div>
-            <h4 className="text-sm mb-1">Garantía Total</h4>
-            <p className="text-xs text-muted-foreground">Revisiones incluidas</p>
+            <h4 className="text-sm mb-1">{t('priceCalculator.trustIndicators.totalGuarantee.title')}</h4>
+            <p className="text-xs text-muted-foreground">{t('priceCalculator.trustIndicators.totalGuarantee.description')}</p>
           </div>
         </motion.div>
       </div>
@@ -447,8 +528,8 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                     <Calculator className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-xl">Calculadora de Precio</h3>
-                    <p className="text-sm text-muted-foreground">{selectedServiceForCalc.name}</p>
+                    <h3 className="text-xl">{t('priceCalculator.calculator.title')}</h3>
+                    <p className="text-sm text-muted-foreground">{getServiceTranslation(selectedServiceForCalc.id).name}</p>
                   </div>
                 </div>
                 <button
@@ -462,7 +543,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
               {/* Base Price */}
               <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 mb-6">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Precio base</span>
+                  <span className="text-sm text-muted-foreground">{t('priceCalculator.calculator.basePrice')}</span>
                   <span className="text-xl">{formatPrice(selectedServiceForCalc.priceBase)}</span>
                 </div>
               </div>
@@ -470,10 +551,10 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
               {/* UI/UX Design Option (Frontend only) */}
               {selectedServiceForCalc.specialty === 'frontend' && (
                 <div className="mb-6">
-                  <h4 className="text-sm mb-3">Diseño UI/UX</h4>
+                  <h4 className="text-sm mb-3">{t('priceCalculator.calculator.uiuxDesign')}</h4>
                   <div className="flex items-center justify-between p-4 rounded-xl border border-border/50 bg-background/50">
                     <div>
-                      <span className="text-sm">Diseño UI/UX</span>
+                      <span className="text-sm">{t('priceCalculator.calculator.uiuxDesign')}</span>
                       <p className="text-xs text-muted-foreground mt-1">
                         +{formatPrice(600)}
                       </p>
@@ -497,12 +578,12 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
               {/* Extra Sections (Frontend/Fullstack) */}
               {selectedServiceForCalc.specialty !== 'backend' && (
                 <div className="mb-6">
-                  <h4 className="text-sm mb-3">Secciones Adicionales</h4>
+                  <h4 className="text-sm mb-3">{t('priceCalculator.calculator.additionalSections')}</h4>
                   <div className="flex items-center justify-between p-4 rounded-xl border border-border/50 bg-background/50">
                     <div>
-                      <span className="text-sm">Agregar secciones extra</span>
+                      <span className="text-sm">{t('priceCalculator.calculator.addExtraSections')}</span>
                       <p className="text-xs text-muted-foreground mt-1">
-                        +{formatPrice(150)} por sección
+                        +{formatPrice(150)} {t('priceCalculator.calculator.perSection')}
                       </p>
                     </div>
                     <div className="flex items-center gap-3">
@@ -528,7 +609,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
               {/* Optional Features */}
               {selectedServiceForCalc.optionalFeatures.length > 0 && (
                 <div className="mb-6">
-                  <h4 className="text-sm mb-3">Características Opcionales</h4>
+                  <h4 className="text-sm mb-3">{t('priceCalculator.calculator.optionalFeatures')}</h4>
                   <div className="space-y-2">
                     {selectedServiceForCalc.optionalFeatures.map((feature) => (
                       <div
@@ -544,7 +625,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                             className="w-4 h-4 accent-primary cursor-pointer"
                           />
                           <label htmlFor={feature.name} className="text-sm cursor-pointer">
-                            {feature.name}
+                            {getFeatureTranslation(selectedServiceForCalc.id, feature.name)}
                           </label>
                         </div>
                         <span className="text-sm text-muted-foreground">
@@ -559,11 +640,11 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
               {/* Total Price */}
               <div className="p-5 rounded-xl bg-gradient-to-br from-primary/10 to-accent/10 border-2 border-primary/30 mb-6">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm text-muted-foreground">Total Estimado</span>
+                  <span className="text-sm text-muted-foreground">{t('priceCalculator.calculator.estimatedTotal')}</span>
                   <span className="text-3xl">{formatPrice(calculateTotal())}</span>
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  * Precio referencial. Puede ajustarse según requerimientos específicos.
+                  {t('priceCalculator.calculator.disclaimer')}
                 </p>
               </div>
 
@@ -574,7 +655,7 @@ export function QuoteSection({ onNavigateToContact }: QuoteSectionProps = {}) {
                   className="flex-1"
                   size="lg"
                 >
-                  Solicitar Cotización con este Precio
+                  {t('priceCalculator.calculator.requestQuote')}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>

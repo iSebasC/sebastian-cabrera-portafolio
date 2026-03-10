@@ -1,5 +1,6 @@
 import { QuoteSection } from './QuoteSection';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
 
 interface QuotePageProps {
@@ -9,6 +10,7 @@ interface QuotePageProps {
 
 export function QuotePage({ onNavigateToContact, headingLevel = 'h1' }: QuotePageProps = {}) {
   const HeadingTag = headingLevel as 'h1' | 'h2';
+  const { t } = useTranslation();
 
   return (
     <div className="bg-background text-foreground">
@@ -27,18 +29,16 @@ export function QuotePage({ onNavigateToContact, headingLevel = 'h1' }: QuotePag
               transition={{ delay: 0.15 }}
               className="flex items-center gap-4 mb-6"
             >
-              <span className="font-mono text-6xl lg:text-8xl font-bold text-muted-foreground opacity-30">04</span>
+              <span className="font-mono text-6xl lg:text-8xl font-bold text-muted-foreground opacity-30">{t('quote.magazineNumber')}</span>
               <div className="h-px flex-1 bg-border" />
             </motion.div>
 
             <HeadingTag className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">
-              Cotizar<br />Proyecto
+              {t('quote.title')}
             </HeadingTag>
 
             <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
-              Precios claros y una estimación orientativa para transformar tu idea en una{' '}
-              <span className="text-foreground font-semibold">solución funcional</span>, con foco en{' '}
-              <span className="text-primary font-semibold">resultados medibles</span>.
+              {t('quote.subtitle')}
             </p>
           </div>
         </div>
@@ -61,7 +61,7 @@ export function QuotePage({ onNavigateToContact, headingLevel = 'h1' }: QuotePag
           <div className="mb-8">
             <h2 className="text-2xl md:text-3xl mb-2">
               <span className="bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
-                ¿Por qué invertir?
+                {t('quote.whyInvest')}
               </span>
             </h2>
           </div>
@@ -72,9 +72,9 @@ export function QuotePage({ onNavigateToContact, headingLevel = 'h1' }: QuotePag
               className="p-5 rounded-xl bg-gradient-to-br from-primary/5 to-transparent border border-border/50"
             >
               <div className="text-3xl mb-2">📈</div>
-              <h3 className="text-base mb-2">ROI Comprobado</h3>
+              <h3 className="text-base mb-2">{t('quote.benefits.roi.title')}</h3>
               <p className="text-sm text-muted-foreground">
-                +40% conversión promedio en proyectos
+                {t('quote.benefits.roi.description')}
               </p>
             </motion.div>
 
@@ -83,9 +83,9 @@ export function QuotePage({ onNavigateToContact, headingLevel = 'h1' }: QuotePag
               className="p-5 rounded-xl bg-gradient-to-br from-accent/5 to-transparent border border-border/50"
             >
               <div className="text-3xl mb-2">⚡</div>
-              <h3 className="text-base mb-2">Entregas Ágiles</h3>
+              <h3 className="text-base mb-2">{t('quote.benefits.agile.title')}</h3>
               <p className="text-sm text-muted-foreground">
-                De 2 a 4 semanas según complejidad
+                {t('quote.benefits.agile.description')}
               </p>
             </motion.div>
 
@@ -94,9 +94,9 @@ export function QuotePage({ onNavigateToContact, headingLevel = 'h1' }: QuotePag
               className="p-5 rounded-xl bg-gradient-to-br from-primary/5 to-transparent border border-border/50"
             >
               <div className="text-3xl mb-2">🎯</div>
-              <h3 className="text-base mb-2">Estrategia Clara</h3>
+              <h3 className="text-base mb-2">{t('quote.benefits.strategy.title')}</h3>
               <p className="text-sm text-muted-foreground">
-                Diseño orientado a objetivos medibles
+                {t('quote.benefits.strategy.description')}
               </p>
             </motion.div>
 
@@ -105,9 +105,9 @@ export function QuotePage({ onNavigateToContact, headingLevel = 'h1' }: QuotePag
               className="p-5 rounded-xl bg-gradient-to-br from-accent/5 to-transparent border border-border/50"
             >
               <div className="text-3xl mb-2">🔄</div>
-              <h3 className="text-base mb-2">Soporte Continuo</h3>
+              <h3 className="text-base mb-2">{t('quote.benefits.support.title')}</h3>
               <p className="text-sm text-muted-foreground">
-                Revisiones ilimitadas incluidas
+                {t('quote.benefits.support.description')}
               </p>
             </motion.div>
           </div>
@@ -126,7 +126,7 @@ export function QuotePage({ onNavigateToContact, headingLevel = 'h1' }: QuotePag
           <div className="mb-8">
             <h2 className="text-2xl md:text-3xl mb-2">
               <span className="bg-gradient-to-r from-foreground to-primary bg-clip-text text-transparent">
-                Preguntas Frecuentes
+                {t('quote.faq.title')}
               </span>
             </h2>
           </div>
@@ -135,37 +135,37 @@ export function QuotePage({ onNavigateToContact, headingLevel = 'h1' }: QuotePag
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="rev">
                 <AccordionTrigger className="text-base">
-                  ¿Incluyen revisiones?
+                  {t('quote.faq.revisions.question')}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground">
-                  Sí, revisiones ilimitadas hasta tu satisfacción completa.
+                  {t('quote.faq.revisions.answer')}
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="time">
                 <AccordionTrigger className="text-base">
-                  ¿Cuánto demora?
+                  {t('quote.faq.time.question')}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground">
-                  Landing pages: 1-2 semanas. Proyectos complejos: 3-4 semanas.
+                  {t('quote.faq.time.answer')}
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="pay">
                 <AccordionTrigger className="text-base">
-                  ¿Formas de pago?
+                  {t('quote.faq.payment.question')}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground">
-                  Transferencias, Yape, Plin, tarjetas. Plan: 50% inicio, 50% final.
+                  {t('quote.faq.payment.answer')}
                 </AccordionContent>
               </AccordionItem>
 
               <AccordionItem value="support">
                 <AccordionTrigger className="text-base">
-                  ¿Qué incluye el soporte?
+                  {t('quote.faq.support.question')}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm text-muted-foreground">
-                  30 días post-entrega para ajustes menores y resolución de dudas.
+                  {t('quote.faq.support.answer')}
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
