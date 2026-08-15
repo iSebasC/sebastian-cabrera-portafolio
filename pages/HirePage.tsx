@@ -27,7 +27,15 @@ const stack = [
     color: 'bg-violet-50 dark:bg-violet-950/30 border-violet-100 dark:border-violet-900/40',
     dot: 'bg-violet-500',
     span: 'lg:col-span-1',
-    items: ['PostgreSQL', 'MySQL', 'Prisma ORM', 'Sanity CMS'],
+    items: ['MySQL', 'Prisma ORM', 'Sanity CMS'],
+  },
+  {
+    id: 'mobile',
+    category: 'Mobile',
+    color: 'bg-rose-50 dark:bg-rose-950/30 border-rose-100 dark:border-rose-900/40',
+    dot: 'bg-rose-500',
+    span: 'lg:col-span-1',
+    items: ['React Native', 'Expo'],
   },
   {
     id: 'cloud',
