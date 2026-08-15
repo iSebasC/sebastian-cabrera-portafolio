@@ -196,8 +196,8 @@ export function TestimonialsSection({
                 return (
                   <motion.div
                     key={testimonial.id}
-                    initial={{ opacity: 0, x: 50 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     className="flex-shrink-0 w-[calc(100vw-2rem)] sm:w-[500px] lg:w-[600px] snap-start"

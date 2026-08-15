@@ -205,8 +205,8 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
 
           {/* Bio + Filosofía - 5 columnas */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="lg:col-span-5 space-y-8"
           >
@@ -265,16 +265,16 @@ export function AboutSection({ setActiveSection, portfolioMode = 'freelance' }: 
 
           {/* Right: Steps */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="space-y-6"
           >
             {workProcess.map((step, index) => (
               <motion.div
                 key={step.step}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ x: 8 }}

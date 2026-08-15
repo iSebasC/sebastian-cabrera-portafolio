@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, Mail, Phone, MapPin, MessageCircle, CheckCircle, X } from 'lucide-react';
+import { Send, Mail, Phone, MapPin, MessageCircle, CheckCircle, X, Loader2, Linkedin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -11,168 +11,114 @@ interface ContactSectionProps {
   portfolioMode?: 'employee' | 'freelance';
   headingLevel?: 'h1' | 'h2';
   headerVariant?: 'default' | 'magazine';
+  showHeading?: boolean;
 }
 
 export function ContactSection({
   portfolioMode = 'freelance',
   headingLevel = 'h2',
   headerVariant = 'default',
+  showHeading = true,
 }: ContactSectionProps) {
   const { t } = useTranslation();
-  
-  const contactInfo = [
+
+  const baseContactInfo = [
     {
       icon: Mail,
       label: t('contact.info.emailLabel'),
-      value: "sebastiandev@sebastiancabreraalcala.com",
-      href: "mailto:sebastiandev@sebastiancabreraalcala.com"
+      value: 'sebastiandev@sebastiancabreraalcala.com',
+      href: 'mailto:sebastiandev@sebastiancabreraalcala.com',
+      truncate: true,
     },
     {
       icon: Phone,
       label: t('contact.info.phoneLabel'),
-      value: "+51 914 866 361",
-      href: "tel:+51914866361"
+      value: portfolioMode === 'employee' ? '+51 993 106 111' : '+51 914 866 361',
+      href: portfolioMode === 'employee' ? 'tel:+51993106111' : 'tel:+51914866361',
     },
     {
       icon: MapPin,
       label: t('contact.info.locationLabel'),
       value: t('contact.info.locationValue'),
-      href: "#"
-    }
+      href: '#',
+    },
   ];
-  
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
+
+  const contactInfo =
+    portfolioMode === 'employee'
+      ? [
+          ...baseContactInfo,
+          {
+            icon: Linkedin,
+            label: 'LinkedIn',
+            value: 'linkedin.com/in/sebastian-cabrera-alcala',
+            href: 'https://linkedin.com/in/sebastian-cabrera-alcala',
+            truncate: true,
+          },
+        ]
+      : baseContactInfo;
+
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [focusedField, setFocusedField] = useState<string | null>(null);
-  const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const HeadingTag = headingLevel as 'h1' | 'h2';
   const magazineNumber = portfolioMode === 'freelance' ? '06' : '05';
 
-  // Función de validación
   const validateForm = () => {
-    const newErrors: {[key: string]: string} = {};
-    
-    if (!formData.name.trim()) {
-      newErrors.name = t('contact.form.validation.nameRequired');
-    } else if (formData.name.trim().length < 2) {
-      newErrors.name = t('contact.form.validation.nameMinLength');
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = t('contact.form.validation.emailRequired');
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = t('contact.form.validation.emailInvalid');
-    }
-    
-    if (!formData.subject.trim()) {
-      newErrors.subject = t('contact.form.validation.subjectRequired');
-    } else if (formData.subject.trim().length < 3) {
-      newErrors.subject = t('contact.form.validation.subjectMinLength');
-    }
-    
-    if (!formData.message.trim()) {
-      newErrors.message = t('contact.form.validation.messageRequired');
-    } else if (formData.message.trim().length < 10) {
-      newErrors.message = t('contact.form.validation.messageMinLength');
-    }
-    
+    const newErrors: Record<string, string> = {};
+    if (!formData.name.trim()) newErrors.name = t('contact.form.validation.nameRequired');
+    else if (formData.name.trim().length < 2) newErrors.name = t('contact.form.validation.nameMinLength');
+    if (!formData.email.trim()) newErrors.email = t('contact.form.validation.emailRequired');
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = t('contact.form.validation.emailInvalid');
+    if (!formData.subject.trim()) newErrors.subject = t('contact.form.validation.subjectRequired');
+    else if (formData.subject.trim().length < 3) newErrors.subject = t('contact.form.validation.subjectMinLength');
+    if (!formData.message.trim()) newErrors.message = t('contact.form.validation.messageRequired');
+    else if (formData.message.trim().length < 10) newErrors.message = t('contact.form.validation.messageMinLength');
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-    
-    // Limpiar error del campo cuando el usuario empiece a escribir
-    if (errors[name]) {
-      setErrors({
-        ...errors,
-        [name]: ''
-      });
-    }
+    setFormData({ ...formData, [name]: value });
+    if (errors[name]) setErrors({ ...errors, [name]: '' });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validar formulario antes de enviar
-    if (!validateForm()) {
-      return;
-    }
-    
+    if (!validateForm()) return;
     setIsSubmitting(true);
-    
     try {
       if (isProduction()) {
-        console.log('🌐 Enviando formulario vía Netlify Forms en producción');
-        
-        // Crear FormData con los valores del estado
         const netlifyFormData = new FormData();
         netlifyFormData.append('form-name', 'contact');
-        netlifyFormData.append('bot-field', ''); // Campo honeypot vacío
+        netlifyFormData.append('bot-field', '');
         netlifyFormData.append('name', formData.name);
         netlifyFormData.append('email', formData.email);
         netlifyFormData.append('subject', formData.subject);
         netlifyFormData.append('message', formData.message);
-        
         const response = await fetch('/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams(netlifyFormData as any).toString()
+          body: new URLSearchParams(netlifyFormData as any).toString(),
         });
-        
-        if (!response.ok) {
-          throw new Error(`Error ${response.status}: ${response.statusText}`);
-        }
-        
-        console.log('✅ Formulario enviado exitosamente vía Netlify');
-        
+        if (!response.ok) throw new Error(`Error ${response.status}`);
       } else {
-        console.log('🧪 Modo desarrollo - simulando envío');
-        
-        // En desarrollo: simular envío y mostrar en consola
-        console.log('📧 Datos del formulario (modo desarrollo):', {
-          nombre: formData.name,
-          email: formData.email,
-          asunto: formData.subject,
-          mensaje: formData.message,
-          timestamp: new Date().toISOString()
-        });
-        
-        // Simular delay de red
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log('📧 Formulario (dev):', { ...formData, timestamp: new Date().toISOString() });
+        await new Promise((r) => setTimeout(r, 1000));
       }
-      
       setIsSubmitted(true);
-      
-      // Reset form after 5 seconds
       setTimeout(() => {
         setIsSubmitted(false);
         setFormData({ name: '', email: '', subject: '', message: '' });
       }, 5000);
-      
-    } catch (error) {
-      console.error('❌ Error al enviar formulario:', error);
-      
-      // Mostrar error específico al usuario
-      const errorMessage = isProduction() 
-        ? 'Error al enviar el mensaje. Por favor, intenta nuevamente o contáctame directamente.'
-        : 'Formulario en modo desarrollo. Los datos se muestran en consola.';
-        
-      alert(errorMessage);
-      
-      // En desarrollo, seguir mostrando como exitoso para demo
+    } catch {
+      const msg = isProduction()
+        ? 'Error al enviar. Intenta nuevamente o contáctame directamente.'
+        : 'Formulario en modo desarrollo. Datos en consola.';
+      alert(msg);
       if (!isProduction()) {
         setIsSubmitted(true);
         setTimeout(() => {
@@ -180,31 +126,224 @@ export function ContactSection({
           setFormData({ name: '', email: '', subject: '', message: '' });
         }, 5000);
       }
-      
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  return (
-    <section id="contact" className="scroll-mt-24 pt-24 md:pt-32 lg:pt-40 pb-40 sm:pb-20 lg:pb-24 relative">
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        <motion.div
-          animate={{
-            background: [
-              'radial-gradient(circle at 70% 20%, rgba(120, 119, 198, 0.1) 0%, transparent 50%)',
-              'radial-gradient(circle at 20% 80%, rgba(255, 119, 198, 0.1) 0%, transparent 50%)',
-              'radial-gradient(circle at 80% 60%, rgba(119, 198, 255, 0.1) 0%, transparent 50%)'
-            ]
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="w-full h-full"
-        />
+  /* ── Campo reutilizable ── */
+  const Field = ({
+    id,
+    label,
+    error,
+    children,
+  }: {
+    id: string;
+    label: string;
+    error?: string;
+    children: React.ReactNode;
+  }) => (
+    <div className="space-y-1.5">
+      <label htmlFor={id} className="block text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+        {label}
+      </label>
+      {children}
+      {error && <p className="text-red-500 text-xs">{error}</p>}
+    </div>
+  );
+
+  /* ── Formulario ── */
+  const FormContent = (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="min-w-0"
+    >
+      {showHeading && (
+        <div className="mb-8 space-y-1">
+          <h3 className="text-2xl font-bold">
+            {portfolioMode === 'employee' ? t('contact.form.opportunitiesTitle') : t('contact.form.conversationTitle')}
+          </h3>
+          <p className="text-muted-foreground text-sm">
+            {portfolioMode === 'employee' ? t('contact.form.opportunitiesDescription') : t('contact.form.conversationDescription')}
+          </p>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <input type="text" name="bot-field" style={{ display: 'none' }} />
+
+        <div className="grid sm:grid-cols-2 gap-4">
+          <Field id="name" label={t('contact.form.nameLabel')} error={errors.name}>
+            <Input
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleInputChange}
+              required
+              placeholder={t('contact.form.namePlaceholder')}
+              className={`h-11 rounded-xl border-border/60 bg-background ${errors.name ? 'border-red-500' : ''}`}
+            />
+          </Field>
+
+          <Field id="email" label={t('contact.form.emailLabel')} error={errors.email}>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              required
+              placeholder={t('contact.form.emailPlaceholder')}
+              className={`h-11 rounded-xl border-border/60 bg-background ${errors.email ? 'border-red-500' : ''}`}
+            />
+          </Field>
+        </div>
+
+        <Field
+          id="subject"
+          label={portfolioMode === 'employee' ? t('contact.form.subjectLabelEmployee') : t('contact.form.subjectLabel')}
+          error={errors.subject}
+        >
+          <Input
+            id="subject"
+            name="subject"
+            value={formData.subject}
+            onChange={handleInputChange}
+            required
+            placeholder={
+              portfolioMode === 'employee'
+                ? t('contact.form.subjectPlaceholderEmployee')
+                : t('contact.form.subjectPlaceholder')
+            }
+            className={`h-11 rounded-xl border-border/60 bg-background ${errors.subject ? 'border-red-500' : ''}`}
+          />
+        </Field>
+
+        <Field id="message" label={t('contact.form.messageLabel')} error={errors.message}>
+          <Textarea
+            id="message"
+            name="message"
+            value={formData.message}
+            onChange={handleInputChange}
+            required
+            rows={5}
+            placeholder={
+              portfolioMode === 'employee'
+                ? t('contact.form.messagePlaceholderEmployee')
+                : t('contact.form.messagePlaceholder')
+            }
+            className={`rounded-xl border-border/60 bg-background resize-none ${errors.message ? 'border-red-500' : ''}`}
+          />
+        </Field>
+
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full h-11 rounded-xl bg-foreground text-background hover:bg-foreground/90 font-semibold"
+        >
+          {isSubmitting ? (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              {t('contact.form.sending')}
+            </>
+          ) : (
+            <>
+              <Send className="w-4 h-4 mr-2" />
+              {t('contact.form.sendButton')}
+            </>
+          )}
+        </Button>
+      </form>
+    </motion.div>
+  );
+
+  /* ── Info de contacto ── */
+  const InfoContent = (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.1 }}
+      className="space-y-6"
+    >
+      <div>
+        <p className="text-xs font-mono uppercase tracking-widest text-muted-foreground mb-3">
+          {t('contact.infoTitle')}
+        </p>
+        <div className="space-y-2">
+          {contactInfo.map((info) => (
+            <a
+              key={info.label}
+              href={info.href}
+              target={info.href.startsWith('http') ? '_blank' : undefined}
+              rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              className="flex items-center gap-3 p-3 rounded-xl border border-border/60 hover:bg-accent/50 transition-colors group"
+            >
+              <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                <info.icon className="w-4 h-4 text-muted-foreground" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-xs text-muted-foreground">{info.label}</div>
+                <div className={`text-sm font-medium group-hover:text-primary transition-colors ${info.truncate ? 'truncate' : ''}`}>
+                  {info.value}
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        {headerVariant === 'magazine' ? (
+      {/* Disponibilidad */}
+      <div className="p-4 rounded-xl bg-muted/30 border border-border/60">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+          </span>
+          <span className="text-sm font-semibold">
+            {portfolioMode === 'employee' ? t('contact.availability.employee') : t('contact.availability.freelance')}
+          </span>
+        </div>
+        <p className="text-xs text-muted-foreground pl-4">
+          {portfolioMode === 'employee'
+            ? t('contact.availabilityDesc.employee')
+            : t('contact.availabilityDesc.freelance')}
+        </p>
+      </div>
+    </motion.div>
+  );
+
+  return (
+    <section
+      id="contact"
+      className={`scroll-mt-24 ${
+        showHeading
+          ? 'pb-16 sm:pb-20 lg:pb-24 pt-24 md:pt-32 lg:pt-40 relative overflow-hidden'
+          : 'pb-2'
+      }`}
+    >
+      {/* Fondo animado — solo en página de contacto */}
+      {showHeading && (
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div
+            animate={{
+              background: [
+                'radial-gradient(circle at 70% 20%, rgba(120, 119, 198, 0.1) 0%, transparent 50%)',
+                'radial-gradient(circle at 20% 80%, rgba(255, 119, 198, 0.1) 0%, transparent 50%)',
+                'radial-gradient(circle at 80% 60%, rgba(119, 198, 255, 0.1) 0%, transparent 50%)',
+              ],
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
+            className="w-full h-full"
+          />
+        </div>
+      )}
+
+      <div className={showHeading ? 'container mx-auto px-4 relative z-10' : 'w-full'}>
+        {/* ── Encabezado — solo en página de contacto ── */}
+        {showHeading && headerVariant === 'magazine' ? (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -223,17 +362,15 @@ export function ContactSection({
                 </span>
                 <div className="h-px flex-1 bg-border" />
               </motion.div>
-
               <HeadingTag className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">
                 {t('contact.title')}
               </HeadingTag>
-
               <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
                 {portfolioMode === 'employee' ? t('contact.employeeDescription') : t('contact.freelanceDescription')}
               </p>
             </div>
           </motion.div>
-        ) : (
+        ) : showHeading ? (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -247,501 +384,86 @@ export function ContactSection({
               transition={{ delay: 0.2 }}
               className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-primary/10 to-accent/20 rounded-full border border-border/50 mb-8"
             >
-              <motion.div
-                animate={{ 
-                  rotate: [0, 10, -10, 0],
-                  scale: [1, 1.1, 1]
-                }}
-                transition={{ 
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-              >
-                <MessageCircle className="w-5 h-5 text-primary" />
-              </motion.div>
+              <MessageCircle className="w-5 h-5 text-primary" />
               <span className="font-medium">{t('contact.connectLabel')}</span>
             </motion.div>
-            
-            <h2 className="text-4xl lg:text-6xl xl:text-7xl font-bold mb-8">
-              <motion.span
-                animate={{
-                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
-                }}
-                transition={{ duration: 5, repeat: Infinity }}
-                className="bg-gradient-to-r from-foreground via-primary to-accent bg-clip-text text-transparent bg-[length:200%]"
-              >
-                {t('contact.readyTitle')}
-              </motion.span>
-              <br />
-              <span className="relative">
-                <motion.span
-                  animate={{
-                    color: ['#000', '#7c3aed', '#ec4899', '#000']
-                  }}
-                  transition={{ duration: 4, repeat: Infinity }}
-                  className="relative z-10"
-                >
-                  {t('contact.createTitle')}
-                </motion.span>
-                <motion.div
-                  animate={{
-                    scaleX: [0, 1, 0],
-                    opacity: [0, 0.3, 0]
-                  }}
-                  transition={{ 
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="absolute bottom-2 left-0 w-full h-3 bg-gradient-to-r from-primary to-accent rounded-full"
-                />
-              </span>
-            </h2>
-            
-            <motion.p 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
-            >
+            <HeadingTag className="text-4xl lg:text-6xl xl:text-7xl font-bold mb-6">
+              {t('contact.readyTitle')} {t('contact.createTitle')}
+            </HeadingTag>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               {portfolioMode === 'employee' ? t('contact.employeeSubtitle') : t('contact.freelanceSubtitle')}
-            </motion.p>
+            </p>
           </motion.div>
+        ) : null}
+
+        {/* ── Grid principal ── */}
+        {showHeading ? (
+          /* Página /contacto — sin card wrapper */
+          <div className="grid lg:grid-cols-[1fr_1px_360px] gap-12 lg:gap-16 items-start">
+            {FormContent}
+            <div className="hidden lg:block self-stretch bg-border/60" />
+            {InfoContent}
+          </div>
+        ) : (
+          /* Página /hire — dentro de card bento */
+          <div className="rounded-2xl border border-border/60 bg-card p-6 sm:p-8 lg:p-10">
+            <div className="grid lg:grid-cols-[1fr_1px_300px] gap-8 lg:gap-10 items-start">
+              {FormContent}
+              <div className="hidden lg:block self-stretch bg-border/60" />
+              {InfoContent}
+            </div>
+          </div>
         )}
-
-        <div className="grid lg:grid-cols-2 gap-20 items-start">
-          {/* Enhanced Interactive Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <div className="space-y-4">
-              <motion.h3 className="text-3xl font-bold">
-                {portfolioMode === 'employee' ? t('contact.form.opportunitiesTitle') : t('contact.form.conversationTitle')}
-              </motion.h3>
-              <p className="text-muted-foreground text-lg">
-                {portfolioMode === 'employee' ? t('contact.form.opportunitiesDescription') : t('contact.form.conversationDescription')}
-              </p>
-            </div>
-
-            <motion.form
-              onSubmit={handleSubmit}
-              className="space-y-8"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
-              {/* Campo honeypot oculto para Netlify */}
-              <input type="text" name="bot-field" style={{ display: 'none' }} />
-              <div className="grid sm:grid-cols-2 gap-6">
-                {/* Name Field */}
-                <motion.div 
-                  className="relative space-y-3"
-                >
-                  <label htmlFor="name" className="text-sm font-medium flex items-center gap-2">
-                    <span className="text-base leading-none">👋</span>
-                    <motion.span
-                      animate={{ 
-                        color: focusedField === 'name' ? '#7c3aed' : 'inherit'
-                      }}
-                    >
-                      {t('contact.form.nameLabel')}
-                    </motion.span>
-                  </label>
-                  <div className="relative">
-                    <Input
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('name')}
-                      onBlur={() => setFocusedField(null)}
-                      required
-                      className={`h-14 pl-4 pr-12 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl hover:border-primary/30 ${
-                        errors.name 
-                          ? 'border-red-500 focus:border-red-500' 
-                          : 'focus:border-primary/50'
-                      }`}
-                      placeholder={t('contact.form.namePlaceholder')}
-                    />
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-primary/60 flex items-center justify-center w-6 h-6">
-                      <span className="text-lg leading-none">✨</span>
-                    </div>
-                  </div>
-                  {errors.name && (
-                    <motion.p 
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="text-red-500 text-sm mt-1"
-                    >
-                      {errors.name}
-                    </motion.p>
-                  )}
-                </motion.div>
-                
-                {/* Email Field */}
-                <motion.div 
-                  className="relative space-y-3"
-                >
-                  <label htmlFor="email" className="text-sm font-medium flex items-center gap-2">
-                    <span className="text-base leading-none">📧</span>
-                    <motion.span
-                      animate={{ 
-                        color: focusedField === 'email' ? '#7c3aed' : 'inherit'
-                      }}
-                    >
-                      {t('contact.form.emailLabel')}
-                    </motion.span>
-                  </label>
-                  <div className="relative">
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      onFocus={() => setFocusedField('email')}
-                      onBlur={() => setFocusedField(null)}
-                      required
-                      className={`h-14 pl-4 pr-12 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl hover:border-primary/30 ${
-                        errors.email 
-                          ? 'border-red-500 focus:border-red-500' 
-                          : 'focus:border-primary/50'
-                      }`}
-                      placeholder={t('contact.form.emailPlaceholder')}
-                    />
-                    <div className="absolute right-4 top-1/2 -translate-y-1/2 text-primary/60 flex items-center justify-center w-6 h-6">
-                      <span className="text-lg leading-none">💌</span>
-                    </div>
-                  </div>
-                  {errors.email && (
-                    <motion.p 
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="text-red-500 text-sm mt-1"
-                    >
-                      {errors.email}
-                    </motion.p>
-                  )}
-                </motion.div>
-              </div>
-
-              {/* Subject Field */}
-              <motion.div 
-                className="relative space-y-3"
-              >
-                <label htmlFor="subject" className="text-sm font-medium flex items-center gap-2">
-                  <span className="text-base leading-none">🎯</span>
-                  <motion.span
-                    animate={{ 
-                      color: focusedField === 'subject' ? '#7c3aed' : 'inherit'
-                    }}
-                  >
-                    {t('contact.form.subjectLabel')}
-                  </motion.span>
-                </label>
-                <div className="relative">
-                  <Input
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    onFocus={() => setFocusedField('subject')}
-                    onBlur={() => setFocusedField(null)}
-                    required
-                    className={`h-14 pl-4 pr-12 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl hover:border-primary/30 ${
-                      errors.subject 
-                        ? 'border-red-500 focus:border-red-500' 
-                        : 'focus:border-primary/50'
-                    }`}
-                    placeholder={t('contact.form.subjectPlaceholder')}
-                  />
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2 text-primary/60 flex items-center justify-center w-6 h-6">
-                    <span className="text-lg leading-none">🚀</span>
-                  </div>
-                </div>
-                {errors.subject && (
-                  <motion.p 
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-red-500 text-sm mt-1"
-                  >
-                    {errors.subject}
-                  </motion.p>
-                )}
-              </motion.div>
-
-              {/* Message Field */}
-              <motion.div 
-                className="relative space-y-3"
-              >
-                <label htmlFor="message" className="text-sm font-medium flex items-center gap-2">
-                  <span className="text-base leading-none">💭</span>
-                  <motion.span
-                    animate={{ 
-                      color: focusedField === 'message' ? '#7c3aed' : 'inherit'
-                    }}
-                  >
-                    {t('contact.form.messageLabel')}
-                  </motion.span>
-                </label>
-                <div className="relative">
-                  <Textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    onFocus={() => setFocusedField('message')}
-                    onBlur={() => setFocusedField(null)}
-                    required
-                    rows={6}
-                    placeholder={t('contact.form.messagePlaceholder')}
-                    className={`pl-4 pr-4 pt-4 text-lg bg-background/50 backdrop-blur-sm border-2 transition-all duration-300 rounded-2xl hover:border-primary/30 resize-none ${
-                      errors.message 
-                        ? 'border-red-500 focus:border-red-500' 
-                        : 'focus:border-primary/50'
-                    }`}
-                  />
-                  <div className="absolute right-4 top-4 text-primary/60 flex items-center justify-center w-6 h-6">
-                    <span className="text-lg leading-none">✍️</span>
-                  </div>
-                </div>
-                {errors.message && (
-                  <motion.p 
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-red-500 text-sm mt-1"
-                  >
-                    {errors.message}
-                  </motion.p>
-                )}
-              </motion.div>
-
-              {/* Enhanced Submit Button */}
-              <motion.div
-                whileTap={{ scale: 0.98 }}
-                className="pt-4"
-              >
-                <Button
-                  type="submit"
-                  className="group relative w-full h-16 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground rounded-3xl overflow-hidden transition-all duration-500 shadow-lg hover:shadow-2xl"
-                  disabled={isSubmitting}
-                >
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                    animate={{ x: [-100, 400] }}
-                    transition={{ 
-                      duration: 2,
-                      repeat: Infinity,
-                      repeatDelay: 3,
-                      ease: "easeInOut"
-                    }}
-                  />
-                  
-                  {isSubmitting ? (
-                    <motion.div
-                      className="flex items-center gap-3 text-lg font-semibold"
-                    >
-                      <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                      >
-                        <div className="w-6 h-6 border-3 border-primary-foreground/20 border-t-primary-foreground rounded-full" />
-                      </motion.div>
-                      {t('contact.form.sending')}
-                    </motion.div>
-                  ) : (
-                    <div className="flex items-center gap-3 text-lg font-semibold">
-                      <motion.div
-                        animate={{ x: [0, 5, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                      >
-                        <Send className="w-6 h-6" />
-                      </motion.div>
-                      {t('contact.form.sendButton')}
-                      <span className="group-hover:translate-x-1 transition-transform">🚀</span>
-                    </div>
-                  )}
-                </Button>
-              </motion.div>
-            </motion.form>
-          </motion.div>
-
-          {/* Contact Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="space-y-8"
-          >
-            <div>
-              <h3 className="text-2xl font-bold mb-4">{t('contact.infoTitle')}</h3>
-              <p className="text-muted-foreground">
-                {t('contact.infoDescription')}
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <motion.a
-                  key={info.label}
-                  href={info.href}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group flex items-center gap-4 p-4 bg-accent/30 rounded-2xl border border-border/50 hover:bg-accent/50 transition-all duration-300"
-                >
-                  <div className="p-3 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
-                    <info.icon className="w-6 h-6 text-primary" />
-                  </div>
-                  
-                  <div className="min-w-0 flex-1">
-                    <div className="font-medium text-sm text-muted-foreground">
-                      {info.label}
-                    </div>
-                    <div className="font-semibold group-hover:text-primary transition-colors break-words">
-                      {info.value}
-                    </div>
-                  </div>
-                </motion.a>
-              ))}
-            </div>
-
-            {/* Visual Element */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="relative p-8 bg-gradient-to-br from-primary/10 to-accent/20 rounded-3xl border border-border/50 overflow-hidden"
-            >
-              <div className="relative z-10">
-                <h4 className="text-xl font-bold mb-2">
-                  {portfolioMode === 'employee' ? t('contact.availability.employee') : t('contact.availability.freelance')}
-                </h4>
-                <p className="text-muted-foreground text-sm">
-                  {portfolioMode === 'employee' ? t('contact.availabilityDesc.employee') : t('contact.availabilityDesc.freelance')}
-                </p>
-              </div>
-              
-              {/* Background Pattern */}
-              <motion.div
-                animate={{ 
-                  rotate: 360,
-                  scale: [1, 1.2, 1]
-                }}
-                transition={{ 
-                  rotate: { duration: 20, repeat: Infinity, ease: "linear" },
-                  scale: { duration: 8, repeat: Infinity, ease: "easeInOut" }
-                }}
-                className="absolute -top-4 -right-4 w-16 h-16 bg-primary/20 rounded-full blur-sm"
-              />
-              
-              <motion.div
-                animate={{ 
-                  rotate: -360,
-                  x: [0, 10, 0],
-                  y: [0, -5, 0]
-                }}
-                transition={{ 
-                  rotate: { duration: 15, repeat: Infinity, ease: "linear" },
-                  x: { duration: 6, repeat: Infinity, ease: "easeInOut" },
-                  y: { duration: 4, repeat: Infinity, ease: "easeInOut" }
-                }}
-                className="absolute -bottom-2 -left-2 w-12 h-12 bg-accent/30 rounded-full blur-sm"
-              />
-            </motion.div>
-          </motion.div>
-        </div>
       </div>
 
-      {/* Success Modal */}
+      {/* ── Modal de éxito ── */}
       <AnimatePresence>
         {isSubmitted && (
-          <>
-            {/* Overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setIsSubmitted(false)}
+          >
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-              onClick={() => setIsSubmitted(false)}
+              initial={{ opacity: 0, scale: 0.8, y: 50 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 50 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+              className="relative bg-background rounded-3xl p-8 max-w-md w-full shadow-2xl border border-border"
+              onClick={(e) => e.stopPropagation()}
             >
-              {/* Modal */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, y: 50 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.8, y: 50 }}
-                transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                className="relative bg-background rounded-3xl p-8 max-w-md w-full shadow-2xl border border-border"
-                onClick={(e) => e.stopPropagation()}
+              <button
+                onClick={() => setIsSubmitted(false)}
+                className="absolute top-4 right-4 p-2 hover:bg-accent/50 rounded-full transition-colors"
+                aria-label={t('contact.success.closeLabel')}
               >
-                {/* Close Button */}
-                <button
-                  onClick={() => setIsSubmitted(false)}
-                  className="absolute top-4 right-4 p-2 hover:bg-accent/50 rounded-full transition-colors"
-                  aria-label={t('contact.success.closeLabel')}
-                >
-                  <X className="w-5 h-5" />
-                </button>
+                <X className="w-5 h-5" />
+              </button>
 
-                {/* Success Icon */}
-                <motion.div
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-                  className="flex justify-center mb-6"
-                >
-                  <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
-                    <CheckCircle className="w-12 h-12 text-white" strokeWidth={2.5} />
-                  </div>
-                </motion.div>
-
-                {/* Success Message */}
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  className="text-center space-y-4"
-                >
-                  <h3 className="text-3xl font-bold">
-                    {t('contact.success.title')}
-                  </h3>
-                  <p className="text-muted-foreground text-lg">
-                    {t('contact.success.message')}
-                  </p>
-                </motion.div>
-
-                {/* Animated confetti effect */}
-                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
-                  {[...Array(12)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ y: -20, opacity: 1 }}
-                      animate={{ 
-                        y: 400,
-                        opacity: 0,
-                        x: Math.sin(i) * 100
-                      }}
-                      transition={{ 
-                        duration: 2,
-                        delay: i * 0.1,
-                        ease: "easeOut"
-                      }}
-                      className="absolute w-2 h-2 rounded-full"
-                      style={{
-                        left: `${(i * 8) + 10}%`,
-                        background: ['#7c3aed', '#ec4899', '#3b82f6', '#10b981'][i % 4]
-                      }}
-                    />
-                  ))}
+              <motion.div
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+                className="flex justify-center mb-6"
+              >
+                <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center">
+                  <CheckCircle className="w-12 h-12 text-white" strokeWidth={2.5} />
                 </div>
               </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="text-center space-y-4"
+              >
+                <h3 className="text-3xl font-bold">{t('contact.success.title')}</h3>
+                <p className="text-muted-foreground text-lg">{t('contact.success.message')}</p>
+              </motion.div>
             </motion.div>
-          </>
+          </motion.div>
         )}
       </AnimatePresence>
     </section>

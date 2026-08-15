@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Moon, Sun, Menu, X, Globe, ChevronDown } from 'lucide-react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../contexts/LanguageContext';
 
@@ -21,6 +21,8 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
   const { t } = useTranslation();
   const { currentLanguage, changeLanguage } = useLanguage();
   const langMenuRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+  const isHirePage = location.pathname === '/hire';
 
   // Scroll progress bar
   const { scrollYProgress } = useScroll();
@@ -29,6 +31,21 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
     damping: 30,
     restDelta: 0.001
   });
+
+  const hireSections = [
+    { id: 'home',     label: t('nav.home'),         number: '01', scrollTo: 'hire-home' },
+    { id: 'about',    label: t('nav.about'),         number: '02', scrollTo: null, to: '/sobre-mi' },
+    { id: 'projects', label: t('nav.projects'),      number: '03', scrollTo: 'hire-projects' },
+    { id: 'contact',  label: t('nav.contact'),       number: '04', scrollTo: 'hire-contact' },
+  ];
+
+  const scrollToSection = (scrollTo: string) => {
+    if (scrollTo === 'hire-home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      document.getElementById(scrollTo)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   const sections = [
     { id: 'home', label: t('nav.home'), number: '01', to: '/' },
@@ -41,14 +58,14 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
       id: 'testimonials',
       label: t('nav.testimonials'),
       number: portfolioMode === 'freelance' ? '05' : '04',
-      to: '/testimonios'
+      to: '/testimonios',
     },
     {
       id: 'contact',
       label: t('nav.contact'),
       number: portfolioMode === 'freelance' ? '06' : '05',
-      to: '/contacto'
-    }
+      to: '/contacto',
+    },
   ];
 
   const isActive = (id: string) => activeSection === id;
@@ -126,7 +143,7 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-16 lg:h-20">
             {/* Logo */}
-            <NavLink to="/" end aria-label="Ir al inicio">
+            <NavLink to={isHirePage ? '/hire' : '/'} end aria-label="Ir al inicio">
               <motion.div className="flex items-center gap-3" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <div className="relative">
                   <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-full bg-gradient-to-br from-primary to-primary/70 flex items-center justify-center">
@@ -149,58 +166,83 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
 
             {/* Desktop Menu - Magazine Style */}
             <div className="hidden lg:flex items-center gap-1">
-              {sections.map((section) => (
-                <NavLink key={section.id} to={section.to} end={section.to === '/'}>
-                  <motion.div
-                    className="relative px-4 py-2 group cursor-pointer"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <div
-                      className={`flex items-center gap-2 transition-all duration-300 ${
-                        isActive(section.id)
-                          ? 'text-primary'
-                          : 'text-muted-foreground group-hover:text-foreground'
-                      }`}
-                    >
-                      {/* Dot indicator para active */}
-                      {isActive(section.id) && (
+              {isHirePage
+                ? hireSections.map((section) =>
+                    section.scrollTo === null && section.to ? (
+                      <NavLink key={section.id} to={section.to}>
                         <motion.div
-                          layoutId="activeDot"
-                          className="w-1.5 h-1.5 rounded-full bg-primary"
+                          className="relative px-4 py-2 group cursor-pointer"
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <div className="flex items-center gap-2 text-muted-foreground group-hover:text-foreground transition-all duration-300">
+                            <span className="text-xs font-mono">{section.number}</span>
+                            <span className="text-sm font-medium">{section.label}</span>
+                          </div>
+                          <motion.div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary origin-left" initial={{ scaleX: 0 }} whileHover={{ scaleX: 1 }} transition={{ duration: 0.3 }} />
+                        </motion.div>
+                      </NavLink>
+                    ) : (
+                      <motion.button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.scrollTo!)}
+                        className="relative px-4 py-2 group cursor-pointer"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <div className="flex items-center gap-2 text-muted-foreground group-hover:text-foreground transition-all duration-300">
+                          <span className="text-xs font-mono">{section.number}</span>
+                          <span className="text-sm font-medium">{section.label}</span>
+                        </div>
+                        <motion.div className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary origin-left" initial={{ scaleX: 0 }} whileHover={{ scaleX: 1 }} transition={{ duration: 0.3 }} />
+                      </motion.button>
+                    )
+                  )
+                : sections.map((section) => (
+                    <NavLink key={section.id} to={section.to} end={section.to === '/'}>
+                      <motion.div
+                        className="relative px-4 py-2 group cursor-pointer"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <div
+                          className={`flex items-center gap-2 transition-all duration-300 ${
+                            isActive(section.id)
+                              ? 'text-primary'
+                              : 'text-muted-foreground group-hover:text-foreground'
+                          }`}
+                        >
+                          {isActive(section.id) && (
+                            <motion.div
+                              layoutId="activeDot"
+                              className="w-1.5 h-1.5 rounded-full bg-primary"
+                              transition={{ duration: 0.3 }}
+                            />
+                          )}
+                          <span
+                            className={`text-xs font-mono transition-all duration-300 ${
+                              isActive(section.id) ? 'font-bold' : 'font-normal'
+                            }`}
+                          >
+                            {section.number}
+                          </span>
+                          <span className="text-sm font-medium">{section.label}</span>
+                        </div>
+                        <motion.div
+                          className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary origin-left"
+                          initial={{ scaleX: 0 }}
+                          whileHover={{ scaleX: 1 }}
                           transition={{ duration: 0.3 }}
                         />
-                      )}
-
-                      {/* Número tipo magazine */}
-                      <span
-                        className={`text-xs font-mono transition-all duration-300 ${
-                          isActive(section.id) ? 'font-bold' : 'font-normal'
-                        }`}
-                      >
-                        {section.number}
-                      </span>
-
-                      {/* Label */}
-                      <span className="text-sm font-medium">{section.label}</span>
-                    </div>
-
-                    {/* Línea animada desde abajo en hover */}
-                    <motion.div
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-primary origin-left"
-                      initial={{ scaleX: 0 }}
-                      whileHover={{ scaleX: 1 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </motion.div>
-                </NavLink>
-              ))}
+                      </motion.div>
+                    </NavLink>
+                  ))}
             </div>
 
             {/* Portfolio Mode Toggle, Language Selector, Theme Toggle & Mobile Menu */}
             <div className="flex items-center gap-2">
               {/* Portfolio Mode Toggle */}
-              {togglePortfolioMode && (
+              {togglePortfolioMode && !isHirePage && (
                 <motion.div
                   className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-accent/20 rounded-lg"
                   whileHover={{ scale: 1.02 }}
@@ -317,27 +359,50 @@ export function Navigation({ activeSection, isDark, toggleTheme, portfolioMode =
         >
           <div className="container mx-auto px-6 py-4">
             <div className="flex flex-col gap-2">
-              {sections.map((section) => (
-                <NavLink key={section.id} to={section.to} end={section.to === '/'}>
-                  <motion.button
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                    }}
-                    className={`w-full text-left p-4 rounded-lg transition-all duration-300 flex items-center gap-3 ${
-                      isActive(section.id)
-                        ? 'bg-primary text-primary-foreground'
-                        : 'hover:bg-accent hover:text-foreground text-muted-foreground'
-                    }`}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <span className="text-xs font-mono font-bold">{section.number}</span>
-                    <span className="font-medium">{section.label}</span>
-                  </motion.button>
-                </NavLink>
-              ))}
+              {isHirePage
+                ? hireSections.map((section) =>
+                    section.scrollTo === null && section.to ? (
+                      <NavLink key={section.id} to={section.to}>
+                        <motion.button
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="w-full text-left p-4 rounded-lg transition-all duration-300 flex items-center gap-3 hover:bg-accent hover:text-foreground text-muted-foreground"
+                          whileTap={{ scale: 0.95 }}
+                        >
+                          <span className="text-xs font-mono font-bold">{section.number}</span>
+                          <span className="font-medium">{section.label}</span>
+                        </motion.button>
+                      </NavLink>
+                    ) : (
+                      <motion.button
+                        key={section.id}
+                        onClick={() => { scrollToSection(section.scrollTo!); setIsMobileMenuOpen(false); }}
+                        className="w-full text-left p-4 rounded-lg transition-all duration-300 flex items-center gap-3 hover:bg-accent hover:text-foreground text-muted-foreground"
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <span className="text-xs font-mono font-bold">{section.number}</span>
+                        <span className="font-medium">{section.label}</span>
+                      </motion.button>
+                    )
+                  )
+                : sections.map((section) => (
+                    <NavLink key={section.id} to={section.to} end={section.to === '/'}>
+                      <motion.button
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`w-full text-left p-4 rounded-lg transition-all duration-300 flex items-center gap-3 ${
+                          isActive(section.id)
+                            ? 'bg-primary text-primary-foreground'
+                            : 'hover:bg-accent hover:text-foreground text-muted-foreground'
+                        }`}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        <span className="text-xs font-mono font-bold">{section.number}</span>
+                        <span className="font-medium">{section.label}</span>
+                      </motion.button>
+                    </NavLink>
+                  ))}
               
               {/* Portfolio Mode Toggle for Mobile */}
-              {togglePortfolioMode && (
+              {togglePortfolioMode && !isHirePage && (
                 <div className="mt-4 pt-4 border-t border-border">
                   <div className="px-4 py-2">
                     <div className="flex items-center justify-between">

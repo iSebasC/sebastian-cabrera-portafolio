@@ -82,7 +82,7 @@ export function ProjectDetailRoutePage({ isDark, toggleTheme }: ProjectDetailRou
 
       <ProjectDetail
         project={project}
-        onBack={() => navigate('/proyectos')}
+        onBack={() => navigate(-1)}
         onContact={() => navigate('/contacto')}
         isDark={isDark}
         toggleTheme={toggleTheme}

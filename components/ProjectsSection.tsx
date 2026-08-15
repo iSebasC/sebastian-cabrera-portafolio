@@ -11,9 +11,10 @@ interface ProjectsSectionProps {
   onProjectSelect?: (projectId: string) => void;
   portfolioMode?: 'employee' | 'freelance';
   headingLevel?: 'h1' | 'h2';
+  showHeading?: boolean;
 }
 
-export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', headingLevel = 'h2' }: ProjectsSectionProps) {
+export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', headingLevel = 'h2', showHeading = true }: ProjectsSectionProps) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState(t('projects.categories.all'));
@@ -74,88 +75,102 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', 
 
 
   return (
-    <section id="projects" className="scroll-mt-24 pt-24 md:pt-32 lg:pt-40 pb-16 sm:pb-20 lg:pb-24 bg-gradient-to-b from-background to-accent/5">
+    <section id="projects" className={`scroll-mt-24 pb-16 sm:pb-20 lg:pb-24 bg-gradient-to-b from-background to-accent/5 ${showHeading ? 'pt-24 md:pt-32 lg:pt-40' : 'pt-2'}`}>
       <div className="container mx-auto px-4">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16"
-        >
-          <div className="max-w-5xl">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-4 mb-6"
-            >
-              <span className="font-mono text-6xl lg:text-8xl font-bold text-muted-foreground opacity-30">{t('projects.magazineNumber')}</span>
-              <div className="h-px flex-1 bg-border" />
-            </motion.div>
+        {showHeading && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-16"
+          >
+            <div className="max-w-5xl">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="flex items-center gap-4 mb-6"
+              >
+                <span className="font-mono text-6xl lg:text-8xl font-bold text-muted-foreground opacity-30">{t('projects.magazineNumber')}</span>
+                <div className="h-px flex-1 bg-border" />
+              </motion.div>
 
-            <HeadingTag className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">
-              {t('projects.title')}
-            </HeadingTag>
+              <HeadingTag className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-bold mb-8 leading-tight">
+                {t('projects.title')}
+              </HeadingTag>
 
-            <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
-              {t('projects.subtitle')}
-            </p>
-          </div>
-        </motion.div>
+              <p className="text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl">
+                {t('projects.subtitle')}
+              </p>
+            </div>
+          </motion.div>
+        )}
 
         {/* Category Filter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12 px-2"
+          className={`flex flex-wrap gap-2 mb-8 ${portfolioMode === 'employee' ? 'justify-start' : 'justify-center px-2 sm:gap-3 mb-12'}`}
         >
           {categories.map((category, index) => (
-            <motion.button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`relative px-4 sm:px-6 py-2 sm:py-3 rounded-full transition-all duration-300 overflow-hidden text-sm sm:text-base ${
-                selectedCategory === category
-                  ? 'bg-primary text-primary-foreground shadow-lg'
-                  : 'bg-accent/50 hover:bg-accent text-muted-foreground hover:text-foreground border border-border/50'
-              }`}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              animate={{ 
-                y: [0, -2, 0],
-                rotate: [0, 1, -1, 0]
-              }}
-              transition={{ 
-                y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 },
-                rotate: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }
-              }}
-            >
-              {category}
-              
-              {/* Sparkle effect - consistente con otros elementos */}
-              {selectedCategory === category && [...Array(3)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
-                  animate={{ 
-                    opacity: [0, 1, 0],
-                    scale: [0, 1, 0],
-                    rotate: [0, 360],
-                    x: [0, (Math.random() - 0.5) * 60],
-                    y: [0, (Math.random() - 0.5) * 60]
-                  }}
-                  transition={{ 
-                    duration: 2,
-                    delay: i * 0.3,
-                    repeat: Infinity,
-                    repeatDelay: 3,
-                    ease: "easeInOut"
-                  }}
-                  className="absolute top-1/2 left-1/2 w-1 h-1 bg-primary-foreground rounded-full"
-                />
-              ))}
-            </motion.button>
+            portfolioMode === 'employee' ? (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-colors border ${
+                  selectedCategory === category
+                    ? 'bg-foreground text-background border-foreground'
+                    : 'border-border/60 text-muted-foreground hover:text-foreground hover:border-border'
+                }`}
+              >
+                {selectedCategory === category && <span className="mr-1">·</span>}{category}
+              </button>
+            ) : (
+              <motion.button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`relative px-4 sm:px-6 py-2 sm:py-3 rounded-full transition-all duration-300 overflow-hidden text-sm sm:text-base ${
+                  selectedCategory === category
+                    ? 'bg-primary text-primary-foreground shadow-lg'
+                    : 'bg-accent/50 hover:bg-accent text-muted-foreground hover:text-foreground border border-border/50'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                animate={{
+                  y: [0, -2, 0],
+                  rotate: [0, 1, -1, 0]
+                }}
+                transition={{
+                  y: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: index * 0.2 },
+                  rotate: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: index * 0.3 }
+                }}
+              >
+                {category}
+                {selectedCategory === category && [...Array(3)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0, x: 0, y: 0 }}
+                    animate={{
+                      opacity: [0, 1, 0],
+                      scale: [0, 1, 0],
+                      rotate: [0, 360],
+                      x: [0, (Math.random() - 0.5) * 60],
+                      y: [0, (Math.random() - 0.5) * 60]
+                    }}
+                    transition={{
+                      duration: 2,
+                      delay: i * 0.3,
+                      repeat: Infinity,
+                      repeatDelay: 3,
+                      ease: "easeInOut"
+                    }}
+                    className="absolute top-1/2 left-1/2 w-1 h-1 bg-primary-foreground rounded-full"
+                  />
+                ))}
+              </motion.button>
+            )
           ))}
         </motion.div>
 
@@ -208,8 +223,8 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', 
                 onMouseEnter={() => setHoveredProject(project.id)}
                 onMouseLeave={() => setHoveredProject(null)}
                 onClick={() => {
-                  console.log('Card clicked! Project ID:', project.id);
-                  onProjectSelect?.(project.id);
+                  if (onProjectSelect) onProjectSelect(project.id);
+                  else navigate(`/proyecto/${project.id}`);
                 }}
               >
                 {/* Background Image */}
@@ -301,8 +316,8 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', 
                         <motion.button
                           onClick={(e) => {
                             e.stopPropagation();
-                            console.log('Button clicked! Project ID:', project.id);
-                            onProjectSelect?.(project.id);
+                            if (onProjectSelect) onProjectSelect(project.id);
+                            else navigate(`/proyecto/${project.id}`);
                           }}
                           className="relative flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full text-white hover:bg-white/30 transition-colors text-sm border border-white/20 overflow-hidden"
                           whileHover={{ scale: 1.05 }}

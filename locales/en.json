@@ -183,8 +183,11 @@
       "emailPlaceholder": "your@email.com",
       "subjectLabel": "What's on your mind?",
       "subjectPlaceholder": "Web project, branding, illustration...",
+      "subjectLabelEmployee": "Role / Company",
+      "subjectPlaceholderEmployee": "Fullstack developer, remote, startup...",
       "messageLabel": "Tell me the details",
       "messagePlaceholder": "Describe your project, objectives, deadlines, estimated budget... Everything you consider important!",
+      "messagePlaceholderEmployee": "Tell me about the company, the team, the role and what you're looking for in a candidate...",
       "sendButton": "Send Message",
       "sending": "Sending your message...",
       "validation": {

@@ -1,4 +1,3 @@
-
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
@@ -52,7 +51,6 @@ export default {
           DEFAULT: "var(--card)",
           foreground: "var(--card-foreground)",
         },
-        // Colores adicionales para gradientes como en Figma
         purple: {
           500: "#8b5cf6",
           600: "#7c3aed",
@@ -115,4 +113,4 @@ export default {
     },
   },
   plugins: [],
-};
+}

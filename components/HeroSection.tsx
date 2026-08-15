@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 
 interface HeroSectionProps {
   portfolioMode?: 'employee' | 'freelance';
+  onProjectsClick?: () => void;
+  onContactClick?: () => void;
+  onAboutClick?: () => void;
 }
 
 const useTypingAnimation = (
@@ -49,7 +52,7 @@ const useTypingAnimation = (
   return displayedText;
 };
 
-export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
+export function HeroSection({ portfolioMode = 'freelance', onProjectsClick, onContactClick, onAboutClick }: HeroSectionProps) {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const typedName = useTypingAnimation(t('hero.name'), 100, 50, 2000);
@@ -88,7 +91,7 @@ export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
 
             {/* Círculo Interactivo con manita "¡Conóceme!" */}
             <motion.button
-              onClick={() => navigate('/sobre-mi')}
+              onClick={() => onAboutClick ? onAboutClick() : navigate('/sobre-mi')}
               className="absolute -bottom-4 -left-4 z-10 cursor-pointer group pointer-events-auto"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
@@ -205,7 +208,7 @@ export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
               className="flex flex-row gap-3 items-center w-fit"
             >
               <motion.button
-                onClick={() => navigate('/proyectos')}
+                onClick={() => onProjectsClick ? onProjectsClick() : navigate('/proyectos')}
                 className="px-5 py-3 bg-white border-2 border-gray-200 text-black rounded-xl font-bold text-xs flex items-center justify-center gap-2 hover:bg-gray-50 transition-colors whitespace-nowrap"
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
@@ -218,6 +221,7 @@ export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
               <motion.button
                 onClick={() => {
                   if (portfolioMode === 'freelance') navigate('/cotizar');
+                  else if (onContactClick) onContactClick();
                   else navigate('/contacto');
                 }}
                 className="group px-5 py-3 bg-black text-white rounded-xl font-bold text-xs flex items-center gap-2 shadow-xl hover:shadow-2xl transition-all hover:bg-black/90"
@@ -299,6 +303,8 @@ export function HeroSection({ portfolioMode = 'freelance' }: HeroSectionProps) {
               onClick={() => {
                 if (portfolioMode === 'freelance') {
                   navigate('/cotizar');
+                } else if (onContactClick) {
+                  onContactClick();
                 } else {
                   navigate('/contacto');
                 }

@@ -8,6 +8,7 @@ import { WhatsAppButton } from './components/WhatsAppButton';
 import { CurrencyProvider } from './contexts/CurrencyContext';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
+import { HirePage } from './pages/HirePage';
 import { HomePage } from './pages/HomePage';
 import { ProjectDetailRoutePage } from './pages/ProjectDetailRoutePage';
 import { ProjectsPage } from './pages/ProjectsPage';
@@ -23,6 +24,13 @@ export function App() {
   // Asegurar que cada navegación muestre el inicio de la sección/página
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname]);
+
+  // Activar modo employee automáticamente en /hire
+  useEffect(() => {
+    if (location.pathname === '/hire') {
+      setPortfolioMode('employee');
+    }
   }, [location.pathname]);
 
   // Theme management
@@ -74,8 +82,15 @@ export function App() {
     return 'home';
   }, [location.pathname]);
 
+  const isHirePage = location.pathname === '/hire';
+
+  const scrollHire = (id: string) => {
+    if (id === 'top') window.scrollTo({ top: 0, behavior: 'smooth' });
+    else document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const SiteShell = () => (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Navigation
         activeSection={activeSection}
         isDark={isDark}
@@ -143,35 +158,44 @@ export function App() {
               <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">{t('footer.navigate')}</h4>
               <ul className="space-y-3">
                 {(
-                  [
-                    { num: '01', label: t('nav.home'), path: '/' },
-                    { num: '02', label: t('nav.about'), path: '/sobre-mi' },
-                    { num: '03', label: t('nav.projects'), path: '/proyectos' },
-                    ...(portfolioMode === 'freelance' ? [{ num: '04', label: t('nav.quote'), path: '/cotizar' }] : []),
-                    {
-                      num: portfolioMode === 'freelance' ? '05' : '04',
-                      label: t('nav.testimonials'),
-                      path: '/testimonios'
-                    },
-                    {
-                      num: portfolioMode === 'freelance' ? '06' : '05',
-                      label: t('nav.contact'),
-                      path: '/contacto'
-                    }
-                  ] as const
+                  isHirePage
+                    ? [
+                        { num: '01', label: t('nav.home'),    scrollId: 'top' },
+                        { num: '02', label: t('nav.about'),   scrollId: 'hire-about' },
+                        { num: '03', label: t('nav.projects'),scrollId: 'hire-projects' },
+                        { num: '04', label: t('nav.contact'), scrollId: 'hire-contact' },
+                      ]
+                    : [
+                        { num: '01', label: t('nav.home'),        path: '/' },
+                        { num: '02', label: t('nav.about'),        path: '/sobre-mi' },
+                        { num: '03', label: t('nav.projects'),     path: '/proyectos' },
+                        ...(portfolioMode === 'freelance' ? [{ num: '04', label: t('nav.quote'), path: '/cotizar' }] : []),
+                        { num: portfolioMode === 'freelance' ? '05' : '04', label: t('nav.testimonials'), path: '/testimonios' },
+                        { num: portfolioMode === 'freelance' ? '06' : '05', label: t('nav.contact'),      path: '/contacto' },
+                      ]
                 ).map((item) => (
                   <li key={item.num}>
-                    <a href={item.path}>
-                      <motion.div
-                        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
-                        whileHover={{ x: 4 }}
-                      >
-                        <span className="font-mono text-xs opacity-50 group-hover:opacity-100 transition-opacity">
-                          {item.num}
-                        </span>
-                        <span>{item.label}</span>
-                      </motion.div>
-                    </a>
+                    {'scrollId' in item ? (
+                      <button onClick={() => scrollHire(item.scrollId)} className="w-full text-left">
+                        <motion.div
+                          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
+                          whileHover={{ x: 4 }}
+                        >
+                          <span className="font-mono text-xs opacity-50 group-hover:opacity-100 transition-opacity">{item.num}</span>
+                          <span>{item.label}</span>
+                        </motion.div>
+                      </button>
+                    ) : (
+                      <a href={item.path}>
+                        <motion.div
+                          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
+                          whileHover={{ x: 4 }}
+                        >
+                          <span className="font-mono text-xs opacity-50 group-hover:opacity-100 transition-opacity">{item.num}</span>
+                          <span>{item.label}</span>
+                        </motion.div>
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -230,13 +254,16 @@ export function App() {
                 </div>
                 <div className="flex items-start gap-2 text-sm">
                   <span className="text-primary mt-0.5">📱</span>
-                  <a href="tel:+51914866361" className="text-muted-foreground hover:text-primary transition-colors">
-                    +51 914 866 361
+                  <a
+                    href={isHirePage ? 'tel:+51993106111' : 'tel:+51914866361'}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {isHirePage ? '+51 993 106 111' : '+51 914 866 361'}
                   </a>
                 </div>
               </div>
 
-              {portfolioMode === 'freelance' && (
+              {portfolioMode === 'freelance' && !isHirePage && (
                 <a href="/cotizar">
                   <motion.button
                     className="mt-4 w-full px-4 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold"
@@ -281,8 +308,8 @@ export function App() {
         <div className="absolute bottom-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
       </motion.footer>
 
-      {/* WhatsApp Floating Button */}
-      <WhatsAppButton />
+      {/* WhatsApp Floating Button — oculto en /hire */}
+      {location.pathname !== '/hire' && <WhatsAppButton />}
     </div>
   );
 
@@ -295,6 +322,7 @@ export function App() {
       <Routes>
         <Route element={<SiteShell />}>
           <Route path="/" element={<HomePage portfolioMode={portfolioMode} />} />
+          <Route path="/hire" element={<HirePage />} />
           <Route path="/sobre-mi" element={<AboutPage portfolioMode={portfolioMode} />} />
           <Route path="/proyectos" element={<ProjectsPage portfolioMode={portfolioMode} />} />
           <Route path="/cotizar" element={<QuoteRoutePage />} />
