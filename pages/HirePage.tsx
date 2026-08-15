@@ -38,11 +38,19 @@ const stack = [
     items: ['React Native', 'Expo'],
   },
   {
+    id: 'uiux',
+    category: 'UI/UX',
+    color: 'bg-fuchsia-50 dark:bg-fuchsia-950/30 border-fuchsia-100 dark:border-fuchsia-900/40',
+    dot: 'bg-fuchsia-500',
+    span: 'lg:col-span-1',
+    items: ['Figma', 'Diseño responsive', 'Design systems'],
+  },
+  {
     id: 'cloud',
     category: 'Cloud & DevOps',
     color: 'bg-amber-50 dark:bg-amber-950/30 border-amber-100 dark:border-amber-900/40',
     dot: 'bg-amber-500',
-    span: 'lg:col-span-2',
+    span: 'lg:col-span-3',
     items: ['Azure', 'Docker', 'Vercel', 'Railway', 'Git', 'CI/CD', 'Azure Functions'],
   },
 ];
