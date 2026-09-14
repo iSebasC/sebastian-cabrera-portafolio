@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Eye, ChevronRight } from 'lucide-react';
+import { ExternalLink, Eye, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -398,96 +398,37 @@ export function ProjectsSection({ onProjectSelect, portfolioMode = 'freelance', 
           </motion.div>
         )}
 
-        {/* Project Impact Banner - Only show in freelance mode */}
+        {/* CTA post-proyectos — solo en modo freelance */}
         {portfolioMode === 'freelance' && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-20"
+            className="mt-20 text-center"
           >
-          <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-primary/10 via-accent/20 to-primary/10 border border-border/50 backdrop-blur-sm">
-            <div className="absolute inset-0">
-              <motion.div
-                animate={{
-                  x: [-100, 100, -100],
-                  opacity: [0.3, 0.6, 0.3]
-                }}
-                transition={{
-                  duration: 8,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="w-full h-full bg-gradient-to-r from-transparent via-primary/5 to-transparent"
-              />
+            <p className="text-lg text-muted-foreground mb-6">
+              ¿Te interesa un proyecto similar?
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+              <motion.button
+                onClick={() => navigate('/cotizar')}
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-2xl font-bold hover:bg-primary/90 transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Solicitar cotización
+                <ArrowRight className="w-5 h-5" />
+              </motion.button>
+              <motion.button
+                onClick={() => navigate('/contacto')}
+                className="w-full sm:w-auto px-8 py-4 border border-border rounded-2xl hover:bg-accent transition-colors"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Hablar con Sebastián
+              </motion.button>
             </div>
-            
-            <div className="relative z-10 p-8 lg:p-12">
-              <div className="grid lg:grid-cols-2 gap-8 items-center">
-                <div className="text-center lg:text-left">
-                  <motion.h3 
-                    className="text-2xl lg:text-3xl font-bold mb-4"
-                    whileHover={{ scale: 1.02 }}
-                  >
-                    Cada Proyecto es una 
-                    <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"> Inversión Estratégica</span>
-                  </motion.h3>
-                  <p className="text-lg text-muted-foreground mb-6">
-                    No solo entrego diseños, sino herramientas que impulsan el crecimiento de tu negocio a largo plazo.
-                  </p>
-                  
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <motion.button
-                      className="group inline-flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-2xl hover:bg-primary/90 transition-all duration-300 shadow-lg hover:shadow-xl"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      Ver Case Studies Completos
-                      <motion.div
-                        animate={{ x: [0, 5, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                      >
-                        <ChevronRight className="w-5 h-5" />
-                      </motion.div>
-                    </motion.button>
-                    
-                    <motion.button
-                      onClick={() => navigate('/contacto')}
-                      className="px-8 py-4 border border-border hover:bg-accent transition-all duration-300 rounded-2xl"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      Solicitar Propuesta
-                    </motion.button>
-                  </div>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { label: 'Incremento Promedio en Ventas', value: '+185%', icon: '📈' },
-                    { label: 'Reducción en Tiempo de Desarrollo', value: '-60%', icon: '⚡' },
-                    { label: 'Mejora en Brand Recognition', value: '+240%', icon: '🎯' },
-                    { label: 'ROI en Primer Año', value: '+320%', icon: '💎' }
-                  ].map((stat, index) => (
-                    <motion.div
-                      key={stat.label}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.1 }}
-                      whileHover={{ scale: 1.05, rotate: 1 }}
-                      className="p-4 bg-background/50 backdrop-blur-sm rounded-2xl border border-border/50 text-center"
-                    >
-                      <div className="text-2xl mb-2">{stat.icon}</div>
-                      <div className="text-xl lg:text-2xl font-bold text-primary mb-1">{stat.value}</div>
-                      <div className="text-xs text-muted-foreground leading-tight">{stat.label}</div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
         )}
       </div>
     </section>

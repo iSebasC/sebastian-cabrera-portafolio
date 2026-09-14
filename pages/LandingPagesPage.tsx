@@ -83,9 +83,15 @@ export function LandingPagesPage() {
               Diseño y desarrollo landing pages optimizadas para captar clientes potenciales en Lima y toda
               Latinoamérica. Velocidad máxima, diseño responsivo y estructura persuasiva.
             </p>
+            <div className="mt-6 flex flex-wrap items-center gap-3">
+              <span className="px-3 py-1.5 bg-primary/10 border border-primary/20 rounded-full text-sm font-semibold text-primary">
+                desde S/700
+              </span>
+              <span className="text-sm text-muted-foreground">· Entrega en 1–2 semanas</span>
+            </div>
             <motion.button
               onClick={() => navigate('/cotizar')}
-              className="mt-8 inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-colors"
+              className="mt-6 inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-xl font-semibold hover:bg-primary/90 transition-colors"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
             >

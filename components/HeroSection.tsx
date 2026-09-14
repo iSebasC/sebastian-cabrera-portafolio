@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Sparkles, ArrowRight, Briefcase } from 'lucide-react';
+import { Sparkles, ArrowRight, Briefcase, Zap } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -172,6 +172,17 @@ export function HeroSection({ portfolioMode = 'freelance', onProjectsClick, onCo
               transition={{ delay: 0.3, duration: 0.6 }}
               className="space-y-1 w-fit"
             >
+              <motion.div
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.15, duration: 0.5 }}
+                className="flex items-center gap-2 mb-3"
+              >
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-medium text-primary">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                  Freelance · Lima, Perú
+                </span>
+              </motion.div>
               <h1 className="text-5xl xl:text-6xl font-bold tracking-tighter leading-tight">{t('hero.title1')}</h1>
               <div className="text-5xl xl:text-6xl font-bold tracking-tighter leading-tight">{t('hero.title2')}</div>
               <div className="text-4xl xl:text-5xl font-bold tracking-tighter text-muted-foreground opacity-40 leading-tight">
@@ -235,6 +246,15 @@ export function HeroSection({ portfolioMode = 'freelance', onProjectsClick, onCo
                 </span>
                 <ArrowRight className="w-4 h-4" />
               </motion.button>
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.9, duration: 0.5 }}
+                className="flex items-center gap-1.5 text-xs text-muted-foreground mt-1"
+              >
+                <Zap className="w-3 h-3 text-primary" />
+                Respuesta en menos de 24 horas
+              </motion.p>
             </motion.div>
             </motion.div>
           </div>
@@ -271,6 +291,12 @@ export function HeroSection({ portfolioMode = 'freelance', onProjectsClick, onCo
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-center space-y-4"
           >
+            <div className="flex justify-center mb-2">
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-xs font-medium text-primary">
+                <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+                Freelance · Lima, Perú
+              </span>
+            </div>
             <h1 className="text-4xl sm:text-5xl font-bold tracking-tighter">
               {t('hero.title1')}<br />{t('hero.title2')}
             </h1>

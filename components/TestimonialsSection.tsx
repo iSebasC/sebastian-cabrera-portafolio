@@ -260,50 +260,6 @@ export function TestimonialsSection({
           </motion.div>
         )}
 
-        {!loading && !error && (
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mt-20 max-w-5xl mx-auto"
-          >
-            <div className="text-center mb-12">
-              <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-                {t('testimonials.whyTrust')}
-              </h3>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
-                {t('testimonials.whyTrustDescription')}
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-              {[
-                { value: '95%', label: t('testimonials.metrics.successful'), gradient: 'from-green-500 to-emerald-500' },
-                { value: '100%', label: t('testimonials.metrics.delivery'), gradient: 'from-blue-500 to-cyan-500' },
-                { value: '+250%', label: t('testimonials.metrics.roi'), gradient: 'from-purple-500 to-pink-500' },
-                { value: '98%', label: t('testimonials.metrics.recommendation'), gradient: 'from-orange-500 to-yellow-500' },
-              ].map((metric, index) => (
-                <motion.div
-                  key={metric.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  whileHover={{ y: -4 }}
-                  className="text-center p-6 rounded-2xl bg-muted/30"
-                >
-                  <div
-                    className={`text-4xl sm:text-5xl font-black mb-2 bg-gradient-to-br ${metric.gradient} bg-clip-text text-transparent`}
-                  >
-                    {metric.value}
-                  </div>
-                  <div className="text-sm font-medium text-muted-foreground">{metric.label}</div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
       </div>
 
       <style>{`

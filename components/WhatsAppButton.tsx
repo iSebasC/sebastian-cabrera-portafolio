@@ -1,13 +1,30 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 export function WhatsAppButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const phoneNumber = '51914866361'; // Formato internacional para Perú
+  const phoneNumber = '51914866361';
+  const location = useLocation();
+
+  const getContextualMessage = () => {
+    const path = location.pathname;
+    if (path === '/landing-pages')
+      return '¡Hola Sebastián! Me interesa una landing page para mi negocio.';
+    if (path === '/sistemas-web')
+      return '¡Hola Sebastián! Necesito un sistema web a medida.';
+    if (path === '/desarrollo-web-lima')
+      return '¡Hola Sebastián! Me gustaría cotizar un proyecto web contigo.';
+    if (path === '/cotizar')
+      return '¡Hola Sebastián! Estaba revisando tu calculadora de precios y me gustaría cotizar un proyecto.';
+    if (path.startsWith('/proyecto/'))
+      return '¡Hola Sebastián! Vi uno de tus proyectos y me gustaría hablar sobre algo similar.';
+    return '¡Hola Sebastián! Me gustaría contactarte sobre un proyecto web.';
+  };
 
   const handleWhatsAppClick = () => {
-    const message = encodeURIComponent('¡Hola Sebastian! Me gustaría contactarte.');
+    const message = encodeURIComponent(getContextualMessage());
     window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
     setIsOpen(false);
   };
