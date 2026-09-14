@@ -140,7 +140,7 @@ export function MiniServicesSection() {
             >
               <ImageWithFallback
                 src="/img/servicios.webp"
-                alt="Servicios"
+                alt="Desarrollo web en Lima — Landing Pages y Sistemas Web a medida"
                 className="w-full h-auto object-cover"
               />
             </div>

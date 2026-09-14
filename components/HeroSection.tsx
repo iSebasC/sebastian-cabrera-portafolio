@@ -84,7 +84,7 @@ export function HeroSection({ portfolioMode = 'freelance', onProjectsClick, onCo
             <div className="relative w-full h-full rounded-3xl overflow-hidden border-4 border-border/50 shadow-2xl">
               <img
                 src="/img/profilesebastian_2026.webp"
-                alt="Perfil"
+                alt="Sebastián Cabrera — Desarrollador Web Freelance en Lima, Perú"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -262,7 +262,7 @@ export function HeroSection({ portfolioMode = 'freelance', onProjectsClick, onCo
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative w-48 h-64 sm:w-56 sm:h-72 rounded-3xl overflow-hidden border-4 border-border/50 shadow-2xl"
           >
-            <img src="/img/profilesebastian_2026.webp" alt="Perfil" className="w-full h-full object-cover" />
+            <img src="/img/profilesebastian_2026.webp" alt="Sebastián Cabrera — Desarrollador Web Freelance en Lima, Perú" className="w-full h-full object-cover" />
           </motion.div>
 
           <motion.div

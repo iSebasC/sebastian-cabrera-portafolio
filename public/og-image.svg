@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#0a0a0a"/>
+
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="1200" height="5" fill="#6366f1"/>
+
+  <!-- Decorative circles (top-right) -->
+  <circle cx="1090" cy="170" r="160" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.12"/>
+  <circle cx="1090" cy="170" r="100" fill="none" stroke="#6366f1" stroke-width="1" opacity="0.08"/>
+  <circle cx="1090" cy="170" r="50"  fill="none" stroke="#6366f1" stroke-width="1" opacity="0.06"/>
+
+  <!-- Left accent line -->
+  <rect x="80" y="110" width="4" height="90" fill="#6366f1" rx="2"/>
+
+  <!-- Name -->
+  <text x="104" y="173" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="56" font-weight="700" fill="#ffffff" letter-spacing="-1.5">
+    Sebastián Cabrera
+  </text>
+
+  <!-- Role + location -->
+  <text x="104" y="220" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="24" font-weight="400" fill="#a1a1aa" letter-spacing="0.2">
+    Desarrollador Web Freelance · Lima, Perú
+  </text>
+
+  <!-- Divider -->
+  <rect x="80" y="255" width="1040" height="1" fill="#27272a"/>
+
+  <!-- Services row -->
+  <!-- Landing Pages -->
+  <rect x="80" y="280" width="210" height="42" rx="8" fill="#18181b" stroke="#3f3f46" stroke-width="1"/>
+  <text x="185" y="307" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="16" fill="#a1a1aa" text-anchor="middle">Landing Pages</text>
+
+  <!-- Sistemas Web -->
+  <rect x="306" y="280" width="210" height="42" rx="8" fill="#18181b" stroke="#3f3f46" stroke-width="1"/>
+  <text x="411" y="307" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="16" fill="#a1a1aa" text-anchor="middle">Sistemas Web</text>
+
+  <!-- APIs Backend -->
+  <rect x="532" y="280" width="210" height="42" rx="8" fill="#18181b" stroke="#3f3f46" stroke-width="1"/>
+  <text x="637" y="307" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="16" fill="#a1a1aa" text-anchor="middle">APIs &amp; Backend</text>
+
+  <!-- Stack label -->
+  <text x="80" y="400" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="13" font-weight="600" fill="#6366f1" letter-spacing="2.5">
+    STACK
+  </text>
+
+  <!-- Stack items -->
+  <text x="80" y="442" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="26" font-weight="600" fill="#e4e4e7" letter-spacing="-0.5">
+    React · Next.js · Laravel · NestJS · TypeScript
+  </text>
+
+  <!-- Years + projects stats -->
+  <text x="80" y="510" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="15" fill="#52525b">
+    +4 años de experiencia  ·  +12 proyectos entregados
+  </text>
+
+  <!-- Bottom divider -->
+  <rect x="80" y="540" width="1040" height="1" fill="#1c1c1e"/>
+
+  <!-- Brand initials bottom-left -->
+  <text x="80" y="583" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="18" font-weight="800" fill="#6366f1">SC</text>
+
+  <!-- URL bottom-right -->
+  <text x="1120" y="583" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+        font-size="17" fill="#52525b" text-anchor="end">sebastiancabreraalcala.com</text>
+</svg>

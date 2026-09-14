@@ -8,11 +8,14 @@ import { WhatsAppButton } from './components/WhatsAppButton';
 import { CurrencyProvider } from './contexts/CurrencyContext';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
+import { DesarrolloWebLimaPage } from './pages/DesarrolloWebLimaPage';
 import { HirePage } from './pages/HirePage';
 import { HomePage } from './pages/HomePage';
+import { LandingPagesPage } from './pages/LandingPagesPage';
 import { ProjectDetailRoutePage } from './pages/ProjectDetailRoutePage';
 import { ProjectsPage } from './pages/ProjectsPage';
 import { QuoteRoutePage } from './pages/QuoteRoutePage';
+import { SistemasWebPage } from './pages/SistemasWebPage';
 import { TestimonialsPage } from './pages/TestimonialsPage';
 
 export function App() {
@@ -328,6 +331,9 @@ export function App() {
           <Route path="/cotizar" element={<QuoteRoutePage />} />
           <Route path="/testimonios" element={<TestimonialsPage portfolioMode={portfolioMode} />} />
           <Route path="/contacto" element={<ContactPage portfolioMode={portfolioMode} />} />
+          <Route path="/desarrollo-web-lima" element={<DesarrolloWebLimaPage />} />
+          <Route path="/landing-pages" element={<LandingPagesPage />} />
+          <Route path="/sistemas-web" element={<SistemasWebPage />} />
         </Route>
         <Route path="/proyecto/:projectId" element={<ProjectDetailRoutePage isDark={isDark} toggleTheme={toggleTheme} />} />
 

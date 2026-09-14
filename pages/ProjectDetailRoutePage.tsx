@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ProjectDetail } from '../components/ProjectDetail';
 import { getProjectById } from '../services/sanityService';
 import type { Project } from '../types/sanity';
+import { SITE_URL, OG_IMAGE } from '../config/seo';
 
 interface ProjectDetailRoutePageProps {
   isDark: boolean;
@@ -50,16 +51,38 @@ export function ProjectDetailRoutePage({ isDark, toggleTheme }: ProjectDetailRou
   const seo = useMemo(() => {
     if (!project) {
       return {
-        title: 'Proyecto | Sebastian Cabrera',
-        description: 'Detalle del proyecto.'
+        title: 'Proyecto | Sebastián Cabrera',
+        description: 'Detalle del proyecto de desarrollo web.',
+        canonical: `${SITE_URL}/proyectos`,
+        schema: null,
       };
     }
 
-    return {
-      title: `${project.title} | Proyectos | Sebastian Cabrera`,
-      description: project.description
+    const canonical = `${SITE_URL}/proyecto/${projectId}`;
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'CreativeWork',
+      name: project.title,
+      description: project.description,
+      url: canonical,
+      creator: { '@type': 'Person', name: 'Sebastián Cabrera', url: SITE_URL },
+      breadcrumb: {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Inicio', item: SITE_URL },
+          { '@type': 'ListItem', position: 2, name: 'Proyectos', item: `${SITE_URL}/proyectos` },
+          { '@type': 'ListItem', position: 3, name: project.title, item: canonical },
+        ],
+      },
     };
-  }, [project]);
+
+    return {
+      title: `${project.title} | Proyectos | Sebastián Cabrera`,
+      description: project.description,
+      canonical,
+      schema,
+    };
+  }, [project, projectId]);
 
   if (loading || !project) {
     return (
@@ -67,6 +90,7 @@ export function ProjectDetailRoutePage({ isDark, toggleTheme }: ProjectDetailRou
         <Helmet>
           <title>{seo.title}</title>
           <meta name="description" content={seo.description} />
+          <link rel="canonical" href={seo.canonical} />
         </Helmet>
         <div className="min-h-screen bg-background text-foreground" />
       </>
@@ -78,6 +102,14 @@ export function ProjectDetailRoutePage({ isDark, toggleTheme }: ProjectDetailRou
       <Helmet>
         <title>{seo.title}</title>
         <meta name="description" content={seo.description} />
+        <link rel="canonical" href={seo.canonical} />
+        <meta property="og:url" content={seo.canonical} />
+        <meta property="og:title" content={seo.title} />
+        <meta property="og:description" content={seo.description} />
+        <meta property="og:image" content={OG_IMAGE} />
+        {seo.schema && (
+          <script type="application/ld+json">{JSON.stringify(seo.schema)}</script>
+        )}
       </Helmet>
 
       <ProjectDetail
