@@ -1,38 +1,35 @@
 import { motion } from 'framer-motion';
-import { CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowRight, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 export function MiniServicesSection() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(0);
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const services = [
     {
       title: t('services.service1.title'),
-      items: [
-        t('services.service1.item1'),
-        t('services.service1.item2'),
-      ],
+      items: [t('services.service1.item1'), t('services.service1.item2')],
+      href: '/landing-pages',
     },
     {
       title: t('services.service2.title'),
-      items: [
-        t('services.service2.item1'),
-      ],
+      items: [t('services.service2.item1')],
+      href: '/sistemas-web',
     },
     {
       title: t('services.service3.title'),
-      items: [
-        t('services.service3.item1'),
-      ],
+      items: [t('services.service3.item1')],
+      href: '/sistemas-web',
     },
     {
       title: t('services.service4.title'),
-      items: [
-        t('services.service4.item1'),
-      ],
+      items: [t('services.service4.item1')],
+      href: '/cotizar',
     },
   ];
 
@@ -117,6 +114,12 @@ export function MiniServicesSection() {
                           <span className="text-sm text-muted-foreground">{item}</span>
                         </div>
                       ))}
+                      <button
+                        onClick={() => navigate(service.href)}
+                        className="flex items-center gap-1 text-sm text-primary hover:underline mt-1"
+                      >
+                        Ver más <ArrowRight className="w-3 h-3" />
+                      </button>
                     </div>
                   </motion.div>
                 </motion.div>
