@@ -118,7 +118,7 @@ export function App() {
 
         <div className="container mx-auto px-6 py-12 lg:py-16">
           {/* Grid Principal */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+          <div className={`grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 ${portfolioMode === 'freelance' && !isHirePage ? 'lg:grid-cols-5' : 'lg:grid-cols-4'}`}>
             {/* Columna 1: Logo y Bio */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -204,7 +204,40 @@ export function App() {
               </ul>
             </motion.div>
 
-            {/* Columna 3: Social */}
+            {/* Columna 3: Servicios (solo freelance) */}
+            {portfolioMode === 'freelance' && !isHirePage && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 }}
+              >
+                <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Servicios</h4>
+                <ul className="space-y-3">
+                  {[
+                    { label: 'Desarrollo Web Lima', path: '/desarrollo-web-lima' },
+                    { label: 'Landing Pages', path: '/landing-pages' },
+                    { label: 'Sistemas Web', path: '/sistemas-web' },
+                  ].map((item) => (
+                    <li key={item.label}>
+                      <a href={item.path}>
+                        <motion.div
+                          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors group"
+                          whileHover={{ x: 4 }}
+                        >
+                          <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                            <span className="text-xs">→</span>
+                          </div>
+                          <span>{item.label}</span>
+                        </motion.div>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            )}
+
+            {/* Columna 4 (o 3 en employee): Social */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
